@@ -2,6 +2,12 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<script>
+if (/Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  location.replace('/mobile/' + location.search + location.hash);
+}
+</script>
+<link rel="alternate" media="only screen and (max-width: 640px)" href="https://eva-corp.co.kr/mobile/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
 <meta name="description" content="EVA는 Causal AI로 현장의 구조를 읽고 원인을 찾아 더 나은 판단을 돕습니다. Decision intelligence, powered by causality.">
