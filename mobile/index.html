@@ -6165,6 +6165,7 @@ document.addEventListener('DOMContentLoaded',function(){
   .card-grid,.insight-grid,.ab-office,.cl-way-grid,.cl-env-grid,.rc-exp-grid,
   .in-fw-grid,.in-rs-grid,.in-pr-media.grid2,.sh-grid{
     grid-template-columns:1fr!important;gap:16px!important}
+  .ic.wide{grid-column:span 1!important} /* 1열 그리드에서 span 2가 남아있어 열이 밀리던 문제 수정 */
   .cau-kpi-grid,.mfg-kpi-grid,.uc-val ul{grid-template-columns:repeat(2,1fr)!important;gap:12px!important}
   .in-pr-row{grid-template-columns:1fr!important;gap:28px!important;padding:40px 0!important}
   .in-pr-row.rev>.in-pr-txt{order:1}
