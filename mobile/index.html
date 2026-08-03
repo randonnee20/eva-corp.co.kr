@@ -6166,6 +6166,12 @@ document.addEventListener('DOMContentLoaded',function(){
   .in-fw-grid,.in-rs-grid,.in-pr-media.grid2,.sh-grid{
     grid-template-columns:1fr!important;gap:16px!important}
   .ic.wide{grid-column:span 1!important} /* 1열 그리드에서 span 2가 남아있어 열이 밀리던 문제 수정 */
+  /* 위 그리드들의 자식 카드가 표 등 넓은 내용 때문에 칸 폭보다 넓어지며 밀리는 문제 방지 */
+  .fw-cards>*,.pg>*,.kg>*,.rl>*,.fg>*,.lgg>*,.ig>*,.uc-cols>*,.pd-cards>*,
+  .prod-img-grid-2>*,.prod-img-grid-3>*,.ont-sum-grid>*,.ont-effect-layout>*,.ont-stat-grid>*,
+  .cau-arch-grid>*,.cau-role-grid>*,.mfg-feat-grid>*,.mfg-screen-2>*,
+  .card-grid>*,.insight-grid>*,.ab-office>*,.cl-way-grid>*,.cl-env-grid>*,.rc-exp-grid>*,
+  .in-fw-grid>*,.in-rs-grid>*,.in-pr-media.grid2>*,.sh-grid>*{min-width:0!important}
   .cau-kpi-grid,.mfg-kpi-grid,.uc-val ul{grid-template-columns:repeat(2,1fr)!important;gap:12px!important}
   .in-pr-row{grid-template-columns:1fr!important;gap:28px!important;padding:40px 0!important}
   .in-pr-row.rev>.in-pr-txt{order:1}
