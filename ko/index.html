@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<title>EVA | Causal AI</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap">
+<style>
+/* 한글 본문: Pretendard(OFL-1.1) KS X 1001 서브셋 내장 / 영문 라벨·숫자: Poppins */
+@font-face{font-family:"Pretendard EVA";src:url(../assets/fonts/PretendardKS.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+/* Layout: 시안 순서 그대로 - 상단바 / 풀블리드 히어로 + 4단 카드 / About(텍스트+콜라주) / 다크 통계띠 / 서비스 카드 / 2카드 / 산업 카드 / 프로세스 / 후기 카드 / FAQ / CTA / 푸터 */
+:root{
+  --navy:#0B2B3A;
+  --navy-2:#0F3A4C;
+  --navy-3:#15505F;
+  --teal:#14968E;
+  --teal-dk:#0E7B74;
+  --teal-hi:#3CCABB;
+  --teal-soft:#E7F5F3;
+  --ink:#0E202C;
+  --body:#53646F;
+  --muted:#80909A;
+  --line:#E0E8EB;
+  --mist:#F4F7F9;
+  --paper:#FFFFFF;
+  --warn:#DB6A2C;
+  --on-dark:#FFFFFF;
+  --on-dark-2:#B9CAD2;
+  --f-kr:"Pretendard EVA","Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --f-en:"Poppins","Pretendard EVA","Apple SD Gothic Neo",sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--body);
+  font-family:var(--f-kr);font-size:16px;line-height:1.7;font-weight:400;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-0.005em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{color:var(--ink);font-weight:700;letter-spacing:-0.03em;line-height:1.3;text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--teal-hi);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.acc{color:var(--teal)}
+.blk{display:block}
+.nw{white-space:nowrap}
+.en{font-family:var(--f-en)}
+
+/* 공통 타이포 */
+.eyebrow{font-family:var(--f-en);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);line-height:1.4}
+.eyebrow.ko{font-family:var(--f-kr);font-size:13.5px;font-weight:700;letter-spacing:.01em;text-transform:none}
+.eyebrow.dot{display:inline-flex;align-items:center;gap:8px}
+.eyebrow.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.h2{font-size:clamp(26px,1.9vw + 14px,40px)}
+.h2 .acc{display:block}
+.lead{font-size:16.5px;line-height:1.8;color:var(--body);max-width:64ch}
+.sec{padding-block:clamp(72px,8vw,108px)}
+.sec-head{display:grid;gap:12px;justify-items:center;text-align:center;margin-bottom:clamp(40px,5vw,56px)}
+.sec-head .lead{margin-top:6px}
+.rule{width:40px;height:2px;background:var(--teal);border-radius:2px;margin-top:4px}
+.on-dark h2,.on-dark h3{color:var(--on-dark)}
+.on-dark .acc{color:var(--teal-hi)}
+.on-dark .eyebrow{color:var(--teal-hi)}
+
+/* 버튼 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 24px;border-radius:7px;font-family:var(--f-kr);font-size:15px;font-weight:700;letter-spacing:-0.01em;border:1.5px solid transparent;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-teal{background:var(--teal);color:var(--on-dark)}
+.btn-teal:hover{background:var(--teal-dk)}
+.btn-ghost{border-color:rgba(255,255,255,.45);color:var(--on-dark)}
+.btn-ghost:hover{border-color:var(--on-dark);background:rgba(255,255,255,.07)}
+.btn-white{background:var(--paper);color:var(--navy)}
+.btn-white:hover{background:var(--teal-soft)}
+.btn-dark{background:var(--navy);color:var(--on-dark)}
+.btn-dark:hover{background:var(--navy-3)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+/* CSS 화살표 */
+.arw{position:relative;display:inline-block;width:26px;height:12px;flex:none;color:var(--teal);vertical-align:middle}
+.arw::before{content:"";position:absolute;left:0;right:2px;top:50%;height:2px;margin-top:-1px;background:currentColor;border-radius:2px}
+.arw::after{content:"";position:absolute;right:1px;top:50%;width:8px;height:8px;margin-top:-4px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+
+/* 표식(아이콘 대신 번호) */
+.mk{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-en);font-weight:600;font-size:14px;color:var(--teal);background:var(--teal-soft);border:1px solid #CDEBE6}
+
+/* ---------- 상단바 ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-en);color:var(--navy)}
+.logo .mark{display:block;width:34px;height:auto;flex:none;color:var(--navy)}
+.logo b{font-size:24px;font-weight:700;letter-spacing:.03em;line-height:1}
+.nav{display:flex;align-items:center;gap:40px}
+.nav .gnb{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.gnb > li{position:relative}
+.nav a.m{display:block;font-family:var(--f-en);font-size:15px;font-weight:600;color:#2F414D;padding:24px 16px;position:relative}
+.nav a.m::after{content:"";position:absolute;left:16px;right:16px;bottom:16px;height:2px;background:var(--teal);transform:scaleX(0);transition:transform .2s}
+.gnb > li:hover > a.m,.gnb > li:focus-within > a.m{color:var(--teal)}
+.gnb > li:hover > a.m::after,.gnb > li:focus-within > a.m::after{transform:scaleX(1)}
+.sub{list-style:none;margin:0;padding:8px;position:absolute;left:50%;top:calc(100% - 8px);min-width:210px;transform:translate(-50%,6px);background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 22px 40px -20px rgba(11,43,58,.35);opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.gnb > li:hover .sub,.gnb > li:focus-within .sub{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.sub a{display:block;padding:10px 14px;border-radius:7px;font-family:var(--f-en);font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap}
+.sub a:hover,.sub a:focus-visible{background:var(--teal-soft);color:var(--teal-dk)}
+.menu-btn{display:none;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:7px;background:var(--paper);font-weight:700;font-size:14px;color:var(--navy);cursor:pointer}
+
+/* ---------- 1. 히어로 ---------- */
+.hero{position:relative;background:var(--navy);overflow:hidden;isolation:isolate}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;display:block}
+.hero-in{padding-block:clamp(72px,8vw,112px) clamp(132px,12vw,170px)}
+.hero-copy{max-width:620px;display:grid;gap:20px;animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.hero h1{color:var(--on-dark);font-size:clamp(30px,3.4vw + 10px,58px);font-weight:700;line-height:1.24;letter-spacing:-0.035em}
+.hero h1 .acc{display:block;color:var(--teal-hi)}
+.hero-sub{font-size:clamp(17px,.6vw + 13px,21px);font-weight:600;color:var(--on-dark);line-height:1.5;letter-spacing:-0.02em}
+.hero-p{font-size:15.5px;line-height:1.85;color:var(--on-dark-2);max-width:54ch}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px;margin-top:6px}
+.hero-link{display:inline-flex;align-items:center;gap:12px;color:var(--on-dark);font-weight:700;font-size:15px;margin-left:6px}
+.hero-link .ring{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);display:grid;place-items:center;transition:background .2s,border-color .2s}
+.hero-link .ring .arw{width:16px;color:var(--on-dark)}
+.hero-link:hover .ring{background:var(--teal);border-color:var(--teal)}
+@keyframes rise{from{opacity:.001;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* 4단 카드 */
+.feat{position:relative;z-index:2;margin-top:clamp(-96px,-7vw,-70px)}
+.feat-card{background:var(--paper);border-radius:14px;box-shadow:0 28px 60px -28px rgba(11,43,58,.32),0 2px 8px rgba(11,43,58,.06);display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.feat-item{padding:30px 28px;display:grid;gap:12px;align-content:start;justify-items:center;text-align:center;position:relative}
+.feat-item+.feat-item::before{content:"";position:absolute;left:0;top:30px;bottom:30px;width:1px;background:var(--line)}
+.feat-item h3{font-size:17px;letter-spacing:-0.02em}
+.feat-item p{font-size:14px;line-height:1.65}
+
+/* ---------- 2. About: 왜 인과추론인가 ---------- */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(40px,6vw,84px);align-items:center}
+.about-l{display:grid;gap:18px;align-content:start}
+.chk-label{font-size:14px;font-weight:700;color:var(--ink);margin-top:4px}
+.chk2{list-style:none;margin:-6px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px}
+.chk2 li{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--ink)}
+.chk2 li::before{content:"";flex:none;width:8px;height:8px;border-radius:2px;background:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
+.q-line{margin-top:6px;border-left:3px solid var(--teal);padding:4px 0 4px 18px;font-size:17px;font-weight:600;color:var(--ink);line-height:1.6;letter-spacing:-0.02em}
+.q-line b{color:var(--teal);font-weight:700}
+
+/* DAG 콜라주 */
+.collage{position:relative}
+.dots{position:absolute;width:84px;height:84px;background-image:radial-gradient(var(--teal) 1.4px,transparent 1.6px);background-size:12px 12px;opacity:.35;pointer-events:none}
+.dots.a{left:-18px;top:-22px}
+.dots.b{right:-14px;bottom:44px}
+.dag2{position:relative;container-type:inline-size;aspect-ratio:600/540;max-width:100%}
+.dag2 svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.tile{position:absolute;border-radius:14px;display:grid;align-content:center;justify-items:center;text-align:center;gap:.25em;padding:.6em .5em;box-shadow:0 22px 44px -26px rgba(11,43,58,.45)}
+.tile .k{font-family:var(--f-en);font-weight:600;letter-spacing:.14em;font-size:clamp(9px,1.9cqw,12px)}
+.tile .t{font-weight:700;letter-spacing:-0.03em;line-height:1.25;font-size:clamp(15px,4.7cqw,28px)}
+.tile .d{font-size:clamp(11px,2.4cqw,14.5px);line-height:1.4}
+.t-cc{left:30%;top:0;width:40%;height:27.8%;background:linear-gradient(150deg,var(--navy-3),var(--navy-2));}
+.t-cc .k{color:var(--on-dark-2)}.t-cc .t{color:var(--on-dark)}.t-cc .d{color:var(--on-dark-2)}
+.t-tr{left:0;top:61.1%;width:41.7%;height:27.8%;background:var(--paper);border:1.5px solid var(--line)}
+.t-tr .k{color:var(--teal)}.t-tr .t{color:var(--ink)}.t-tr .d{color:var(--body)}
+.t-out{left:58.3%;top:61.1%;width:41.7%;height:27.8%;background:var(--teal)}
+.t-out .k{color:#D2F4EF}.t-out .t{color:var(--on-dark)}.t-out .d{color:#E4FAF7}
+.elb{position:absolute;font-size:clamp(10.5px,2.35cqw,14px);line-height:1.4;font-weight:600}
+.elb.l1{left:0;width:27%;top:39%;text-align:right;color:var(--muted)}
+.elb.l2{left:72%;width:28%;top:37.5%;color:var(--warn)}
+.badge{position:absolute;left:50%;top:86.5%;transform:translateX(-50%);background:var(--paper);border-radius:12px;padding:.7em 1.2em;box-shadow:0 18px 40px -16px rgba(11,43,58,.38);display:grid;justify-items:center;gap:2px;white-space:nowrap}
+.badge b{font-size:clamp(14px,3.4cqw,21px);color:var(--teal);letter-spacing:-0.02em;line-height:1.3}
+.badge span{display:inline-flex;align-items:center;gap:6px;font-size:clamp(10.5px,2.2cqw,13px);color:var(--body);font-weight:600}
+.badge .arw{width:16px;height:10px}
+.cap{margin-top:30px;display:flex;align-items:flex-start;gap:12px;font-size:14.5px;line-height:1.6;color:var(--body)}
+.cap::before{content:"";flex:none;width:26px;margin-top:.8em;border-top:2px dashed var(--warn)}
+.cap b{color:var(--ink)}
+
+/* ---------- 3. 다크 띠: 데이터에서 의사결정까지 ---------- */
+.band{background:var(--navy);position:relative;overflow:hidden}
+.band::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 120% at 100% 0%,rgba(60,202,187,.14),transparent 60%);pointer-events:none}
+.band .wrap{position:relative;padding-block:44px 48px}
+.band-cap{text-align:center;color:var(--on-dark-2);font-size:14px;font-weight:600;margin-bottom:26px;display:flex;justify-content:center;flex-wrap:wrap;gap:4px 12px}
+.band-cap .en{color:var(--teal-hi);font-size:12px;letter-spacing:.2em;font-weight:600;align-self:center}
+.stats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.stats li{position:relative;text-align:center;display:grid;gap:6px;padding:4px 18px;align-content:center}
+.stats .v{font-size:clamp(18px,1.1vw + 10px,25px);font-weight:700;color:var(--on-dark);letter-spacing:-0.03em;line-height:1.35}
+.stats .v i{font-style:normal;color:var(--teal-hi);margin:0 .2em}
+.stats li:last-child .v{color:var(--teal-hi)}
+.stats .s{font-family:var(--f-en);font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--on-dark-2)}
+.stats li:not(:last-child) .arw{position:absolute;right:-13px;top:50%;margin-top:-6px;color:#6F8C99}
+
+/* ---------- 4. 서비스 카드: 데이터와 지식의 연결 ---------- */
+.svc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.svc-card{border:1px solid var(--line);border-radius:12px;padding:30px 20px 28px;display:grid;justify-items:center;text-align:center;gap:12px;align-content:start;background:var(--paper);box-shadow:0 12px 30px -24px rgba(11,43,58,.35);transition:border-color .2s,box-shadow .2s,transform .2s}
+.svc-card:hover{border-color:#BFE4DF;box-shadow:0 20px 40px -26px rgba(11,43,58,.45);transform:translateY(-3px)}
+.svc-card h3{font-size:17px}
+.svc-card p{font-size:14px;line-height:1.65}
+.center-btn{display:flex;justify-content:center;margin-top:36px}
+
+/* ---------- 5. 2카드: 신뢰할 수 있는 분석 ---------- */
+.duo{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px}
+.plan{border-radius:16px;overflow:hidden;background:linear-gradient(120deg,var(--navy-2) 0%,var(--navy-3) 100%);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);position:relative}
+.plan-l{padding:clamp(28px,3.5vw,44px);display:grid;gap:16px;align-content:start;position:relative;z-index:1}
+.plan-l h3{font-size:clamp(22px,.9vw + 12px,26px)}
+.plan-l h3 .acc{display:block}
+.plan-l p{color:var(--on-dark-2);font-size:15px;line-height:1.75}
+.plan-l .btn{justify-self:start;margin-top:4px}
+.plan-r{position:relative;display:grid;align-items:center;padding:28px clamp(20px,3vw,36px) 28px 0}
+.est{background:var(--paper);border-radius:14px;padding:22px 20px 20px;box-shadow:0 26px 50px -24px rgba(0,0,0,.45);display:grid;gap:14px}
+.est-h{font-size:13px;font-weight:700;color:var(--ink)}
+.est-plot{position:relative;height:118px;border-bottom:1px solid var(--line)}
+.est-base{position:absolute;left:24%;top:0;bottom:0;border-left:2px dashed #9FB1BA}
+.est-base span{position:absolute;top:-2px;left:8px;font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.est-ci{position:absolute;left:46%;right:12%;top:62px;height:10px;border-radius:6px;background:#BFE6E1}
+.est-pt{position:absolute;left:66%;top:56px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(20,150,142,.18)}
+.est-gap{position:absolute;left:24%;width:42%;top:36px;border-top:1.5px solid var(--teal)}
+.est-gap::after{content:"";position:absolute;right:-1px;top:-5px;width:8px;height:8px;border-top:1.5px solid var(--teal);border-right:1.5px solid var(--teal);transform:rotate(45deg)}
+.est-lb{position:absolute;font-size:11.5px;font-weight:700;white-space:nowrap}
+.est-lb.a{left:45%;top:15px;color:var(--teal);transform:translateX(-50%)}
+.est-lb.b{left:66%;top:86px;color:var(--body);transform:translateX(-50%)}
+.est-legend{display:grid;gap:6px;font-size:12.5px;color:var(--body)}
+.est-legend div{display:flex;align-items:center;gap:8px}
+.est-legend i{flex:none;display:inline-block}
+.est-legend .i1{width:10px;height:10px;border-radius:50%;background:var(--teal)}
+.est-legend .i2{width:18px;height:6px;border-radius:3px;background:#BFE6E1}
+.est-legend .i3{width:0;height:12px;border-left:2px dashed #9FB1BA;margin:0 4px}
+.why{border-radius:16px;background:var(--navy);padding:clamp(28px,3.5vw,44px);display:grid;gap:20px;align-content:start;position:relative;overflow:hidden}
+.why::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(60,202,187,.22);box-shadow:0 0 0 34px rgba(60,202,187,.04),0 0 0 68px rgba(60,202,187,.025);pointer-events:none}
+.why h3{font-size:21px;position:relative;z-index:1}
+.chk{list-style:none;margin:0;padding:0;display:grid;gap:14px;position:relative;z-index:1}
+.chk li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start}
+.chk li::before{content:"";width:8px;height:8px;margin:8px 0 0 6px;border-radius:2px;background:var(--teal-hi);box-shadow:0 0 0 4px rgba(60,202,187,.16)}
+.chk b{display:block;color:var(--on-dark);font-size:15.5px;font-weight:700;line-height:1.4}
+.chk span{display:block;color:var(--on-dark-2);font-size:14px;line-height:1.55;margin-top:2px}
+.why-note{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.12);padding-top:16px;color:var(--teal-hi);font-weight:600;font-size:14.5px;line-height:1.65}
+
+/* ---------- 6. 산업 카드 ---------- */
+.row-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px 32px;flex-wrap:wrap;margin-bottom:clamp(30px,4vw,40px)}
+.row-head-l{display:grid;gap:12px;max-width:760px}
+.more{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--teal);white-space:nowrap}
+.more .arw{width:20px}
+.more:hover{color:var(--teal-dk)}
+.ind{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.ind-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper);display:grid;grid-template-rows:auto 1fr;transition:box-shadow .2s,transform .2s}
+@supports (grid-template-rows:subgrid){
+  .ind-card{grid-row:span 6;grid-template-rows:subgrid;row-gap:0}
+  .ind-card > .ind-body{display:contents}
+  .ind-card > .ind-body > *{padding-inline:24px}
+  .ind-card > .ind-body > .ind-lb:first-child{padding-top:22px}
+  .ind-card > .ind-body > .ind-q{padding-top:8px;padding-bottom:16px}
+  .ind-card > .ind-body > .ind-sep{margin:0 24px;padding:0}
+  .ind-card > .ind-body > .ind-sep + .ind-lb{padding-top:16px}
+  .ind-card > .ind-body > .ind-r{padding-top:8px;padding-bottom:26px}
+}
+.ind-card:hover{box-shadow:0 26px 50px -30px rgba(11,43,58,.45);transform:translateY(-3px)}
+.ind-img{position:relative;min-height:168px;padding:22px 24px;display:grid;align-content:end;gap:2px;overflow:hidden;background:linear-gradient(160deg,var(--navy-3),var(--navy) 75%)}
+.ind-img::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1.3px);background-size:16px 16px;-webkit-mask-image:linear-gradient(200deg,#000 10%,transparent 65%);mask-image:linear-gradient(200deg,#000 10%,transparent 65%)}
+.ind-img::after{content:"";position:absolute;right:-40px;top:-50px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(60,202,187,.32),transparent 70%)}
+.ind-img .k{position:relative;z-index:1;text-align:left;font-family:var(--f-en);font-size:12px;letter-spacing:.16em;font-weight:600;color:var(--teal-hi)}
+.ind-img .t{position:relative;z-index:1;text-align:left;font-size:27px;font-weight:700;color:var(--on-dark);letter-spacing:-0.03em;line-height:1.3}
+.ind-body{padding:22px 24px 26px;display:grid;gap:8px;align-content:start}
+.ind-lb{font-size:12.5px;font-weight:700;color:var(--muted)}
+.ind-q{font-size:16.5px;font-weight:700;color:var(--ink);line-height:1.5;letter-spacing:-0.02em}
+.ind-sep{height:1px;background:var(--line);margin:8px 0}
+.ind-r{font-size:14.5px;line-height:1.7}
+.ind-r b{color:var(--teal);font-weight:700}
+
+/* ---------- 7. 프로세스: AI의 역할 ---------- */
+.flow-cap{text-align:center;margin-bottom:34px;display:grid;gap:4px}
+.flow-cap .en{font-size:12px;letter-spacing:.22em;font-weight:600;color:var(--teal)}
+.flow-cap b{font-size:clamp(19px,.8vw + 13px,24px);color:var(--ink);letter-spacing:-0.03em}
+.proc{list-style:none;margin:0 auto;padding:0;max-width:1080px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:relative}
+.proc::before{content:"";position:absolute;top:31px;left:10%;right:10%;height:2px;background:repeating-linear-gradient(90deg,var(--teal) 0 6px,transparent 6px 12px);opacity:.6}
+.proc li{display:grid;justify-items:center;align-content:start;text-align:center;gap:10px;padding:0 10px;position:relative}
+.proc li:not(:last-child)::after{content:"";position:absolute;right:-5px;top:27px;width:9px;height:9px;border-top:2px solid var(--teal);border-right:2px solid var(--teal);transform:rotate(45deg)}
+.proc .c{width:64px;height:64px;border-radius:50%;background:var(--teal-dk);display:grid;place-items:center;font-family:var(--f-en);font-size:16px;font-weight:600;color:var(--on-dark);position:relative;z-index:1;box-shadow:0 0 0 8px var(--paper),0 0 0 9px #CFEAE6}
+.proc li:last-child .c{background:var(--navy)}
+.proc .n{font-family:var(--f-en);font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--teal);margin-top:6px}
+.proc h3{font-size:17px;margin-top:-4px}
+.proc p{font-size:14px;line-height:1.6;max-width:22ch}
+.who{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 20px;max-width:1080px;margin:26px auto 0}
+.who div{border-top:2px solid var(--teal);padding-top:10px;font-size:13.5px;font-weight:700;color:var(--ink);text-align:center}
+.who div:nth-child(1){grid-column:span 2}
+.who div:nth-child(2){border-color:var(--teal-hi)}
+.who div:nth-child(3){grid-column:span 2;border-color:var(--navy)}
+.who small{display:block;font-family:var(--f-en);font-size:11px;letter-spacing:.12em;font-weight:600;color:var(--muted)}
+.punch{margin-top:clamp(40px,5vw,56px);text-align:center;font-size:clamp(19px,.9vw + 13px,25px);font-weight:700;color:var(--ink);line-height:1.6;letter-spacing:-0.03em;text-wrap:balance}
+.punch .acc{display:block}
+
+/* ---------- 8. 후기 카드 -> 예측 AI vs Causal AI ---------- */
+.testi{border-radius:18px;background:var(--navy);display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,4vw,56px);padding:clamp(20px,3vw,32px);position:relative;overflow:hidden}
+.testi::after{content:"";position:absolute;right:-90px;bottom:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(60,202,187,.16),transparent 70%);pointer-events:none}
+.tq-l{border-radius:14px;background:var(--mist);padding:clamp(24px,3vw,36px);display:grid;align-content:center;gap:16px;min-height:300px;position:relative;z-index:1}
+.pill{justify-self:start;font-size:13.5px;font-weight:700;border-radius:999px;padding:7px 14px;line-height:1.3}
+.pill.grey{background:#E2E9EC;color:#56676F}
+.pill.dark{background:var(--navy);color:var(--on-dark)}
+.pill.dark em{font-style:normal;color:var(--teal-hi)}
+.tq-pred{font-size:clamp(20px,1.1vw + 12px,27px);font-weight:600;color:#6E7F88;letter-spacing:-0.03em;line-height:1.4}
+.tq-down{width:2px;height:34px;background:var(--teal);position:relative;margin-left:24px}
+.tq-down::after{content:"";position:absolute;left:50%;bottom:0;width:9px;height:9px;margin-left:-5px;border-right:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:rotate(45deg)}
+.tq-r{display:grid;gap:16px;align-content:center;padding:clamp(4px,2vw,20px) clamp(0px,2vw,24px) clamp(4px,2vw,20px) 0;position:relative;z-index:1}
+.tq-r h2{font-size:clamp(24px,1.2vw + 14px,32px)}
+.tq-r h2 .acc{display:block}
+.tq-r .lead{color:var(--on-dark-2);font-size:15px}
+.tq-quote{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;margin-top:6px}
+.tq-quote .qm{font-family:var(--f-en);font-size:54px;line-height:.85;font-weight:700;color:var(--teal-hi)}
+.tq-quote p{font-size:clamp(19px,1vw + 12px,25px);font-weight:700;color:var(--on-dark);line-height:1.45;letter-spacing:-0.03em}
+.tq-who{display:flex;align-items:center;gap:12px;color:var(--on-dark-2);font-size:14px}
+.tq-who::before{content:"";width:22px;height:2px;background:var(--teal-hi)}
+.tq-who b{color:var(--on-dark);font-weight:700}
+.tq-dots{display:flex;gap:10px;margin-top:6px}
+.tq-dots button{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--on-dark-2);background:transparent;padding:0;cursor:pointer}
+.tq-dots button[aria-current="true"]{background:var(--on-dark);border-color:var(--on-dark);width:26px;border-radius:6px}
+.tq-anim{animation:fade .45s ease both}
+@keyframes fade{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- 9. FAQ -> Causal AI가 답하는 질문 ---------- */
+.faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,48px);align-items:start}
+.help{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--paper);box-shadow:0 18px 40px -30px rgba(11,43,58,.4)}
+.help-img{background:linear-gradient(150deg,var(--navy-3),var(--navy) 70%);padding:30px 26px;min-height:170px;display:grid;align-content:end;gap:4px;position:relative;overflow:hidden}
+.help-img::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1.3px);background-size:16px 16px;-webkit-mask-image:linear-gradient(200deg,#000 10%,transparent 70%);mask-image:linear-gradient(200deg,#000 10%,transparent 70%)}
+.help-img .big{position:relative;font-family:var(--f-en);font-size:46px;font-weight:600;color:var(--teal-hi);letter-spacing:-0.01em;line-height:1}
+.help-img .sm{position:relative;color:var(--on-dark-2);font-size:13.5px;font-weight:600}
+.help-body{padding:26px 26px 28px;display:grid;gap:14px}
+.help-body h3{font-size:clamp(19px,.6vw + 14px,22px);line-height:1.45}
+.help-body p{font-size:14.5px;line-height:1.7}
+.help-body .btn{justify-self:start}
+.qa-list{display:grid;gap:12px}
+.qa-list .eyebrow{margin-bottom:6px}
+details.qa{border:1px solid var(--line);border-radius:12px;background:var(--paper);transition:border-color .2s,box-shadow .2s}
+details.qa[open]{border-color:#BFE4DF;box-shadow:0 16px 36px -28px rgba(11,43,58,.45)}
+details.qa summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) 18px;gap:14px;align-items:center;padding:16px 20px;font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;line-height:1.45}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{font-family:var(--f-en);font-size:12.5px;font-weight:600;color:var(--teal);background:var(--teal-soft);border-radius:8px;padding:5px 9px;line-height:1.2}
+details.qa .pm{position:relative;width:14px;height:14px;justify-self:end}
+details.qa .pm::before,details.qa .pm::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:var(--muted);border-radius:2px;transition:transform .2s}
+details.qa .pm::after{transform:rotate(90deg)}
+details.qa[open] .pm::after{transform:rotate(0)}
+details.qa .ans{padding:0 20px 18px 20px;margin-left:calc(20px + 14px + 1.4em);display:grid;gap:2px}
+details.qa .ans small{font-size:12.5px;font-weight:700;color:var(--muted)}
+details.qa .ans p{font-size:15px;color:var(--ink)}
+details.qa .ans b{color:var(--teal)}
+
+/* ---------- 10. CTA ---------- */
+.cta{padding-bottom:clamp(64px,7vw,92px)}
+.cta-box{border-radius:16px;background:linear-gradient(105deg,var(--teal-dk),var(--navy-2) 55%,var(--navy));padding:clamp(30px,4vw,46px) clamp(24px,4vw,52px);display:flex;align-items:center;justify-content:space-between;gap:24px 32px;flex-wrap:wrap;position:relative;overflow:hidden}
+.cta-box::after{content:"";position:absolute;right:-40px;top:-60px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,.1);box-shadow:0 0 0 40px rgba(255,255,255,.03);pointer-events:none}
+.cta-l{position:relative;z-index:1;min-width:0;display:grid;gap:8px}
+.cta-l h2{font-size:clamp(21px,1vw + 13px,28px);color:var(--on-dark)}
+.cta-l p{color:#CFE0E6;font-size:15px}
+.cta-btns{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+
+/* ---------- 푸터 ---------- */
+.foot{background:#08202B;color:#9AB0BB;padding-block:56px 28px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px 56px;flex-wrap:wrap}
+.foot-brand{min-width:0}
+.foot-right{display:flex;align-items:flex-start;gap:56px;flex-wrap:wrap}
+.foot-menus{display:grid;grid-template-columns:repeat(4,auto);gap:24px 44px}
+.partner{display:grid;justify-items:end;gap:12px;padding-left:44px;border-left:1px solid rgba(255,255,255,.1)}
+.partner small{font-family:var(--f-en);font-size:11.5px;letter-spacing:.16em;font-weight:600;color:#8AA1AD}
+.partner .plate{display:inline-flex;background:#FFFFFF;border-radius:8px;padding:10px 16px}
+.partner img{display:block;width:170px;height:auto}
+.foot .logo{color:var(--on-dark)}
+.foot .logo .mark{width:40px;color:var(--on-dark)}
+.foot .logo b{font-size:26px}
+.foot-tag{font-family:var(--f-en);font-size:12px;letter-spacing:.1em;font-weight:600;color:var(--teal-hi);margin-top:14px}
+.foot h4{color:var(--on-dark);font-size:14px;margin-bottom:14px;font-family:var(--f-en);font-weight:600;letter-spacing:.01em}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;font-family:var(--f-en)}
+.foot a:hover{color:var(--on-dark)}
+.foot-bot{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px}
+.foot-bot a{color:#C9D7DE}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:1100px){
+  .nav a.m{padding-inline:12px}
+  .nav a.m::after{left:12px;right:12px}
+  .svc{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .svc-card{grid-column:span 2}
+  .svc-card:nth-child(4),.svc-card:nth-child(5){grid-column:span 3}
+  .plan{grid-template-columns:minmax(0,1fr)}
+  .plan-r{padding:0 clamp(28px,3.5vw,44px) clamp(28px,3.5vw,44px)}
+}
+@media (max-width:960px){
+  .nav .gnb,.nav .btn{display:none}
+  .menu-btn{display:inline-flex;align-items:center}
+  .nav.open{position:absolute;left:0;right:0;top:72px;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -20px rgba(11,43,58,.3);padding:12px max(20px,env(safe-area-inset-right,0px)) 20px max(20px,env(safe-area-inset-left,0px));display:grid;gap:12px}
+  .nav.open .gnb{display:grid;gap:4px}
+  .nav.open a.m{padding:10px 0 4px;font-size:15.5px;color:var(--ink)}
+  .nav.open a.m::after{display:none}
+  .nav.open .sub{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;padding:0 0 8px 12px;min-width:0;background:transparent;display:grid;gap:0}
+  .nav.open .sub a{padding:7px 10px;font-size:14px;color:var(--body)}
+  .nav.open .btn{display:inline-flex;justify-self:start}
+  .feat-card{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feat-item:nth-child(3)::before{display:none}
+  .feat-item:nth-child(n+3){border-top:1px solid var(--line)}
+  .about,.duo,.faq,.testi{grid-template-columns:minmax(0,1fr)}
+  .collage{max-width:600px;margin:0 auto;width:100%}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:30px}
+  .stats li:nth-child(2) .arw{display:none}
+  .proc{grid-template-columns:minmax(0,1fr);max-width:520px;gap:22px}
+  .proc::before{top:32px;bottom:32px;left:31px;right:auto;width:2px;height:auto;background:repeating-linear-gradient(180deg,var(--teal) 0 6px,transparent 6px 12px)}
+  .proc li{grid-template-columns:64px minmax(0,1fr);justify-items:start;text-align:left;column-gap:20px;row-gap:2px;padding:0}
+  .proc .c{grid-row:span 3}
+  .proc li:not(:last-child)::after{right:auto;left:27px;top:auto;bottom:-16px;transform:rotate(135deg)}
+  .proc .n{margin-top:0}
+  .proc h3{margin-top:0}
+  .proc p{max-width:none}
+  .who{grid-template-columns:minmax(0,1fr);max-width:520px;gap:12px}
+  .who div:nth-child(1),.who div:nth-child(3){grid-column:auto}
+  .who div{text-align:left}
+  .ind{grid-template-columns:minmax(0,1fr)}
+  .ind-card{grid-template-columns:230px minmax(0,1fr);grid-template-rows:none;grid-row:auto}
+  .ind-card > .ind-body{display:grid}
+  .ind-card > .ind-body > *{padding:0}
+  .ind-card > .ind-body > .ind-sep{margin:8px 0}
+  .ind-card > .ind-body{padding:22px 24px 26px}
+  .ind-img{min-height:0}
+  .tq-l{min-height:0}
+  .foot-top,.foot-right{flex-direction:column;gap:32px}
+  .foot-menus{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+  .partner{justify-items:start;padding-left:0;border-left:0}
+}
+@media (max-width:640px){
+  .feat-card{grid-template-columns:minmax(0,1fr)}
+  .feat-item::before{display:none}
+  .feat-item+.feat-item{border-top:1px solid var(--line)}
+  .feat-item{padding:22px 22px;grid-template-columns:44px minmax(0,1fr);column-gap:16px;row-gap:4px;justify-items:start;text-align:left}
+  .feat-item .mk{grid-row:span 2}
+  .hero-cta .btn{flex:1 1 100%}
+  .hero-link{margin-left:0}
+  .stats{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .stats li{padding:14px 0}
+  .stats li:not(:last-child) .arw{display:inline-block;position:static;margin:10px auto 0;transform:rotate(90deg);justify-self:center}
+  .svc{grid-template-columns:minmax(0,1fr)}
+  .svc-card,.svc-card:nth-child(4),.svc-card:nth-child(5){grid-column:auto;grid-template-columns:44px minmax(0,1fr);justify-items:start;text-align:left;column-gap:16px;row-gap:4px;padding:22px 20px}
+  .svc-card .mk{grid-row:span 2}
+  .chk2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .ind-card{grid-template-columns:minmax(0,1fr)}
+  .ind-img{min-height:120px}
+  details.qa summary{padding:14px 16px;font-size:15px;gap:12px}
+  details.qa .ans{margin-left:16px;padding:0 16px 16px}
+  .cta-btns .btn{flex:1 1 100%}
+  .tq-quote{grid-template-columns:minmax(0,1fr);gap:0}
+  .tq-quote .qm{font-size:44px;height:26px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* 통합: 산업 카드 링크 */
+.ind-card.is-link{position:relative;cursor:pointer}
+.ind-link{position:absolute;inset:0;z-index:3;border-radius:14px}
+.ind-link:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+</style>
+<meta name="theme-color" content="#0B2B3A">
+<style>
+/* ===== 모바일 웹 버전(768px 이하): 앱 형태 화면 ===== */
+.m-tab,.m-sub,.m-cta,.m-top{display:none}
+@keyframes mfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:768px){
+  html{-webkit-text-size-adjust:100%}
+  body{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+  .top-in{height:56px}
+  .top .logo .mark{width:28px;height:28px}
+  .menu-btn,.nav{display:none!important}
+  .m-cta{display:inline-flex;align-items:center;height:34px;padding:0 16px;border-radius:999px;background:var(--teal);color:var(--on-dark);font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+  body[data-page="contact"] .m-cta{visibility:hidden}
+  .m-sub{display:flex;gap:6px;position:sticky;top:calc(56px + env(safe-area-inset-top,0px));z-index:45;padding:9px 16px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+  .m-sub::-webkit-scrollbar{display:none}
+  .m-sub a{flex:none;padding:7px 15px;border-radius:999px;font-family:var(--f-en);font-size:13.5px;font-weight:600;color:var(--body);background:var(--mist);border:1px solid var(--line);white-space:nowrap;transition:background .2s,color .2s}
+  .m-sub a[aria-current]{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+  .m-tab{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:60;height:calc(62px + env(safe-area-inset-bottom,0px));padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);box-shadow:0 -10px 28px -20px rgba(11,43,58,.4);transition:transform .22s ease}
+  .m-tab a{display:grid;justify-items:center;align-content:center;gap:6px;font-family:var(--f-en);font-size:12.5px;font-weight:600;color:var(--muted)}
+  .m-tab a::before{content:"";width:20px;height:3px;border-radius:3px;background:transparent;transition:background .2s}
+  .m-tab a[aria-current]{color:var(--navy)}
+  .m-tab a[aria-current]::before{background:var(--teal)}
+  body.m-typing .m-tab{transform:translateY(110%)}
+  .m-top{display:block;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:55;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--navy);font:inherit;font-size:12.5px;font-weight:700;box-shadow:0 12px 26px -14px rgba(11,43,58,.55);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;cursor:pointer}
+  .m-top.on{opacity:1;pointer-events:auto;transform:none}
+  body.m-typing .m-top{opacity:0;pointer-events:none}
+  .crumb{display:none!important}
+  #view-detail .crumb{display:flex!important}
+  .foot{padding-block:36px 24px}
+  .foot-menus{display:none!important}
+  .foot-bot{margin-top:28px}
+  main{animation:mfade .35s ease both}
+}
+@media (max-width:768px) and (prefers-reduced-motion:reduce){main{animation:none}}
+</style>
+<style>
+/* 언어 선택(KOR | ENG): 두 언어를 함께 보여 주고 현재 언어를 강조 */
+.lang-sw{display:inline-flex;align-items:center;gap:2px;margin-left:8px;font-family:var(--f-en);font-size:12.5px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.lang-sw a{padding:6px 6px;color:var(--muted);border-radius:6px;transition:color .2s}
+.lang-sw a:hover{color:var(--teal-dk)}
+.lang-sw a.on{color:var(--navy);box-shadow:inset 0 -2px 0 var(--teal);border-radius:0;cursor:default}
+.lang-sw span{color:#C5D2D8;font-weight:400}
+.lang-sw.m-only{display:none}
+@media (max-width:960px){ .nav .lang-sw{display:none} .lang-sw.m-only{display:inline-flex;margin-left:auto} }
+@media (max-width:768px){ .lang-sw.m-only{margin-right:-16px;font-size:12px} .lang-sw.m-only a{padding:6px 4px} }
+</style>
+<link rel="alternate" hreflang="en" href="../index.html">
+<link rel="alternate" hreflang="ko" href="index.html">
+<link rel="alternate" hreflang="x-default" href="../index.html">
+</head>
+<body data-page="home">
+<!-- ============ 상단바 ============ -->
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="#top" aria-label="EVA 홈"><svg class="mark" viewBox="0 0 995 930" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z"/></svg><b>EVA</b></a>
+    <nav class="nav" id="nav" aria-label="주 메뉴">
+      <ul class="gnb">
+        <li><a class="m" href="product.html#product">Product</a>
+          <ul class="sub"><li><a href="product.html#ai-engine-document">AI Engine Document</a></li><li><a href="product.html#ai-engine-factory">AI Engine Factory</a></li></ul></li>
+        <li><a class="m" href="industry.html#industry">Industry</a>
+          <ul class="sub"><li><a href="industry.html#manufacturing">Manufacturing</a></li><li><a href="industry.html#finance">Finance</a></li></ul></li>
+        <li><a class="m" href="rnd.html#rnd">Resource</a>
+          <ul class="sub"><li><a href="rnd.html#rnd">R&amp;D</a></li></ul></li>
+        <li><a class="m" href="company.html#about">Company</a>
+          <ul class="sub"><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></li>
+      </ul>
+      <a class="btn btn-teal btn-sm" href="contact.html?type=diagnosis">데이터 진단 문의</a>
+    <div class="lang-sw" role="group" aria-label="Language"><a href="index.html" hreflang="ko" lang="ko" aria-label="한국어" class="on" aria-current="true">KOR</a><span aria-hidden="true">|</span><a href="../index.html" hreflang="en" lang="en" aria-label="English">ENG</a></div></nav>
+    <div class="lang-sw m-only" role="group" aria-label="Language"><a href="index.html" hreflang="ko" lang="ko" aria-label="한국어" class="on" aria-current="true">KOR</a><span aria-hidden="true">|</span><a href="../index.html" hreflang="en" lang="en" aria-label="English">ENG</a></div>
+    <a class="m-cta" href="contact.html?type=diagnosis">문의</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">메뉴</button>
+  </div>
+</header>
+
+<main id="home">
+
+<!-- ============ 1. 히어로 (슬라이드 1) ============ -->
+<section class="hero" aria-labelledby="hero-title">
+  <canvas id="graph" aria-hidden="true"></canvas>
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow" style="color:var(--teal-hi)">Empowering Value Through AI</p>
+      <h1 id="hero-title">결과를 예측하는 AI에서, <span class="acc">조치를 판단하는 AI로</span></h1>
+      <p class="hero-sub">상관관계를 넘어, 조치의 효과를 판단합니다.</p>
+      <p class="hero-p">무엇이 결과를 바꾸는지 찾고, 어떤 조치가 얼마나 영향을 미칠지 근거로 비교합니다. 데이터를 연결하고, 원인 후보를 검토하고, 조치별 효과를 비교합니다. <span class="nw">Causal AI는</span> 의사결정자가 더 나은 선택을 할 수 있도록 근거를 준비합니다.</p>
+      <div class="hero-cta">
+        <a class="btn btn-teal" href="product.html#product">AI Engine 살펴보기</a>
+        <a class="btn btn-ghost" href="contact.html?type=diagnosis">데이터 진단 문의</a>
+        <a class="hero-link" href="industry.html#industry"><span class="ring"><span class="arw"></span></span>산업별 적용 사례 보기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="feat">
+  <div class="wrap">
+    <div class="feat-card">
+      <div class="feat-item"><span class="mk">01</span><h3>데이터 연결</h3><p>대상, 조건, 행동, 결과를 공통 기준으로 연결합니다.</p></div>
+      <div class="feat-item"><span class="mk">02</span><h3>원인 후보 검토</h3><p>무엇이 결과를 바꾸는지 찾습니다.</p></div>
+      <div class="feat-item"><span class="mk">03</span><h3>조치별 효과 비교</h3><p>어떤 조치가 얼마나 영향을 미칠지 근거로 비교합니다.</p></div>
+      <div class="feat-item"><span class="mk">04</span><h3>의사결정 근거 준비</h3><p>의사결정자가 더 나은 선택을 할 수 있도록 근거를 준비합니다.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2. About: 왜 인과추론인가 (슬라이드 2) ============ -->
+<section class="sec" id="engine" aria-labelledby="a-title">
+  <div class="wrap about">
+    <div class="about-l">
+      <p class="eyebrow ko dot">왜 인과추론인가?</p>
+      <h2 class="h2" id="a-title">함께 변했다는 사실과, <span class="acc">변화를 만든 이유는 다릅니다.</span></h2>
+      <p class="lead">어떤 조치를 적용한 대상의 결과가 좋아 보여도, 원래 조건이 좋았기 때문일 수 있습니다. 조치 대상 선정, 운영 환경, 시점, 대상 특성처럼 결과에 함께 영향을 주는 요인을 고려하지 않으면 효과가 과대 또는 과소평가될 수 있습니다. 인과추론은 조치를 적용한 경우와 적용하지 않은 경우를 비교 가능한 조건으로 맞춰, 조치 자체가 만든 변화를 추정합니다.</p>
+      <p class="chk-label">결과에 함께 영향을 주는 요인</p>
+      <ul class="chk2">
+        <li>조치 대상 선정</li>
+        <li>운영 환경</li>
+        <li>시점</li>
+        <li>대상 특성</li>
+      </ul>
+      <p class="q-line">&ldquo;조치한 뒤 좋아졌다&rdquo;가 아니라, <b class="nw">&ldquo;조치하지 않았다면 어땠을까&rdquo;</b>를 함께 생각합니다</p>
+    </div>
+
+    <div class="collage">
+      <span class="dots a" aria-hidden="true"></span>
+      <span class="dots b" aria-hidden="true"></span>
+      <div class="dag2" role="figure" aria-label="공통 조건이 조치 여부와 결과에 함께 영향을 주는 인과 구조">
+        <svg viewBox="0 0 600 540" aria-hidden="true" focusable="false">
+          <defs>
+            <marker id="mg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8FA2AC"/></marker>
+            <marker id="mo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#DB6A2C"/></marker>
+            <marker id="mt" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#14968E"/></marker>
+          </defs>
+          <line x1="236" y1="152" x2="156" y2="322" stroke="#8FA2AC" stroke-width="2.5" fill="none" marker-end="url(#mg)"/>
+          <line x1="364" y1="152" x2="444" y2="322" stroke="#DB6A2C" stroke-width="2.5" stroke-dasharray="8 6" fill="none" marker-end="url(#mo)"/>
+          <line x1="254" y1="405" x2="342" y2="405" stroke="#14968E" stroke-width="5" fill="none" marker-end="url(#mt)"/>
+        </svg>
+        <div class="tile t-cc"><span class="k">COMMON CAUSE</span><span class="t">공통 조건</span><span class="d">대상의 특성 · 시점 · 환경</span></div>
+        <div class="tile t-tr"><span class="k">TREATMENT</span><span class="t">조치 여부</span><span class="d">조치했는가,<br>하지 않았는가</span></div>
+        <div class="tile t-out"><span class="k">OUTCOME</span><span class="t">결과</span><span class="d">성과 지표</span></div>
+        <span class="elb l1">조치 대상 <br>선정에 영향</span>
+        <span class="elb l2">결과에도 직접 <br>영향을 주는 경로</span>
+        <div class="badge"><b>알고 싶은 효과</b><span>조치 여부 <i class="arw"></i> 결과</span></div>
+      </div>
+      <p class="cap"><span>이 경로를 걷어내지 않으면, <b class="nw">원래 있던 차이</b>까지 조치의 효과로 보입니다</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. 다크 띠: 데이터에서 의사결정까지 (슬라이드 4 도식) ============ -->
+<section class="band" aria-labelledby="band-title">
+  <div class="wrap">
+    <p class="band-cap" id="band-title"><span class="en">FROM DATA TO DECISION</span><span>데이터에서 의사결정까지</span></p>
+    <ol class="stats">
+      <li><span class="v">데이터<i>+</i>문서<i>+</i>조치이력</span><span class="s">STEP 01</span><span class="arw" aria-hidden="true"></span></li>
+      <li><span class="v">업무 객체·관계 연결</span><span class="s">STEP 02</span><span class="arw" aria-hidden="true"></span></li>
+      <li><span class="v">조치효과 분석</span><span class="s">STEP 03</span><span class="arw" aria-hidden="true"></span></li>
+      <li><span class="v">의사결정</span><span class="s">STEP 04</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 4. 서비스 카드: 데이터와 지식의 연결 (슬라이드 4) ============ -->
+<section class="sec" aria-labelledby="d-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow ko">데이터와 지식의 연결</p>
+      <h2 class="h2" id="d-title">데이터가 연결될 때, <span class="acc">판단의 배경이 보입니다.</span></h2>
+      <span class="rule" aria-hidden="true"></span>
+      <p class="lead">업무 데이터는 시스템·문서·센서·보고서에 흩어져 있습니다. Causal AI는 대상, 조건, 행동, 결과를 공통 기준으로 연결하고, 사람이 남긴 조치 기록과 판단 근거를 분석 가능한 구조로 정리합니다. 이를 통해 &ldquo;어떤 조치가 어떤 조건에서 적용되었고, 어떤 결과로 이어졌는지&rdquo;를 함께 확인할 수 있습니다.</p>
+    </div>
+    <div class="svc">
+      <article class="svc-card"><span class="mk">01</span><h3>업무 객체 연결</h3><p>고객, 제품, 설비, 프로세스, 프로젝트, 자산 등</p></article>
+      <article class="svc-card"><span class="mk">02</span><h3>조치이력 구조화</h3><p>현상, 원인 후보, 조치, 적용 대상, 기대효과</p></article>
+      <article class="svc-card"><span class="mk">03</span><h3>비교 조건 구성</h3><p>조치 대상과 유사한 미조치 대상 확인</p></article>
+      <article class="svc-card"><span class="mk">04</span><h3>근거 추적</h3><p>분석 결과를 원천 데이터와 조치 기록으로 연결</p></article>
+      <article class="svc-card"><span class="mk">05</span><h3>지식 축적</h3><p>조치 결과를 다음 분석의 근거로 축적</p></article>
+    </div>
+    <div class="center-btn"><a class="btn btn-teal btn-sm" href="contact.html?type=diagnosis">데이터 진단 문의</a></div>
+  </div>
+</section>
+
+<!-- ============ 5. 2카드: 신뢰할 수 있는 분석 (슬라이드 5) ============ -->
+<section class="sec" style="padding-top:0" aria-labelledby="e-title">
+  <div class="wrap duo">
+    <div class="plan on-dark">
+      <div class="plan-l">
+        <p class="eyebrow ko">신뢰할 수 있는 분석</p>
+        <h3 id="e-title">숫자 하나보다, <span class="acc">그 숫자를 믿을 수 있는 근거가 중요합니다.</span></h3>
+        <p>조치효과는 하나의 추정값으로 끝나지 않습니다. 비교 조건, 데이터 범위, 추정구간, 검증 결과를 함께 제시해 분석 결과를 검토하고 판단할 수 있도록 합니다.</p>
+        <a class="btn btn-teal btn-sm" href="contact.html?type=diagnosis">데이터 진단 문의</a>
+      </div>
+      <div class="plan-r">
+        <div class="est" role="figure" aria-label="비교 조건 대비 조치효과의 추정값과 추정구간을 함께 제시하는 예시 도식">
+          <p class="est-h">조치효과는 하나의 추정값으로 끝나지 않습니다.</p>
+          <div class="est-plot" aria-hidden="true">
+            <span class="est-base"><span>비교 조건</span></span>
+            <span class="est-gap"></span>
+            <span class="est-lb a">효과의 크기</span>
+            <span class="est-ci"></span>
+            <span class="est-pt"></span>
+            <span class="est-lb b">추정구간</span>
+          </div>
+          <div class="est-legend">
+            <div><i class="i3"></i>비교 조건: 어떤 대상과 어떤 조건을 비교했는지</div>
+            <div><i class="i1"></i>효과의 크기: 조치에 따른 예상 변화</div>
+            <div><i class="i2"></i>불확실성: 추정값이 가질 수 있는 범위</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why on-dark">
+      <h3>분석 결과와 함께 확인하는 항목</h3>
+      <ul class="chk">
+        <li><div><b>효과의 크기</b><span>조치에 따른 예상 변화</span></div></li>
+        <li><div><b>불확실성</b><span>추정값이 가질 수 있는 범위</span></div></li>
+        <li><div><b>비교 조건</b><span>어떤 대상과 어떤 조건을 비교했는지</span></div></li>
+        <li><div><b>검증 결과</b><span>데이터와 분석 조건을 바꿔도 결과가 유지되는지</span></div></li>
+        <li><div><b>활용 구분</b><span>근거로 활용 가능한지, 추가 검토가 필요한지</span></div></li>
+      </ul>
+      <p class="why-note">효과가 크게 나타났다고 해서 바로 실행을 권하지 않습니다. 효과의 크기와 근거의 충분성을 함께 확인합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. 산업 카드: 적용 가능한 의사결정 영역 (슬라이드 7) ============ -->
+<section class="sec mist-bg" id="industry" style="background:var(--mist)" aria-labelledby="g-title">
+  <div class="wrap">
+    <div class="row-head">
+      <div class="row-head-l">
+        <p class="eyebrow ko dot">적용 가능한 의사결정 영역</p>
+        <h2 class="h2" id="g-title">조치의 효과가 궁금한 <span class="acc">모든 영역에 <span class="nw">적용할 수 있습니다.</span></span></h2>
+        <p class="lead">제조의 공정 개선부터 금융의 고객·리스크 관리, 리테일과 커머스의 가격·프로모션·고객경험 개선까지, 조치와 결과 사이의 관계를 분석해 의사결정 근거를 제공합니다.</p>
+      </div>
+      <a class="more" href="industry.html#industry">산업별 적용 사례 보기 <span class="arw" aria-hidden="true"></span></a>
+    </div>
+    <div class="ind">
+      <article class="ind-card is-link">
+        <a class="ind-link" href="industry.html#manufacturing" aria-label="Manufacturing Service 보기"></a>
+        <div class="ind-img"><span class="k">AREA 01</span><span class="t">제조</span></div>
+        <div class="ind-body">
+          <span class="ind-lb">예시 질문</span>
+          <p class="ind-q">어떤 설비·공정조건을 먼저 개선해야 할까?</p>
+          <span class="ind-sep" aria-hidden="true"></span>
+          <span class="ind-lb">인과추론의 역할</span>
+          <p class="ind-r">설비 정비, 공정조건 변경, 품질 대응 등 <b class="nw">조치별 효과와 우선순위</b>를 비교합니다.</p>
+        </div>
+      </article>
+      <article class="ind-card is-link">
+        <a class="ind-link" href="industry.html#finance" aria-label="Finance Service 보기"></a>
+        <div class="ind-img"><span class="k">AREA 02</span><span class="t">금융</span></div>
+        <div class="ind-body">
+          <span class="ind-lb">예시 질문</span>
+          <p class="ind-q">어떤 고객에게 어떤 한도·상품·대응을 적용해야 할까?</p>
+          <span class="ind-sep" aria-hidden="true"></span>
+          <span class="ind-lb">인과추론의 역할</span>
+          <p class="ind-r">신용한도 조정, 마케팅, 상품 제안, 리스크 관리 조치의 효과를 <b class="nw">고객 특성별로 비교</b>합니다.</p>
+        </div>
+      </article>
+      <article class="ind-card">
+        <div class="ind-img"><span class="k">AREA 03</span><span class="t">리테일·커머스</span></div>
+        <div class="ind-body">
+          <span class="ind-lb">예시 질문</span>
+          <p class="ind-q">어떤 프로모션·가격·추천이 매출과 전환을 실제로 높였을까?</p>
+          <span class="ind-sep" aria-hidden="true"></span>
+          <span class="ind-lb">인과추론의 역할</span>
+          <p class="ind-r">할인, 쿠폰, 추천, 배송·UX 개선이 <b class="nw">전환·재구매·고객가치</b>에 미친 효과를 분석합니다.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. 프로세스: AI의 역할 (슬라이드 6) ============ -->
+<section class="sec" aria-labelledby="f-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow ko">AI의 역할</p>
+      <h2 class="h2" id="f-title">AI는 근거를 제공하고, <span class="acc">최종 판단은 사람이 합니다.</span></h2>
+      <span class="rule" aria-hidden="true"></span>
+      <p class="lead">분석 수치와 비교 근거는 정해진 규칙과 분석 결과를 바탕으로 산출합니다. 생성형 AI는 그 결과를 바탕으로 맥락, 해석, 권고 문장을 정리합니다. 같은 데이터에는 같은 수치가 유지되도록 하고, AI가 숫자를 임의로 만들지 않도록 역할을 구분합니다.</p>
+    </div>
+    <div class="flow-cap"><span class="en">FROM RESULT TO DECISION</span><b>분석 결과에서 <span class="acc">의사결정</span>까지</b></div>
+    <ol class="proc">
+      <li><span class="c">01</span><span class="n">STEP 01</span><h3>분석 결과</h3><p>정해진 규칙과 분석 결과를 바탕으로 산출</p></li>
+      <li><span class="c">02</span><span class="n">STEP 02</span><h3>수치·근거 확정</h3><p>같은 데이터에는 같은 수치가 유지되도록</p></li>
+      <li><span class="c">03</span><span class="n">STEP 03</span><h3>AI 해석</h3><p>생성형 AI가 맥락, 해석, 권고 문장을 정리</p></li>
+      <li><span class="c">04</span><span class="n">STEP 04</span><h3>담당자 검토</h3><p>결론을 내리기 위한 비교와 근거를 검토</p></li>
+      <li><span class="c">05</span><span class="n">STEP 05</span><h3>의사결정</h3><p>최종 판단은 사람이 합니다</p></li>
+    </ol>
+    <div class="who" aria-label="단계별 역할 구분">
+      <div><small>STEP 01 – 02</small>정해진 규칙과 분석 결과</div>
+      <div><small>STEP 03</small>생성형 AI</div>
+      <div><small>STEP 04 – 05</small>사람</div>
+    </div>
+    <p class="punch">AI는 결론을 대신 내리지 않습니다. <span class="acc">결론을 내리기 위한 비교와 근거를 준비합니다.</span></p>
+  </div>
+</section>
+
+<!-- ============ 8. 후기 카드: 예측 AI의 질문 vs Causal AI의 질문 (슬라이드 1 도식) ============ -->
+<section class="sec" style="padding-top:0" aria-labelledby="t-title">
+  <div class="wrap">
+    <div class="testi on-dark" id="testi">
+      <div class="tq-l" aria-live="polite">
+        <span class="pill grey">예측 AI의 질문</span>
+        <p class="tq-pred" id="tqPred">무엇이 일어날 것인가?</p>
+        <span class="tq-down" aria-hidden="true"></span>
+        <span class="pill dark"><em>Causal AI</em>의 질문</span>
+      </div>
+      <div class="tq-r">
+        <p class="eyebrow">Prediction AI vs Causal AI</p>
+        <h2 id="t-title">예측 AI의 질문에서 <span class="acc">Causal AI의 질문으로</span></h2>
+        <p class="lead">데이터가 많아질수록 함께 움직이는 지표도 늘어납니다. 하지만 함께 변했다는 사실만으로는, 그것이 원인인지 아니면 다른 조건이 만든 결과인지 알기 어렵습니다. Causal AI는 조치와 결과 사이의 관계를 구조화하고, 조건 차이를 고려한 효과 추정을 통해 의사결정에 필요한 근거를 제공합니다.</p>
+        <div class="tq-quote" aria-live="polite"><span class="qm" aria-hidden="true">&ldquo;</span><p id="tqCausal">무엇을 바꾸면 결과가 달라지는가?</p></div>
+        <p class="tq-who"><b>Causal AI의 질문</b><span id="tqIdx" class="en">01 / 03</span></p>
+        <div class="tq-dots" role="group" aria-label="질문 비교 선택">
+          <button type="button" aria-current="true" aria-label="1번째 비교"></button>
+          <button type="button" aria-current="false" aria-label="2번째 비교"></button>
+          <button type="button" aria-current="false" aria-label="3번째 비교"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. FAQ: Causal AI가 답하는 질문 (슬라이드 3) ============ -->
+<section class="sec" style="background:var(--mist)" aria-labelledby="c-title">
+  <div class="wrap faq">
+    <aside class="help">
+      <div class="help-img"><span class="big">Q1 – Q5</span><span class="sm">Causal AI가 답하는 질문</span></div>
+      <div class="help-body">
+        <h3 id="c-title">AI에게 물어야 할 질문은 <span class="acc nw">&ldquo;무엇이 좋아질까?&rdquo;</span>에서 시작하지 않습니다.</h3>
+        <p>Causal AI는 결과 예측을 보완해, 조치의 효과와 우선순위를 판단할 수 있는 질문에 답합니다.</p>
+        <a class="btn btn-dark btn-sm" href="contact.html?type=diagnosis">데이터 진단 문의</a>
+      </div>
+    </aside>
+    <div class="qa-list">
+      <p class="eyebrow ko">질문과 Causal AI가 제공하는 답</p>
+      <details class="qa" open><summary><span class="qn">Q1</span><span>조치하면 결과가 얼마나 달라질까?</span><span class="pm" aria-hidden="true"></span></summary><div class="ans"><small>Causal AI가 제공하는 답</small><p>조치 전후의 <b>예상 효과와 불확실성</b></p></div></details>
+      <details class="qa"><summary><span class="qn">Q2</span><span>조치하지 않았다면 어떻게 되었을까?</span><span class="pm" aria-hidden="true"></span></summary><div class="ans"><small>Causal AI가 제공하는 답</small><p>비교 가능한 조건을 기준으로 한 <b>반사실 결과</b></p></div></details>
+      <details class="qa"><summary><span class="qn">Q3</span><span>어떤 대상부터 조치해야 할까?</span><span class="pm" aria-hidden="true"></span></summary><div class="ans"><small>Causal AI가 제공하는 답</small><p>대상별 효과 차이와 <b>우선 검토 후보</b></p></div></details>
+      <details class="qa"><summary><span class="qn">Q4</span><span>여러 조치 중 무엇을 먼저 할까?</span><span class="pm" aria-hidden="true"></span></summary><div class="ans"><small>Causal AI가 제공하는 답</small><p><b>효과 크기와 근거 수준</b>을 함께 본 비교</p></div></details>
+      <details class="qa"><summary><span class="qn">Q5</span><span>조치 후 개선이 실제 효과였을까?</span><span class="pm" aria-hidden="true"></span></summary><div class="ans"><small>Causal AI가 제공하는 답</small><p>조치 이력과 실측 결과를 연결한 <b>검증 근거</b></p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. CTA ============ -->
+<section class="cta" id="contact" style="background:var(--mist)" aria-labelledby="cta-title">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="cta-l">
+        <h2 id="cta-title"><span class="nw">결과를 예측하는 AI에서,</span> <span class="nw">조치를 판단하는 AI로</span></h2>
+        <p>무엇이 결과를 바꾸는지 찾고, 어떤 조치가 얼마나 영향을 미칠지 근거로 비교합니다.</p>
+      </div>
+      <div class="cta-btns">
+        <a class="btn btn-white" href="contact.html?type=diagnosis">데이터 진단 문의</a>
+        <a class="btn btn-ghost" href="product.html#product">AI Engine 살펴보기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="logo" href="#top" aria-label="EVA 홈"><svg class="mark" viewBox="0 0 995 930" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z"/></svg><b>EVA</b></a>
+        <p class="foot-tag">EMPOWERING VALUE THROUGH AI</p>
+      </div>
+      <div class="foot-right">
+        <nav class="foot-menus" aria-label="하단 메뉴">
+          <div><h4>Product</h4><ul><li><a href="product.html#ai-engine-document">AI Engine Document</a></li><li><a href="product.html#ai-engine-factory">AI Engine Factory</a></li></ul></div>
+          <div><h4>Industry</h4><ul><li><a href="industry.html#manufacturing">Manufacturing</a></li><li><a href="industry.html#finance">Finance</a></li></ul></div>
+          <div><h4>Resource</h4><ul><li><a href="rnd.html#rnd">R&amp;D</a></li></ul></div>
+          <div><h4>Company</h4><ul><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></div>
+        </nav>
+        <div class="partner">
+          <small>PARTNER</small>
+          <span class="plate"><img src="../assets/img/a7d02eebe501.png" alt="NVIDIA Inception Program" width="180" height="63"></span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 EVA. All rights reserved.</span>
+      <a href="privacy.html">개인정보처리방침</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* 모바일 메뉴 */
+  var nav=document.getElementById('nav'),btn=document.getElementById('menuBtn');
+  function setMenu(o){nav.classList.toggle('open',o);btn.setAttribute('aria-expanded',o?'true':'false');btn.textContent=o?'닫기':'메뉴';}
+  btn.addEventListener('click',function(){setMenu(!nav.classList.contains('open'));});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nav.classList.contains('open')){setMenu(false);btn.focus();}});
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 후기 카드: 예측 AI 질문 -> Causal AI 질문 3쌍 */
+  var pairs=[
+    ['무엇이 일어날 것인가?','무엇을 바꾸면 결과가 달라지는가?'],
+    ['위험도와 예상 결과는?','조치했을 때와 하지 않았을 때의 차이는?'],
+    ['이상 신호를 감지한다','조치 우선순위와 개선 방향을 비교한다']
+  ];
+  var pred=document.getElementById('tqPred'),cau=document.getElementById('tqCausal'),idx=document.getElementById('tqIdx');
+  var dots=[].slice.call(document.querySelectorAll('.tq-dots button')),cur=0,timer=0,testi=document.getElementById('testi');
+  function show(i){
+    cur=(i+pairs.length)%pairs.length;
+    pred.textContent=pairs[cur][0];cau.textContent=pairs[cur][1];idx.textContent='0'+(cur+1)+' / 03';
+    [pred,cau].forEach(function(el){el.classList.remove('tq-anim');void el.offsetWidth;el.classList.add('tq-anim');});
+    dots.forEach(function(d,k){d.setAttribute('aria-current',k===cur?'true':'false');});
+  }
+  dots.forEach(function(d,k){d.addEventListener('click',function(){show(k);restart();});});
+  function restart(){clearInterval(timer);if(!reduce)timer=setInterval(function(){show(cur+1);},5200);}
+  testi.addEventListener('mouseenter',function(){clearInterval(timer);});
+  testi.addEventListener('mouseleave',restart);
+  testi.addEventListener('focusin',function(){clearInterval(timer);});
+  restart();
+
+  /* 히어로 캔버스: 상관관계 네트워크 속 하나의 인과 경로(조치 -> 결과) */
+  var cv=document.getElementById('graph');if(!cv||!cv.getContext)return;
+  var ctx=cv.getContext('2d'),WIDE=false,W=0,H=0,HR=0,nodes=[],edges=[],path=[],t0=performance.now();
+  var C={bg0:'#0B2B3A',bg1:'#134A5A',edge:'rgba(185,202,210,',node:'rgba(210,226,232,'};
+  function rng(s){return function(){s=(s*16807)%2147483647;return (s-1)/2147483646;};}
+  function build(){
+    var r=cv.getBoundingClientRect();W=r.width;H=r.height;var DPR=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);
+    /* 그래프 영역: 문구 길이(국문/영문)와 무관하게 컨테이너 기준 고정 크기로 배치
+       - GD: 기준 너비(px). 공간이 모자랄 때만 비율 그대로 축소, 너무 좁으면 경로 숨김
+       - COPY: 문구 영역 예약 너비(영문 최대 폭 기준, 두 언어 공통) */
+    var GD=460,COPY=736;
+    var hi=document.querySelector('.hero-in'),hs=hi?getComputedStyle(hi):null,hr=hi?hi.getBoundingClientRect():r;
+    var cl=(hr.left-r.left)+(hs?parseFloat(hs.paddingLeft)||0:0),crt=(hr.right-r.left)-(hs?parseFloat(hs.paddingRight)||0:0);
+    var pt=hs?parseFloat(hs.paddingTop)||0:72,pb=hs?parseFloat(hs.paddingBottom)||0:132;
+    var gr=Math.min(W-48,crt+100),gw=Math.min(GD,gr-(cl+COPY));WIDE=gw>=300;
+    var gl=gr-gw,gh=gw*0.55,gt=pt+gh*0.38;
+    HR=W>768?pt+pb+410:H;var R=rng(11);
+    var x0=WIDE?Math.max(0,gl-40)/W:0.03,x1=0.99;
+    nodes=[];var n=WIDE?48:26;
+    for(var i=0;i<n;i++)nodes.push({x:(x0+R()*(x1-x0))*W,y:(0.06+R()*0.86)*HR,r:1.5+R()*2.3,p:R()*6.28});
+    path=WIDE?[[.05,1],[.37,.235],[.67,.82],[.95,0]].map(function(p){var o={x:gl+gw*p[0],y:gt+gh*p[1],key:true};nodes.push(o);return o;}):[];
+    edges=[];
+    nodes.forEach(function(a,i){
+      nodes.map(function(b,j){return {j:j,d:(a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)};})
+        .filter(function(o){return o.j!==i;}).sort(function(p,q){return p.d-q.d;}).slice(0,2)
+        .forEach(function(o){if(o.j>i)edges.push([i,o.j]);});
+    });
+  }
+  function draw(now){
+    var t=Math.max(0,(now-t0)/1000),fade=WIDE?1:0.42;
+    var g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,C.bg0);g.addColorStop(1,C.bg1);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    var gl=ctx.createRadialGradient(W*.82,HR*.25,0,W*.82,HR*.25,W*.45);gl.addColorStop(0,'rgba(60,202,187,0.16)');gl.addColorStop(1,'rgba(60,202,187,0)');ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+    ctx.lineWidth=1;
+    edges.forEach(function(e){var a=nodes[e[0]],b=nodes[e[1]];ctx.strokeStyle=C.edge+(0.14*fade)+')';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();});
+    nodes.forEach(function(n){if(n.key)return;ctx.fillStyle=C.node+((0.35+0.25*Math.sin(t*0.8+n.p))*fade)+')';ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,6.283);ctx.fill();});
+    if(path.length>1){
+      ctx.strokeStyle='rgba(60,202,187,0.8)';ctx.lineWidth=2;ctx.beginPath();
+      path.forEach(function(p,i){i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);});ctx.stroke();
+      var segs=path.length-1,u=reduce?0.62:((t*0.2)%1),f=u*segs,k=Math.max(0,Math.min(Math.floor(f),segs-1)),q=Math.max(0,Math.min(1,f-k));
+      var a=path[k],b=path[k+1],px=a.x+(b.x-a.x)*q,py=a.y+(b.y-a.y)*q;
+      var rg=ctx.createRadialGradient(px,py,0,px,py,20);rg.addColorStop(0,'rgba(60,202,187,0.95)');rg.addColorStop(1,'rgba(60,202,187,0)');
+      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(px,py,20,0,6.283);ctx.fill();
+      path.forEach(function(p,i){var end=(i===0||i===path.length-1),rr=end?9:6;
+        ctx.fillStyle=C.bg0;ctx.beginPath();ctx.arc(p.x,p.y,rr,0,6.283);ctx.fill();
+        ctx.strokeStyle='rgba(60,202,187,1)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,rr,0,6.283);ctx.stroke();
+        if(end){ctx.fillStyle='rgba(60,202,187,1)';ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,6.283);ctx.fill();}});
+      label(path[0],'조치',1);label(path[path.length-1],'결과',-1);
+    }
+  }
+  function label(p,txt,dir){
+    ctx.font='600 13px "Pretendard EVA","Apple SD Gothic Neo",sans-serif';
+    var w=ctx.measureText(txt).width+22,h=27,x=p.x-w/2,y=dir>0?p.y+16:p.y-16-h;
+    ctx.fillStyle='rgba(255,255,255,0.1)';ctx.strokeStyle='rgba(60,202,187,0.6)';ctx.lineWidth=1;
+    ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,6);else ctx.rect(x,y,w,h);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#FFFFFF';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,p.x,y+h/2+1);
+  }
+  var visible=true,raf=0;
+  function loop(now){draw(now);if(!reduce&&visible)raf=requestAnimationFrame(loop);}
+  function start(){cancelAnimationFrame(raf);build();raf=requestAnimationFrame(loop);}
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){visible=es[0].isIntersecting;if(visible&&!reduce){cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);}}).observe(cv);}
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(start,120);});
+  start();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(start);
+})();
+</script>
+
+<nav class="m-tab" aria-label="모바일 주 메뉴"><a href="#top" data-t="home">Home</a><a href="product.html#product" data-t="product">Product</a><a href="industry.html#industry" data-t="industry">Industry</a><a href="rnd.html#rnd" data-t="rnd">R&amp;D</a><a href="company.html#about" data-t="company">Company</a></nav>
+<button class="m-top" type="button">맨 위로</button>
+<script>
+/* 모바일 웹 버전: 하단 탭·하위 탭 현재 위치 표시, 맨 위로, 입력 중 하단 탭 숨김 */
+(function(){
+  var page = document.body.getAttribute("data-page");
+  var tab = document.querySelector('.m-tab a[data-t="' + page + '"]');
+  if (tab) tab.setAttribute("aria-current", "page");
+  var sub = document.querySelector(".m-sub");
+  function syncSub(){
+    if (!sub) return;
+    var links = [].slice.call(sub.querySelectorAll("a")), h = (location.hash || "").replace("#", "");
+    var hit = links.filter(function(a){ return a.getAttribute("data-h") === h; })[0] || links[0];
+    links.forEach(function(a){ if (a === hit) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (hit && sub.scrollWidth > sub.clientWidth) sub.scrollTo({ left: hit.offsetLeft - 16, behavior: "smooth" });
+  }
+  window.addEventListener("hashchange", syncSub); syncSub();
+  var topBtn = document.querySelector(".m-top");
+  function onScroll(){ if (topBtn) topBtn.classList.toggle("on", window.scrollY > 700); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  if (topBtn) topBtn.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
+  function isField(el){ return el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !/^(checkbox|radio|button|submit)$/.test(el.type || ""); }
+  document.addEventListener("focusin", function(e){ if (isField(e.target)) document.body.classList.add("m-typing"); });
+  document.addEventListener("focusout", function(e){ if (isField(e.target)) document.body.classList.remove("m-typing"); });
+})();
+</script>
+<script>
+/* 언어 선택: 다른 언어를 누르면 현재 화면(해시)과 문의 유형(쿼리)을 유지한 채 이동 */
+document.addEventListener("click", function(e){ var a = e.target.closest && e.target.closest(".lang-sw a"); if (!a) return; e.preventDefault(); if (a.classList.contains("on")) return; location.href = a.getAttribute("href") + location.search + location.hash; });
+</script>
+</body>
+</html>

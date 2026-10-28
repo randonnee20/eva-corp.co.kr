@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<title>EVA Product</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap">
+<style>
+/* 한글 본문: Pretendard(OFL-1.1) KS X 1001 서브셋 내장 / 영문 라벨·숫자: Poppins */
+@font-face{font-family:"Pretendard EVA";src:url(../assets/fonts/PretendardKS.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+:root{
+  --navy:#0B2B3A;
+  --navy-2:#0F3A4C;
+  --navy-3:#15505F;
+  --teal:#14968E;
+  --teal-dk:#0E7B74;
+  --teal-hi:#3CCABB;
+  --teal-soft:#E7F5F3;
+  --ink:#0E202C;
+  --body:#53646F;
+  --muted:#80909A;
+  --line:#E0E8EB;
+  --mist:#F4F7F9;
+  --paper:#FFFFFF;
+  --warn:#DB6A2C;
+  --on-dark:#FFFFFF;
+  --on-dark-2:#B9CAD2;
+  --f-kr:"Pretendard EVA","Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --f-en:"Poppins","Pretendard EVA","Apple SD Gothic Neo",sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--body);
+  font-family:var(--f-kr);font-size:16px;line-height:1.7;font-weight:400;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-0.005em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{color:var(--ink);font-weight:700;letter-spacing:-0.03em;line-height:1.3;text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--teal-hi);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.acc{color:var(--teal)}
+.blk{display:block}
+.nw{white-space:nowrap}
+.en{font-family:var(--f-en)}
+
+/* 공통 타이포 */
+.eyebrow{font-family:var(--f-en);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);line-height:1.4}
+.eyebrow.ko{font-family:var(--f-kr);font-size:13.5px;font-weight:700;letter-spacing:.01em;text-transform:none}
+.eyebrow.dot{display:inline-flex;align-items:center;gap:8px}
+.eyebrow.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.h2{font-size:clamp(26px,1.9vw + 14px,40px)}
+.h2 .acc{display:block}
+.lead{font-size:16.5px;line-height:1.8;color:var(--body);max-width:64ch}
+.sec{padding-block:clamp(72px,8vw,108px)}
+.sec-head{display:grid;gap:12px;justify-items:center;text-align:center;margin-bottom:clamp(40px,5vw,56px)}
+.sec-head .lead{margin-top:6px}
+.rule{width:40px;height:2px;background:var(--teal);border-radius:2px;margin-top:4px}
+.on-dark h2,.on-dark h3{color:var(--on-dark)}
+.on-dark .acc{color:var(--teal-hi)}
+.on-dark .eyebrow{color:var(--teal-hi)}
+
+/* 버튼 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 24px;border-radius:7px;font-family:var(--f-kr);font-size:15px;font-weight:700;letter-spacing:-0.01em;border:1.5px solid transparent;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-teal{background:var(--teal);color:var(--on-dark)}
+.btn-teal:hover{background:var(--teal-dk)}
+.btn-ghost{border-color:rgba(255,255,255,.45);color:var(--on-dark)}
+.btn-ghost:hover{border-color:var(--on-dark);background:rgba(255,255,255,.07)}
+.btn-white{background:var(--paper);color:var(--navy)}
+.btn-white:hover{background:var(--teal-soft)}
+.btn-dark{background:var(--navy);color:var(--on-dark)}
+.btn-dark:hover{background:var(--navy-3)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+/* CSS 화살표 */
+.arw{position:relative;display:inline-block;width:26px;height:12px;flex:none;color:var(--teal);vertical-align:middle}
+.arw::before{content:"";position:absolute;left:0;right:2px;top:50%;height:2px;margin-top:-1px;background:currentColor;border-radius:2px}
+.arw::after{content:"";position:absolute;right:1px;top:50%;width:8px;height:8px;margin-top:-4px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+
+/* 표식(아이콘 대신 번호) */
+.mk{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-en);font-weight:600;font-size:14px;color:var(--teal);background:var(--teal-soft);border:1px solid #CDEBE6}
+
+
+/* ---------- 공통: 상단바 ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-en);color:var(--navy)}
+.logo .mark{display:block;width:34px;height:auto;flex:none;color:var(--navy)}
+.logo b{font-size:24px;font-weight:700;letter-spacing:.03em;line-height:1}
+.nav{display:flex;align-items:center;gap:40px}
+.nav .gnb{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.gnb > li{position:relative}
+.nav a.m{display:block;font-family:var(--f-en);font-size:15px;font-weight:600;color:#2F414D;padding:24px 16px;position:relative}
+.nav a.m::after{content:"";position:absolute;left:16px;right:16px;bottom:16px;height:2px;background:var(--teal);transform:scaleX(0);transition:transform .2s}
+.gnb > li:hover > a.m,.gnb > li:focus-within > a.m{color:var(--teal)}
+.gnb > li:hover > a.m::after,.gnb > li:focus-within > a.m::after{transform:scaleX(1)}
+.sub{list-style:none;margin:0;padding:8px;position:absolute;left:50%;top:calc(100% - 8px);min-width:210px;transform:translate(-50%,6px);background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 22px 40px -20px rgba(11,43,58,.35);opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.gnb > li:hover .sub,.gnb > li:focus-within .sub{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.sub a{display:block;padding:10px 14px;border-radius:7px;font-family:var(--f-en);font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap}
+.sub a:hover,.sub a:focus-visible{background:var(--teal-soft);color:var(--teal-dk)}
+.menu-btn{display:none;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:7px;background:var(--paper);font-weight:700;font-size:14px;color:var(--navy);cursor:pointer}
+.gnb > li.is-on > a.m{color:var(--teal)}
+.gnb > li.is-on > a.m::after{transform:scaleX(1)}
+
+/* Layout: Product - 제품 탭(개요 / Document / Factory) / 다크 히어로 / 흰색·미스트 섹션 교차 / 도식은 HTML로 재구성 */
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-family:var(--f-en);font-size:13px;font-weight:500;color:var(--on-dark-2)}
+.crumb a:hover{color:var(--on-dark)}
+.crumb i{width:5px;height:5px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg);opacity:.7}
+.crumb span[aria-current]{color:var(--on-dark)}
+.mist{background:var(--mist)}
+.h3{font-size:clamp(20px,.7vw + 15px,24px)}
+.left-head{display:grid;gap:12px;margin-bottom:clamp(32px,4vw,44px);max-width:820px}
+.left-head .h2 .acc{display:block}
+
+/* 제품 탭 */
+
+/* 히어로 */
+.phero{background:var(--navy);position:relative;overflow:hidden}
+.phero::before{content:"";position:absolute;inset:0;background:radial-gradient(55% 110% at 100% 0%,rgba(60,202,187,.18),transparent 62%),radial-gradient(45% 80% at 0% 100%,rgba(21,80,95,.85),transparent 70%);pointer-events:none}
+.phero::after{content:"";position:absolute;right:4%;top:0;width:min(460px,42%);height:100%;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1.4px);background-size:18px 18px;-webkit-mask-image:linear-gradient(200deg,#000 15%,transparent 75%);mask-image:linear-gradient(200deg,#000 15%,transparent 75%);pointer-events:none}
+.phero .wrap{position:relative;z-index:1;padding-block:clamp(36px,4vw,52px) clamp(64px,8vw,104px)}
+.phero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:30px}
+.phero-l{display:grid;gap:20px;min-width:0}
+.phero h1{color:var(--on-dark);font-family:var(--f-en);font-size:clamp(34px,2.6vw + 18px,58px);font-weight:700;letter-spacing:-0.03em;line-height:1.12}
+.phero .tag{color:var(--teal-hi);font-size:clamp(19px,.8vw + 14px,25px);font-weight:700;letter-spacing:-0.03em;line-height:1.45}
+.phero .body{color:var(--on-dark-2);font-size:16px;line-height:1.85;max-width:60ch}
+.hl{border-left:3px solid var(--teal-hi);padding:4px 0 4px 18px;display:grid;gap:4px}
+.hl b{color:var(--on-dark);font-size:17px;font-weight:700;letter-spacing:-0.02em}
+.hl span{color:var(--on-dark-2);font-size:15.5px;line-height:1.7}
+.phero-r{display:grid;justify-items:center}
+
+/* 히어로 우측: 흐름 패널 */
+.flowv{width:min(340px,100%);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:22px;display:grid;gap:0;backdrop-filter:blur(2px)}
+.flowv .cap{font-family:var(--f-en);font-size:11.5px;letter-spacing:.18em;font-weight:600;color:var(--teal-hi);margin-bottom:14px}
+.flowv .st{border-radius:10px;padding:14px 16px;display:flex;justify-content:center;gap:10px;align-items:baseline;text-align:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.flowv .st:last-child{background:var(--teal);border-color:var(--teal)}
+.flowv .st .n{font-family:var(--f-en);font-size:12px;font-weight:600;color:var(--teal-hi)}
+.flowv .st:last-child .n{color:#D2F4EF}
+.flowv .st b{color:var(--on-dark);font-size:16.5px;font-weight:700;letter-spacing:-0.02em}
+.flowv .dn{width:2px;height:18px;margin:0 auto;background:rgba(255,255,255,.35);position:relative}
+.flowv .dn::after{content:"";position:absolute;left:50%;bottom:-1px;width:7px;height:7px;margin-left:-4px;border-right:2px solid rgba(255,255,255,.55);border-bottom:2px solid rgba(255,255,255,.55);transform:rotate(45deg)}
+
+/* 질문 카드 */
+.qcards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.qc{border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:24px 22px;display:grid;gap:14px;align-content:start}
+.qc .n{font-family:var(--f-en);font-size:12.5px;font-weight:600;color:var(--teal);background:var(--teal-soft);border-radius:8px;padding:5px 9px;justify-self:start}
+.qc p{font-size:16px;font-weight:700;color:var(--ink);line-height:1.55;letter-spacing:-0.02em}
+.vs{margin-top:clamp(32px,4vw,44px);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.3fr);gap:18px;align-items:stretch}
+.vs-a,.vs-b{border-radius:14px;padding:26px 28px;display:grid;gap:10px;align-content:center}
+.vs-a{background:var(--paper);border:1px solid var(--line)}
+.vs-a small,.vs-b small{font-size:13px;font-weight:700}
+.vs-a small{color:var(--muted)}
+.vs-a p{font-size:20px;font-weight:700;color:#6A7B85;letter-spacing:-0.02em}
+.vs-b{background:var(--navy)}
+.vs-b small{color:var(--teal-hi)}
+.vs-b p{font-size:clamp(18px,.6vw + 14px,22px);font-weight:700;color:var(--on-dark);line-height:1.5;letter-spacing:-0.03em}
+.vs .arw{align-self:center;width:30px}
+.note{margin-top:22px;font-size:16px;color:var(--body);line-height:1.8;max-width:72ch}
+
+/* 원칙/이유 카드 */
+.pcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.pc{border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:28px 26px;display:grid;gap:12px;align-content:start}
+.pc .mk{width:44px;height:44px}
+.pc h3{font-size:19px;line-height:1.45}
+.pc p{font-size:15px;line-height:1.8}
+.why4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.why4 .pc{padding:26px 22px}
+
+/* 도식 공통 */
+.fig{margin-top:clamp(40px,5vw,56px);border:1px solid var(--line);border-radius:16px;background:var(--paper);padding:clamp(22px,3vw,36px)}
+.fig-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 20px;margin-bottom:22px}
+.fig-h .en{font-size:12px;letter-spacing:.18em;font-weight:600;color:var(--teal)}
+.fig-h b{font-size:18px;color:var(--ink);letter-spacing:-0.02em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13.5px;font-weight:600;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 12px;line-height:1.35}
+.chip.en{font-family:var(--f-en);font-weight:500}
+
+/* 4-Layer (Semantic/Causal/Kinetic/Dynamic) */
+
+/* 플랫폼 스택 */
+
+.figimg .imgwrap{overflow-x:auto;border-radius:10px}
+.figimg img{display:block;width:100%;min-width:640px;height:auto}
+
+/* 아키텍처 */
+
+/* 제품 카드 (개요) */
+.lineup{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.lu{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--paper);display:grid;grid-template-rows:auto 1fr;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit;transition:transform .2s,box-shadow .2s}
+.lu:hover{transform:translateY(-3px);box-shadow:0 26px 50px -30px rgba(11,43,58,.5)}
+.lu-top{background:linear-gradient(150deg,var(--navy-3),var(--navy) 70%);padding:30px 30px 26px;display:grid;gap:6px;position:relative;overflow:hidden}
+.lu-top::after{content:"";position:absolute;right:-50px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(60,202,187,.3),transparent 70%)}
+.lu-top .en{font-size:12px;letter-spacing:.16em;color:var(--teal-hi);font-weight:600;position:relative;text-align:left}
+.lu-top b{text-align:center;font-family:var(--f-en);font-size:clamp(22px,1vw + 15px,28px);color:var(--on-dark);font-weight:600;position:relative}
+.lu-top span.t{text-align:center;color:var(--on-dark-2);font-weight:600;font-size:15.5px;position:relative}
+.lu-body{padding:24px 30px 28px;display:grid;gap:16px;align-content:start}
+.lu-body p{font-size:15px;line-height:1.8}
+.lu-go{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--teal-dk);font-size:15px}
+.lu-go .arw{width:20px}
+
+/* 문제 -> 해결 3단 */
+.p3{display:grid;grid-template-columns:minmax(0,.9fr) 32px minmax(0,1.3fr) 32px minmax(0,.95fr);gap:12px;align-items:stretch}
+.p3 > .arw{align-self:center;width:28px}
+.p3-h{display:grid;gap:2px;margin-bottom:14px}
+.p3-h .en{font-size:12px;letter-spacing:.16em;color:var(--teal);font-weight:600}
+.p3-h b{font-size:17px;color:var(--ink)}
+.p3-h span{font-size:13px;color:var(--muted)}
+.docs{border-radius:14px;background:var(--mist);border:1px solid var(--line);padding:18px;display:grid;gap:14px;align-content:start}
+.docs .g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.docs .g span{background:var(--paper);border:1px solid var(--line);border-radius:8px;aspect-ratio:1/1.05;display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--ink);text-align:center;padding:4px}
+.docs p{font-size:13.5px;line-height:1.6;border-top:1px dashed #C9D7DE;padding-top:12px}
+.docs p b{color:var(--ink)}
+.probs{display:grid;gap:8px;align-content:start}
+.prob{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:14px 16px;display:grid;grid-template-columns:36px minmax(0,.8fr) minmax(0,1.4fr);gap:12px;align-items:center}
+.prob .n{width:34px;height:34px;border-radius:50%;background:#FBEDE5;color:var(--warn);font-family:var(--f-en);font-size:12.5px;font-weight:600;display:grid;place-items:center}
+.prob b{font-size:15px;color:var(--ink);line-height:1.4}
+.probs.nt .prob{grid-template-columns:36px minmax(0,1fr)}
+.probs.nt .prob span:last-child{font-size:15px;color:var(--ink)}
+.prob span{font-size:13.5px;line-height:1.55}
+.sol{border-radius:14px;background:var(--navy);padding:24px 22px;display:grid;gap:14px;align-content:start}
+.sol .t{color:var(--on-dark);font-family:var(--f-en);font-size:20px;font-weight:600}
+.sol p{color:var(--on-dark-2);font-size:14.5px}
+.sol p.big{color:var(--on-dark);font-size:19px;font-weight:700;line-height:1.5;letter-spacing:-0.02em}
+.sol p.big em{font-style:normal;color:var(--teal-hi)}
+.sol .fl{display:grid;gap:0;margin-top:4px}
+.sol .fl span{border-radius:8px;padding:11px;text-align:center;font-weight:700;color:var(--on-dark);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);font-size:14.5px}
+.sol .fl span:last-child{background:var(--teal);border-color:var(--teal)}
+.sol .fl i{width:2px;height:18px;background:rgba(255,255,255,.4);margin:0 auto;position:relative}
+.sol .fl i::after{content:"";position:absolute;left:50%;bottom:0;width:7px;height:7px;margin-left:-4px;border-right:2px solid rgba(255,255,255,.6);border-bottom:2px solid rgba(255,255,255,.6);transform:rotate(45deg)}
+
+/* 인과 경로 */
+.cpath{display:grid;grid-template-columns:repeat(7,auto);justify-content:center;align-items:center;gap:10px}
+.cnode{border-radius:12px;padding:14px 18px;text-align:center;display:grid;gap:2px;border:1px solid var(--line);background:var(--paper);min-width:120px}
+.cnode b{font-size:15.5px;color:var(--ink)}
+.cnode small{font-size:12.5px;color:var(--muted);font-weight:600}
+.cnode.cause{background:var(--teal-soft);border-color:#BFE4DF}
+.cnode.cause small{color:var(--teal-dk)}
+.cnode.kpi{background:#FBEDE5;border-color:#F2CDB8}
+.cnode.kpi small{color:var(--warn)}
+.cpath-note{margin-top:14px;text-align:center;font-size:14px;color:var(--body);background:var(--mist);border-radius:10px;padding:12px}
+
+/* 단계 흐름 (그룹 + 단계 + 노트) */
+.gflow{display:grid;gap:18px}
+.grp{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;align-items:stretch}
+.grp > .gl{border:1.5px dashed #C9D7DE;border-radius:12px;display:grid;place-items:center;font-weight:700;color:var(--ink);font-size:14.5px;text-align:center;padding:8px}
+.grp > .gs{display:grid;gap:18px}
+.srow{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:10px}
+.srow .s{text-align:center;justify-items:center;position:relative;border-radius:10px;background:var(--teal-soft);border:1px solid #CBE9E5;padding:12px 16px;font-weight:700;color:var(--teal-dk);font-size:15px;display:grid;align-content:center}
+.srow .s.first{background:var(--mist);border-color:var(--line);color:var(--ink)}
+.srow .s.last{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.srow .s:not(.last)::after{content:"";position:absolute;left:50%;bottom:-17px;width:2px;height:16px;background:#9FB9BD}
+.srow .s:not(.last)::before{content:"";position:absolute;left:50%;bottom:-17px;width:7px;height:7px;margin-left:-3px;border-right:2px solid #9FB9BD;border-bottom:2px solid #9FB9BD;transform:rotate(45deg);z-index:1}
+.srow .d{border-radius:10px;border:1px solid var(--line);padding:10px 14px;font-size:13.5px;line-height:1.5;display:grid;align-content:center;text-align:center;color:var(--body)}
+
+/* How it works: 번호 단계 + 도식 */
+.how{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:stretch}
+.how > div:first-child{display:flex;flex-direction:column}
+.how > div:first-child > .olist:last-of-type{flex:1;display:flex;flex-direction:column}
+.how > div:first-child > .olist:last-of-type li{flex:1;align-items:center}
+.how > .fig{display:flex;flex-direction:column}
+.how > .fig .vflow{flex:1;display:flex;flex-direction:column}
+.how > .fig .vstep{flex:1}
+.how > .fig .vdn{flex:none}
+.olist{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+.olist li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid var(--line);counter-increment:s}
+.olist li:last-child{border-bottom:1px solid var(--line)}
+.olist li::before{content:counter(s,decimal-leading-zero);width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--on-dark);font-family:var(--f-en);font-size:13px;font-weight:600;display:grid;place-items:center}
+.olist p{font-size:15.5px;line-height:1.8;color:#3F515C;align-self:center}
+.olist p b{color:var(--ink)}
+.vflow{display:grid;gap:0}
+.vflow .in{border-radius:12px;background:var(--mist);border:1px solid var(--line);padding:14px 16px}
+.vflow .in b{display:block;font-size:14px;color:var(--ink);margin-bottom:8px}
+.vflow .in .chips .chip{font-size:12.5px;padding:5px 10px}
+.vstep{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:10px;align-items:stretch}
+.vstep .s{border-radius:10px;background:var(--teal-soft);border:1px solid #CBE9E5;padding:12px 14px;display:grid;gap:2px;align-content:center;justify-items:center;text-align:center}
+.vstep .s b{color:var(--teal-dk);font-size:15px}
+.vstep .s small{color:var(--body);font-size:12.5px;font-weight:600}
+.vstep.last .s{background:var(--navy);border-color:var(--navy)}
+.vstep.last .s b{color:var(--on-dark)}
+.vstep.last .s small{color:var(--on-dark-2)}
+.vstep .d{border-radius:10px;border:1px solid var(--line);padding:10px 12px;font-size:12.5px;line-height:1.55;display:grid;align-content:center;text-align:center}
+.vdn{height:14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr)}
+.vdn{height:20px}
+.vdn i{width:2px;height:20px;background:#9FB9BD;margin:0 auto;position:relative}
+.vdn i::after{content:"";position:absolute;left:50%;bottom:0;width:7px;height:7px;margin-left:-4px;border-right:2px solid #9FB9BD;border-bottom:2px solid #9FB9BD;transform:rotate(45deg)}
+
+/* 예시: 원문 -> Assertion */
+.assert{margin-top:16px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}
+.assert .src{background:var(--mist);padding:12px 16px;display:grid;gap:4px;text-align:center}
+.assert .src small{font-size:12.5px;font-weight:700;color:var(--muted)}
+.assert .src p{font-size:14px;color:var(--ink);font-weight:600}
+.adn{height:20px;display:grid;place-items:center}
+.adn i{width:2px;height:16px;background:#9FB9BD;position:relative}
+.adn i::after{content:"";position:absolute;left:50%;bottom:0;width:7px;height:7px;margin-left:-4px;border-right:2px solid #9FB9BD;border-bottom:2px solid #9FB9BD;transform:rotate(45deg)}
+.assert .hd{background:var(--navy);color:var(--on-dark);text-align:center;padding:8px;font-weight:700;font-size:13.5px}
+.assert .hd span{font-family:var(--f-en);color:var(--teal-hi);font-weight:600}
+.assert dl{margin:0;display:grid;grid-template-columns:76px minmax(0,1fr) 76px minmax(0,1fr)}
+.assert dt,.assert dd{margin:0;padding:7px 10px;border-top:1px solid var(--line);font-size:13px;line-height:1.45}
+.assert dd.span3{grid-column:span 3}
+.assert dt{color:var(--muted);font-weight:600;background:var(--mist)}
+.assert dd{color:var(--ink);font-weight:600}
+
+/* 온톨로지 객체 */
+.objs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.obj{border:1px solid #CBE9E5;background:var(--teal-soft);border-radius:10px;padding:11px 14px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:center}
+.obj b{font-family:var(--f-en);font-size:14px;color:var(--teal-dk);font-weight:600}
+.obj span{font-size:13.5px;color:var(--ink)}
+.obj-out{margin-top:0;border-radius:10px;background:var(--navy);color:var(--on-dark);padding:13px 16px;text-align:center;display:grid;gap:2px}
+.obj-out b{font-size:15px}
+.obj-out small{color:var(--on-dark-2);font-size:13px}
+
+/* 4계층 구조 */
+.lyr{display:grid;gap:0}
+.ly{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:start;border-radius:14px;padding:22px 24px;border:1px solid var(--line);background:var(--paper)}
+.ly.ly.l3c{background:var(--teal-soft);border-color:#CBE9E5}
+.ly.l2c{background:#F7FBFB}
+.ly.l1c{background:var(--mist)}
+.ly-h{display:grid;gap:8px}
+.ly-h small{font-family:var(--f-en);font-size:11.5px;letter-spacing:.16em;font-weight:600;color:var(--teal)}
+.ly-h b{font-family:var(--f-en);font-size:18px;color:var(--ink);line-height:1.35}
+.ly-h b.kr{font-family:var(--f-kr);letter-spacing:-0.02em}
+.ly-h em{font-style:normal;font-size:14px;font-weight:700;color:var(--teal-dk)}
+.ly.ly.ly.ly-d{font-size:14.5px;line-height:1.75;color:#3F515C}
+.ly.ly-d ul{margin:6px 0 0;padding-left:18px;display:grid;gap:3px}
+.lyr .up{height:22px;display:grid;place-items:center}
+.lyr .up i{width:10px;height:10px;border-top:2px solid #9FB1BA;border-left:2px solid #9FB1BA;transform:rotate(45deg);margin-top:6px}
+
+/* Core value */
+.cv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.cvc{border-radius:16px;padding:30px 28px;background:var(--paper);border:1px solid var(--line);display:grid;gap:10px;align-content:start;position:relative;overflow:hidden}
+.cvc .en{font-size:13px;letter-spacing:.2em;font-weight:600;color:var(--teal)}
+.cvc h3{font-size:19px;line-height:1.45}
+.cvc p{font-size:15px;line-height:1.8}
+.cvc:nth-child(4){background:var(--navy);border-color:var(--navy)}
+.cvc:nth-child(4) .en{color:var(--teal-hi)}
+.cvc:nth-child(4) h3{color:var(--on-dark)}
+.cvc:nth-child(4) p{color:var(--on-dark-2)}
+.cvc > *{position:relative;z-index:1}
+.cvc::after{content:"";position:absolute;right:-40px;bottom:-40px;width:130px;height:130px;border-radius:50%;border:16px solid var(--teal-soft);opacity:.7}
+.cvc:nth-child(4)::after{border-color:rgba(60,202,187,.12)}
+
+/* Key features */
+.kf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.kfc{border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:26px 24px;display:grid;gap:12px;align-content:start;transition:border-color .2s,box-shadow .2s}
+.kfc:hover{border-color:#BFE4DF;box-shadow:0 20px 44px -32px rgba(11,43,58,.5)}
+.kfc h3{font-size:18px}
+.kfc p{font-size:14.5px;line-height:1.75}
+.kfc q{display:block;quotes:none;background:var(--mist);border-radius:8px;padding:10px 12px;font-size:13.5px;color:var(--ink);line-height:1.6;font-weight:600}
+
+/* 기대효과 + 화면 */
+.exp{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,4vw,56px);align-items:start}
+.elist{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.elist li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;padding:14px 0;border-top:1px solid var(--line);font-size:15.5px;line-height:1.65;color:var(--ink)}
+.elist li:last-child{border-bottom:1px solid var(--line)}
+.elist li::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--teal);margin:.6em 0 0 6px;box-shadow:0 0 0 4px var(--teal-soft)}
+.screens{display:grid;gap:12px}
+.stabs{display:flex;flex-wrap:wrap;gap:6px}
+.stab{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);font-weight:600;font-size:13.5px;color:var(--body);cursor:pointer}
+.stab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.sframe{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper);box-shadow:0 24px 50px -34px rgba(11,43,58,.55)}
+.sframe .bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:var(--mist);border-bottom:1px solid var(--line)}
+.sframe .bar i{width:8px;height:8px;border-radius:50%;background:#C9D7DE}
+.sframe .bar span{font-family:var(--f-en);font-size:12px;color:var(--muted);font-weight:500}
+.sframe img{display:block;width:100%;height:auto;aspect-ratio:1200/840;object-fit:cover;object-position:top}
+.scap{font-size:12.5px;color:var(--muted)}
+
+/* 추천 기업 */
+.reco{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:center}
+.reco-img{border-radius:16px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(11,43,58,.6);aspect-ratio:16/10;max-width:100%}
+.reco-img img{display:block;width:100%;height:100%;object-fit:cover}
+.rlist{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:10px}
+.rlist li{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:14px 16px;display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:center;font-size:15px;font-weight:600;color:var(--ink);line-height:1.5}
+.rlist li span{width:28px;height:28px;border-radius:50%;background:var(--teal-soft);color:var(--teal-dk);font-family:var(--f-en);font-size:12px;font-weight:600;display:grid;place-items:center}
+
+/* CTA */
+.ctab{border-radius:16px;background:linear-gradient(105deg,var(--teal-dk),var(--navy-2) 55%,var(--navy));padding:clamp(30px,4vw,46px) clamp(24px,4vw,52px);display:flex;align-items:center;justify-content:space-between;gap:24px 32px;flex-wrap:wrap;position:relative;overflow:hidden}
+.ctab::after{content:"";position:absolute;right:-40px;top:-60px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,.1);box-shadow:0 0 0 40px rgba(255,255,255,.03);pointer-events:none}
+.ctab > div{position:relative;z-index:1;display:grid;gap:8px;min-width:0}
+.ctab h2{color:var(--on-dark);font-size:clamp(21px,1vw + 13px,28px)}
+.ctab p{color:#CFE0E6;font-size:15px}
+.ctab .btns{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+button.btn-ghost{background:transparent}
+
+/* ---------- 공통: 하단 ---------- */
+.foot{background:#08202B;color:#9AB0BB;padding-block:56px 28px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px 56px;flex-wrap:wrap}
+.foot-brand{min-width:0}
+.foot-right{display:flex;align-items:flex-start;gap:56px;flex-wrap:wrap}
+.foot-menus{display:grid;grid-template-columns:repeat(4,auto);gap:24px 44px}
+.partner{display:grid;justify-items:end;gap:12px;padding-left:44px;border-left:1px solid rgba(255,255,255,.1)}
+.partner small{font-family:var(--f-en);font-size:11.5px;letter-spacing:.16em;font-weight:600;color:#8AA1AD}
+.partner .plate{display:inline-flex;background:#FFFFFF;border-radius:8px;padding:10px 16px}
+.partner img{display:block;width:170px;height:auto}
+.foot .logo{color:var(--on-dark)}
+.foot .logo .mark{width:40px;color:var(--on-dark)}
+.foot .logo b{font-size:26px}
+.foot-tag{font-family:var(--f-en);font-size:12px;letter-spacing:.1em;font-weight:600;color:var(--teal-hi);margin-top:14px}
+.foot h4{color:var(--on-dark);font-size:14px;margin-bottom:14px;font-family:var(--f-en);font-weight:600;letter-spacing:.01em}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;font-family:var(--f-en)}
+.foot a:hover{color:var(--on-dark)}
+.foot-bot{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px}
+.foot-bot a{color:#C9D7DE}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:1100px){
+  .nav a.m{padding-inline:12px}
+  .nav a.m::after{left:12px;right:12px}
+  .qcards,.why4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .p3{grid-template-columns:minmax(0,1fr)}
+  .docs .g span{aspect-ratio:auto;min-height:60px}
+  .p3 > .arw{transform:rotate(90deg);justify-self:center}
+  .kf{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:960px){
+  .nav .gnb,.nav .btn{display:none}
+  .menu-btn{display:inline-flex;align-items:center}
+  .nav.open{position:absolute;left:0;right:0;top:72px;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -20px rgba(11,43,58,.3);padding:12px max(20px,env(safe-area-inset-right,0px)) 20px max(20px,env(safe-area-inset-left,0px));display:grid;gap:12px}
+  .nav.open .gnb{display:grid;gap:4px}
+  .nav.open a.m{padding:10px 0 4px;font-size:15.5px;color:var(--ink)}
+  .nav.open a.m::after{display:none}
+  .nav.open .sub{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;padding:0 0 8px 12px;min-width:0;background:transparent;display:grid;gap:0}
+  .nav.open .sub a{padding:7px 10px;font-size:14px;color:var(--body)}
+  .nav.open .btn{display:inline-flex;justify-self:start}
+  .foot-top,.foot-right{flex-direction:column;gap:32px}
+  .foot-menus{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+  .partner{justify-items:start;padding-left:0;border-left:0}
+    .phero-grid,.how,.exp,.reco,.ly{grid-template-columns:minmax(0,1fr)}
+  .phero-r{justify-items:start}
+  .pcards,.lineup,.cv{grid-template-columns:minmax(0,1fr)}
+  .vs{grid-template-columns:minmax(0,1fr)}
+  .vs .arw{transform:rotate(90deg);justify-self:center}
+      }
+@media (max-width:640px){
+  .qcards,.why4,.kf,    .prob{grid-template-columns:36px minmax(0,1fr)}
+  .prob .n{grid-row:span 2;align-self:start}
+  .prob > span:last-child{grid-column:2}
+  .srow,.vstep{grid-template-columns:minmax(0,1fr)}
+  .vdn{grid-template-columns:minmax(0,1fr)}
+  .grp{grid-template-columns:minmax(0,1fr)}
+  .grp > .gl{justify-items:start;place-items:center start;border-style:none none dashed;border-radius:0;padding:4px 0}
+  .cpath{grid-template-columns:minmax(0,1fr)}
+  .cpath > .arw{transform:rotate(90deg);justify-self:center}
+  .obj{grid-template-columns:minmax(0,1fr)}
+  .assert dl{grid-template-columns:84px minmax(0,1fr)}
+  .assert dd.span3{grid-column:auto}
+  .ctab .btns .btn,.phero .btn{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* 대표 화면(Product·Industry 첫 화면): 서브 화면과 구분되는 바탕색과 움직이는 그림 */
+.hub .wrap{padding-block:clamp(36px,4vw,52px) clamp(72px,8vw,112px)}
+.hub::after{display:none}
+.hub .hub-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+.hub .phero-l,.hub .chero-l{animation:hubrise .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes hubrise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hv{position:relative;width:100%;max-width:520px;justify-self:end;aspect-ratio:1/1}
+.hv canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hv-chart{aspect-ratio:5/4;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09)}
+.hub-blue{background:linear-gradient(155deg,#0D3168 0%,#0A2551 45%,#071A3B 100%)}
+.hub-blue::before{background:radial-gradient(48% 70% at 78% 48%,rgba(59,130,246,.26),transparent 70%),radial-gradient(40% 60% at 0% 100%,rgba(9,40,88,.9),transparent 70%)}
+.hub-blue .eyebrow,.hub-blue .tag{color:#8EBBFF}
+.hub-blue .crumb{color:#A9BFE0}
+.hub-teal{background:linear-gradient(155deg,#0B4F51 0%,#073C41 45%,#052A31 100%)}
+.hub-teal::before{background:radial-gradient(52% 72% at 78% 48%,rgba(60,202,187,.22),transparent 70%),radial-gradient(40% 60% at 0% 100%,rgba(3,28,34,.9),transparent 70%)}
+.hub-teal h1 .acc{color:#7FF2E3}
+.hub-teal .crumb{color:#A8D3CF}
+@media (max-width:960px){
+  .hub .hub-grid{grid-template-columns:minmax(0,1fr)}
+  .hv{justify-self:center;max-width:400px}
+}
+@media (max-width:640px){ .hv{max-width:320px} .hv-chart{max-width:360px} }
+</style>
+<meta name="theme-color" content="#0B2B3A">
+<style>
+/* ===== 모바일 웹 버전(768px 이하): 앱 형태 화면 ===== */
+.m-tab,.m-sub,.m-cta,.m-top{display:none}
+@keyframes mfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:768px){
+  html{-webkit-text-size-adjust:100%}
+  body{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+  .top-in{height:56px}
+  .top .logo .mark{width:28px;height:28px}
+  .menu-btn,.nav{display:none!important}
+  .m-cta{display:inline-flex;align-items:center;height:34px;padding:0 16px;border-radius:999px;background:var(--teal);color:var(--on-dark);font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+  body[data-page="contact"] .m-cta{visibility:hidden}
+  .m-sub{display:flex;gap:6px;position:sticky;top:calc(56px + env(safe-area-inset-top,0px));z-index:45;padding:9px 16px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+  .m-sub::-webkit-scrollbar{display:none}
+  .m-sub a{flex:none;padding:7px 15px;border-radius:999px;font-family:var(--f-en);font-size:13.5px;font-weight:600;color:var(--body);background:var(--mist);border:1px solid var(--line);white-space:nowrap;transition:background .2s,color .2s}
+  .m-sub a[aria-current]{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+  .m-tab{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:60;height:calc(62px + env(safe-area-inset-bottom,0px));padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);box-shadow:0 -10px 28px -20px rgba(11,43,58,.4);transition:transform .22s ease}
+  .m-tab a{display:grid;justify-items:center;align-content:center;gap:6px;font-family:var(--f-en);font-size:12.5px;font-weight:600;color:var(--muted)}
+  .m-tab a::before{content:"";width:20px;height:3px;border-radius:3px;background:transparent;transition:background .2s}
+  .m-tab a[aria-current]{color:var(--navy)}
+  .m-tab a[aria-current]::before{background:var(--teal)}
+  body.m-typing .m-tab{transform:translateY(110%)}
+  .m-top{display:block;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:55;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--navy);font:inherit;font-size:12.5px;font-weight:700;box-shadow:0 12px 26px -14px rgba(11,43,58,.55);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;cursor:pointer}
+  .m-top.on{opacity:1;pointer-events:auto;transform:none}
+  body.m-typing .m-top{opacity:0;pointer-events:none}
+  .crumb{display:none!important}
+  #view-detail .crumb{display:flex!important}
+  .foot{padding-block:36px 24px}
+  .foot-menus{display:none!important}
+  .foot-bot{margin-top:28px}
+  main{animation:mfade .35s ease both}
+}
+@media (max-width:768px) and (prefers-reduced-motion:reduce){main{animation:none}}
+</style>
+<style>
+/* 언어 선택(KOR | ENG): 두 언어를 함께 보여 주고 현재 언어를 강조 */
+.lang-sw{display:inline-flex;align-items:center;gap:2px;margin-left:8px;font-family:var(--f-en);font-size:12.5px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.lang-sw a{padding:6px 6px;color:var(--muted);border-radius:6px;transition:color .2s}
+.lang-sw a:hover{color:var(--teal-dk)}
+.lang-sw a.on{color:var(--navy);box-shadow:inset 0 -2px 0 var(--teal);border-radius:0;cursor:default}
+.lang-sw span{color:#C5D2D8;font-weight:400}
+.lang-sw.m-only{display:none}
+@media (max-width:960px){ .nav .lang-sw{display:none} .lang-sw.m-only{display:inline-flex;margin-left:auto} }
+@media (max-width:768px){ .lang-sw.m-only{margin-right:-16px;font-size:12px} .lang-sw.m-only a{padding:6px 4px} }
+</style>
+<link rel="alternate" hreflang="en" href="../product.html">
+<link rel="alternate" hreflang="ko" href="product.html">
+<link rel="alternate" hreflang="x-default" href="../product.html">
+</head>
+<body data-page="product">
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="index.html" aria-label="EVA 홈"><svg class="mark" viewBox="0 0 995 930" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z"/></svg><b>EVA</b></a>
+    <nav class="nav" id="nav" aria-label="주 메뉴">
+      <ul class="gnb">
+        <li class="is-on"><a class="m" href="#product" aria-current="page">Product</a>
+          <ul class="sub"><li><a href="#ai-engine-document">AI Engine Document</a></li><li><a href="#ai-engine-factory">AI Engine Factory</a></li></ul></li>
+        <li><a class="m" href="industry.html#industry">Industry</a>
+          <ul class="sub"><li><a href="industry.html#manufacturing">Manufacturing</a></li><li><a href="industry.html#finance">Finance</a></li></ul></li>
+        <li><a class="m" href="rnd.html#rnd">Resource</a>
+          <ul class="sub"><li><a href="rnd.html#rnd">R&amp;D</a></li></ul></li>
+        <li><a class="m" href="company.html#about">Company</a>
+          <ul class="sub"><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></li>
+      </ul>
+      <a class="btn btn-teal btn-sm" href="contact.html?type=diagnosis">데이터 진단 문의</a>
+    <div class="lang-sw" role="group" aria-label="Language"><a href="product.html" hreflang="ko" lang="ko" aria-label="한국어" class="on" aria-current="true">KOR</a><span aria-hidden="true">|</span><a href="../product.html" hreflang="en" lang="en" aria-label="English">ENG</a></div></nav>
+    <div class="lang-sw m-only" role="group" aria-label="Language"><a href="product.html" hreflang="ko" lang="ko" aria-label="한국어" class="on" aria-current="true">KOR</a><span aria-hidden="true">|</span><a href="../product.html" hreflang="en" lang="en" aria-label="English">ENG</a></div>
+    <a class="m-cta" href="contact.html?type=diagnosis">문의</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">메뉴</button>
+  </div>
+</header>
+<nav class="m-sub" aria-label="하위 메뉴"><a href="#product" data-h="product">AI Engine</a><a href="#ai-engine-document" data-h="ai-engine-document">Document</a><a href="#ai-engine-factory" data-h="ai-engine-factory">Factory</a></nav>
+
+<main id="product-page">
+
+<!-- =====================================================================
+     VIEW 1. AI Engine (개요) - 슬라이드 1~4
+     ===================================================================== -->
+<div class="pview" id="v-product">
+  <section class="phero on-dark hub hub-blue" aria-labelledby="t1">
+    <div class="wrap">
+      <nav class="crumb" aria-label="현재 위치"><a href="index.html">Home</a><i></i><span aria-current="page">Product</span></nav>
+      <div class="phero-grid hub-grid">
+        <div class="phero-l">
+          <p class="eyebrow">Product</p>
+          <h1 id="t1">AI Engine</h1>
+          <p class="tag">데이터를 이해하는 AI에서, 결과를 바꾸는 AI로</p>
+          <p class="body">기업의 문서, 공정, 설비, 품질, 공급망 데이터를 하나의 지식 구조로 연결합니다. AI Engine은 단순히 정보를 찾아주거나 예측하는 데 그치지 않고, 결과에 영향을 준 원인과 앞으로 바꿔야 할 조치까지 제안합니다.</p>
+          <div class="hl"><b>데이터는 많은데, 결정은 여전히 어렵다면</b><span>AI Engine은 기업의 데이터를 이해하고, 설명하고, 실행으로 연결하는 의사결정 AI입니다.</span></div>
+          <div class="hero-cta" style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn btn-teal" href="contact.html?type=adoption">도입 문의하기</a></div>
+        </div>
+        <div class="hv" aria-hidden="true"><canvas id="waferViz"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t1a">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">What is AI Engine?</p>
+        <h2 class="h2" id="t1a">왜 결과가 나왔는지, <span class="acc">무엇을 바꿔야 하는지까지</span></h2>
+        <p class="lead">기업에는 이미 많은 데이터와 AI 도구가 있습니다. 하지만 현장에서는 여전히 다음과 같은 질문에 답하기 어렵습니다.</p>
+      </div>
+      <div class="qcards">
+        <div class="qc"><span class="n">Q1</span><p>문서 속 규정과 판단 근거는 어디에 있을까?</p></div>
+        <div class="qc"><span class="n">Q2</span><p>불량과 수율 저하는 왜 반복될까?</p></div>
+        <div class="qc"><span class="n">Q3</span><p>공정 조건을 바꾸면 품질과 생산성은 얼마나 달라질까?</p></div>
+        <div class="qc"><span class="n">Q4</span><p>수많은 데이터 중 지금 어떤 조치가 가장 효과적일까?</p></div>
+      </div>
+      <p class="note">AI Engine은 흩어진 데이터를 기업의 현실 구조로 연결하고, 원인과 결과의 관계를 분석해 실행 가능한 의사결정을 제공합니다.</p>
+      <div class="vs">
+        <div class="vs-a"><small>일반적인 검색·요약 AI가</small><p>&ldquo;무엇이 있는지&rdquo;를 알려준다면,</p></div>
+        <span class="arw" aria-hidden="true"></span>
+        <div class="vs-b"><small>AI Engine은 다음을 함께 답합니다.</small><p>&ldquo;왜 이런 결과가 발생했고, 어떤 조치를 하면 어떤 효과가 기대되는가?&rdquo;</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec mist" aria-labelledby="t1b">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">The Principles of the AI Engine</p>
+        <h2 class="h2" id="t1b">AI Engine의 원칙</h2>
+      </div>
+      <div class="pcards">
+        <article class="pc"><span class="mk">01</span><h3>데이터를 업무의 언어로 연결합니다</h3><p>문서, 센서, 설비 로그, 품질 데이터, 작업 이력은 각각 다른 형태로 흩어져 있습니다. AI Engine은 이를 제품·공정·설비·자재·품질·이벤트처럼 실제 업무의 객체와 관계로 구조화합니다.</p></article>
+        <article class="pc"><span class="mk">02</span><h3>상관관계를 넘어 원인을 이해합니다</h3><p>&ldquo;온도가 높을 때 불량이 많다&rdquo;는 상관관계만으로는 충분하지 않습니다. AI Engine은 온도 변화가 <span class="nw">점도·두께·불량률로</span> 이어지는 원인 경로를 분석해, 개선해야 할 지점을 찾아냅니다.</p></article>
+        <article class="pc"><span class="mk">03</span><h3>분석을 실행 가능한 결정으로 바꿉니다</h3><p>분석 결과는 대시보드에 머물지 않습니다. 어떤 조건을 조정해야 하고, 예상 효과는 얼마인지, 어떤 순서로 대응해야 하는지까지 제안합니다.</p></article>
+      </div>
+
+      <div class="fig figimg" role="figure" aria-label="AI Engine 플랫폼 스택: 데이터에서 의사결정까지의 플랫폼 구성">
+        <div class="fig-h"><span class="en">PLATFORM STACK</span><b>데이터에서 의사결정까지의 플랫폼 구성</b></div>
+        <div class="imgwrap"><img src="../assets/img/309c3e6f23c3.jpg" alt="AI Engine 플랫폼 스택. 00 Foundry Core부터 01 Data Connection & Integration, 02 Model / AI Creation & Integration, 03 Semantic Layer & Self-Serve, 04 Applications, Workflows, Visualization, 05 Decisions & Learning까지 6개 층과 층별 화면 구성" width="1600" height="884"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t1c">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">Why AI Engine?</p>
+        <h2 class="h2" id="t1c">AI Engine을 선택하는 이유</h2>
+      </div>
+      <div class="why4">
+        <article class="pc"><span class="mk">01</span><h3>설명 가능한 AI</h3><p>AI가 왜 그런 결론을 냈는지 근거와 경로를 함께 보여줍니다.</p></article>
+        <article class="pc"><span class="mk">02</span><h3>현장에 맞는 지식 구조</h3><p>회사의 제품, 공정, 설비, 규정 체계를 그대로 반영합니다.</p></article>
+        <article class="pc"><span class="mk">03</span><h3>반복 가능한 의사결정</h3><p>개인의 경험에 의존하던 판단을 조직의 지식으로 축적합니다.</p></article>
+        <article class="pc"><span class="mk">04</span><h3>확장 가능한 구조</h3><p>문서부터 제조, 공급망, R&amp;D까지 같은 엔진 위에서 업무 영역을 확장할 수 있습니다.</p></article>
+      </div>
+
+      <div class="fig figimg" role="figure" aria-label="AI Engine 아키텍처">
+        <div class="fig-h"><span class="en">ARCHITECTURE</span><b>AI Engine 아키텍처</b></div>
+        <div class="imgwrap"><img src="../assets/img/9c6658d0bf5e.jpg" alt="AI Engine 아키텍처. Multi-modal Input, Protocol Bridge, Core Service Layer(Ontology Engine, Causal Inference Engine, GraphRAG + LLM Agent, Governance), Decision Dashboard, Storage Layer, Infra & Runtime과 Feedback Loop" width="1600" height="877"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec mist" aria-labelledby="t1d">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">Products</p>
+        <h2 class="h2" id="t1d">AI Engine 제품</h2>
+      </div>
+      <div class="lineup">
+        <button class="lu" type="button" data-go="ai-engine-document">
+          <span class="lu-top"><span class="en">PRODUCT 01</span><b>AI Engine Document</b><span class="t">문서를 넘어, 판단의 근거까지</span></span>
+          <span class="lu-body"><p>기업의 규정, 계약서, 보고서, 정책자료, 연구자료, 고객 문의 이력을 하나의 지식 구조로 연결합니다.</p><span class="lu-go">자세히 보기 <span class="arw" aria-hidden="true"></span></span></span>
+        </button>
+        <button class="lu" type="button" data-go="ai-engine-factory">
+          <span class="lu-top"><span class="en">PRODUCT 02</span><b>AI Engine Factory</b><span class="t">원인을 찾고, 효과를 예측하는 제조 AI</span></span>
+          <span class="lu-body"><p>생산, 품질, 설비, 공정, 자재, 공급망 데이터를 연결해 불량과 수율 저하의 원인을 분석하고, 가장 효과적인 개선 조치를 제안합니다.</p><span class="lu-go">자세히 보기 <span class="arw" aria-hidden="true"></span></span></span>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =====================================================================
+     VIEW 2. AI Engine Document - 슬라이드 5~12
+     ===================================================================== -->
+<div class="pview" id="v-ai-engine-document" hidden>
+  <section class="phero on-dark" aria-labelledby="t2">
+    <div class="wrap">
+      <nav class="crumb" aria-label="현재 위치"><a href="index.html">Home</a><i></i><a href="#product" data-go="product">Product</a><i></i><span aria-current="page">AI Engine Document</span></nav>
+      <div class="phero-grid">
+        <div class="phero-l">
+          <p class="eyebrow">Product 01</p>
+          <h1 id="t2">AI Engine Document</h1>
+          <p class="tag">문서를 넘어, 판단의 근거까지</p>
+          <p class="body">AI Engine Document는 기업의 규정, 계약서, 보고서, 정책자료, 연구자료, 고객 문의 이력을 하나의 지식 구조로 연결합니다. 필요한 정보를 찾고, 출처를 확인하고, 업무 판단에 바로 활용할 수 있도록 돕는 문서 지능화 AI입니다.</p>
+          <div class="hl"><b>문서는 많지만, 필요한 지식은 찾기 어렵다면</b><span>AI Engine Document로 문서를 찾는 시간에서 판단하는 시간으로 바꾸세요.</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn btn-teal" href="contact.html?type=adoption">도입 문의하기</a></div>
+        </div>
+        <div class="phero-r">
+          <div class="flowv" aria-label="문서에서 업무 판단까지">
+            <span class="cap">AI ENGINE DOCUMENT</span>
+            <div class="st"><span class="n">01</span><b>문서</b></div><span class="dn"></span>
+            <div class="st"><span class="n">02</span><b>지식</b></div><span class="dn"></span>
+            <div class="st"><span class="n">03</span><b>업무 판단</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t2a">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">What problem does it solve?</p>
+        <h2 class="h2" id="t2a">문서를 저장하는 시스템이 아니라, <span class="acc">문서 속 지식을 <span class="nw">업무 판단으로</span> 연결하는 AI</span></h2>
+        <p class="lead">기업에는 PDF, Word, Excel, 이미지, 스캔 문서, 계약서, 정책자료, 회의록, 보고서 등 다양한 문서가 축적되어 있습니다. 하지만 필요한 순간에는 다음과 같은 어려움이 반복됩니다.</p>
+      </div>
+      <div class="p3" role="figure" aria-label="축적된 문서, 반복되는 어려움, 해결 방향">
+        <div>
+          <div class="p3-h"><span class="en">STEP 1</span><b>축적된 문서</b><span>기업에 다양한 문서가 쌓여 있습니다</span></div>
+          <div class="docs">
+            <div class="g"><span>PDF</span><span>Word</span><span>Excel</span><span>이미지</span><span>스캔 문서</span><span>계약서</span><span>정책자료</span><span>회의록</span><span>보고서</span></div>
+            <p>문서는 계속 쌓이지만, <b>필요한 순간</b>에는 같은 어려움이 반복됩니다.</p>
+          </div>
+        </div>
+        <span class="arw" aria-hidden="true"></span>
+        <div>
+          <div class="p3-h"><span class="en">STEP 2</span><b>반복되는 어려움</b><span>필요한 순간에 부딪히는 5가지 문제</span></div>
+          <div class="probs">
+            <div class="prob"><span class="n">01</span><b>찾기 어려움</b><span>문서는 많지만 원하는 내용을 빠르게 찾기 어렵습니다.</span></div>
+            <div class="prob"><span class="n">02</span><b>기준 불분명</b><span>비슷한 규정이 여러 문서에 흩어져 기준이 불분명합니다.</span></div>
+            <div class="prob"><span class="n">03</span><b>최신 기준 확인 어려움</b><span>문서 개정 이력과 적용 대상이 정리되지 않아 최신 기준 확인이 어렵습니다.</span></div>
+            <div class="prob"><span class="n">04</span><b>근거 검증 어려움</b><span>AI가 답을 제시해도 어떤 문서를 근거로 했는지 검증하기 어렵습니다.</span></div>
+            <div class="prob"><span class="n">05</span><b>노하우 미축적</b><span>숙련자의 판단과 노하우가 개인에게 머물러 조직 지식으로 축적되지 않습니다.</span></div>
+          </div>
+        </div>
+        <span class="arw" aria-hidden="true"></span>
+        <div>
+          <div class="p3-h"><span class="en">STEP 3</span><b>해결 방향</b><span>저장이 아니라, 판단으로 연결합니다</span></div>
+          <div class="sol">
+            <span class="t">AI Engine Document</span>
+            <p>문서를 저장하는 시스템이 아니라,</p>
+            <p class="big">문서 속 <em>지식</em>을<br><em>업무 판단</em>으로 연결하는 AI</p>
+            <div class="fl"><span>문서</span><i></i><span>지식</span><i></i><span>업무 판단</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="note" style="font-weight:700;color:var(--ink)">AI Engine Document는 문서를 저장하는 시스템이 아니라, 문서 속 지식을 업무 판단으로 연결하는 AI입니다.</p>
+    </div>
+  </section>
+
+  <section class="sec mist" aria-labelledby="t2b">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">How does it work?</p>
+        <h2 class="h2" id="t2b"><span class="nw">AI Engine Document</span>의 작동 방식</h2>
+      </div>
+      <div class="how">
+        <div>
+          <ol class="olist">
+            <li><p>AI Engine Document는 PDF, Word, Excel, 이미지, 스캔 문서, 표, 첨부자료를 입력받아 문서의 구조와 의미를 해석합니다.</p></li>
+            <li><p>문서 속 조항, 계약 조건, 승인 절차, 정책 기준, 개정 이력, 이미지 속 정보를 구분해 단순 텍스트가 아닌 업무 정보로 전환합니다.</p></li>
+          </ol>
+          <p class="note" style="margin-top:20px">예를 들어 계약서의 &ldquo;대금 지급일은 세금계산서 수령일로부터 30일 이내이다&rdquo;라는 문장은 다음처럼 정리됩니다.</p>
+          <div class="assert" role="figure" aria-label="원문 문장을 구조화된 업무 정보로 바꾼 예시">
+            <div class="src"><small>원문 문장</small><p>&ldquo;대금 지급일은 세금계산서 수령일로부터 30일 이내이다&rdquo;</p></div>
+            <div class="adn" aria-hidden="true"><i></i></div><div class="hd">구조화된 업무 정보 <span>(Assertion)</span></div>
+            <dl><dt>문서 유형</dt><dd>공급계약서</dd><dt>조항</dt><dd>대금 지급</dd><dt>대상</dt><dd>공급사, 발주처</dd><dt>기준</dt><dd>세금계산서 수령일</dd><dt>조건</dt><dd>지급 기한 30일</dd><dt>근거 위치</dt><dd>계약서 제7조, 3페이지</dd><dt>적용 버전</dt><dd class="span3">계약서 v2.1</dd></dl>
+          </div>
+          <ol class="olist" style="counter-reset:s 2;margin-top:22px">
+            <li><p>정리된 정보는 조직·부서·고객·프로젝트·정책·절차와 연결되어, 특정 상황에 적용되는 기준과 절차를 빠르게 찾도록 돕습니다.</p></li>
+            <li><p>사용자가 질문하면 관련 문서를 검색해 답변하고, 원문 위치와 출처를 함께 제공합니다.</p></li>
+            <li><p>AI Engine Document는 계약 검토, 보고서 작성, 규정 문의 대응, <span class="nw">감사·컴플라이언스</span> 대응, 온보딩, 고객 응대, 기술 자료 검토 등 실제 업무 흐름으로 연결됩니다.</p></li>
+          </ol>
+        </div>
+        <div class="fig" style="margin-top:0" role="figure" aria-label="문서 처리 5단계">
+          <div class="fig-h"><span class="en">PROCESS</span><b>입력 문서에서 업무 흐름까지</b></div>
+          <div class="vflow">
+            <div class="in"><b>입력 문서</b><div class="chips"><span class="chip">PDF</span><span class="chip">Word</span><span class="chip">Excel</span><span class="chip">이미지</span><span class="chip">스캔 문서</span><span class="chip">표</span><span class="chip">첨부자료</span></div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>1. 문서 구조 이해</b><small>장·절·조항·표·서명 구분</small></div><div class="d">제목·조항·목록·표<br>버전·개정일·참조 문서</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>2. 업무 정보 전환</b><small>측정값·이벤트·상태·주장</small></div><div class="d">유형·조항·대상·조건<br>근거 위치·적용 버전</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>3. 업무 구조 연결</b><small>조직·프로젝트·정책·KPI</small></div><div class="d">무엇이 있는가<br>어떤 기준이 적용되는가</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>4. 근거 기반 답변</b><small>원문 위치·출처 제시</small></div><div class="d"><span>질의 <i class="arw" style="width:14px;height:8px" aria-hidden="true"></i> 관련 문서 검색</span>답변 + 근거 문서</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep last"><div class="s"><b>5. 업무 흐름 연결</b><small>계약·감사·온보딩·FAQ</small></div><div class="d">제안서 작성·조건 비교<br>규정 문의·교육·지식관리</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t2c">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">Structure</p>
+        <h2 class="h2" id="t2c"><span class="nw">AI Engine Document</span>의 4개 층</h2>
+        <p class="lead">AI Engine Document는 4개 층으로 구성됩니다. 문서와 데이터를 읽어 들이는 층에서 시작해, 업무 판단을 돕는 애플리케이션까지 하나의 흐름으로 이어집니다.</p>
+      </div>
+      <div class="lyr" role="figure" aria-label="AI Engine Document 4계층 구조">
+        <div class="ly l4c"><div class="ly-h"><small>LAYER 4</small><b class="kr">문서 기반 업무 판단 애플리케이션</b><em>현장의 판단으로 연결합니다</em><div class="chips"><span class="chip">문서 검색·질의응답</span><span class="chip">규정·기준 비교</span><span class="chip">개정 이력·적용 대상 확인</span><span class="chip">답변 근거 검증</span><span class="chip">노하우 지식화</span></div></div>
+          <div class="ly-d">추론 결과를 다음 다섯 가지 업무에 제공합니다.</div></div>
+        <div class="up" aria-hidden="true"><i></i></div>
+        <div class="ly l3c"><div class="ly-h"><small>LAYER 3</small><b>AI Engine Document Reasoning Platform</b><em>질문에 답을 추론합니다</em><div class="chips"><span class="chip">문서 검색</span><span class="chip">데이터 조회</span><span class="chip">관계 탐색</span><span class="chip">인과추론</span><span class="chip">시뮬레이션</span><span class="chip">근거 추적·감사 로그</span></div></div>
+          <div class="ly-d">문서 검색, 데이터 조회, 관계 탐색, 인과추론, 시뮬레이션을 조합해 복잡한 업무 질문에 답합니다. 답이 만들어진 과정은 근거 추적·감사 로그로 모두 기록합니다.</div></div>
+        <div class="up" aria-hidden="true"><i></i></div>
+        <div class="ly l2c"><div class="ly-h"><small>LAYER 2</small><b>Ontology &amp; Evidence Layer</b><em>의미를 정의하고 근거를 남깁니다</em><div class="chips"><span class="chip en">Domain Ontology</span><span class="chip en">Enterprise Ontology</span><span class="chip en">Entity Resolution</span><span class="chip en">Observation</span><span class="chip en">M-AST</span><span class="chip en">Provenance</span></div></div>
+          <div class="ly-d"><ul><li>Domain Ontology와 Enterprise Ontology로 업무 객체와 속성, 관계를 정의합니다.</li><li>Entity Resolution으로 이름이 다르게 기록된 같은 대상을 하나로 연결합니다.</li><li>Observation으로 관측된 사실을 기록합니다.</li><li>M-AST로 문서 구조를 정리합니다.</li><li>Provenance로 모든 정보의 출처를 관리합니다.</li></ul></div></div>
+        <div class="up" aria-hidden="true"><i></i></div>
+        <div class="ly l1c"><div class="ly-h"><small>LAYER 1</small><b>Document &amp; Data Adapters</b><em>문서와 데이터를 읽어 들입니다</em><div class="chips"><span class="chip">PDF</span><span class="chip">Word</span><span class="chip">Excel</span><span class="chip">이미지·스캔 문서</span><span class="chip">도면</span><span class="chip">데이터베이스·업무 시스템</span><span class="chip">센서·로그</span></div></div>
+          <div class="ly-d">PDF, Word, Excel, 이미지·스캔 문서, 도면, 데이터베이스·업무 시스템, 센서·로그처럼 형식이 서로 다른 자료를 받아들여 분석할 수 있는 형태로 바꿉니다.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec mist" aria-labelledby="t2d">
+    <div class="wrap">
+      <div class="left-head"><p class="eyebrow dot">Core Value</p><h2 class="h2" id="t2d"><span class="nw">AI Engine Document</span>의 핵심 가치</h2></div>
+      <div class="cv">
+        <article class="cvc"><span class="en">CONNECT</span><h3>흩어진 데이터를 하나의 의미 체계로 연결</h3><p>데이터베이스와 문서, 센서와 로그, 이미지와 도면, 실험 결과와 업무 시스템을 연결합니다. 서로 다른 형식과 용어로 관리되던 데이터를 업무 객체와 속성, 관계를 기준으로 통합하고, 데이터가 무엇을 의미하는지와 서로 어떻게 연결되는지를 정의합니다.</p></article>
+        <article class="cvc"><span class="en">UNDERSTAND</span><h3>데이터의 의미와 관계를 이해</h3><p>AI Engine Document는 데이터의 표면적인 값만 확인하지 않습니다. 업무 객체와 이벤트, 조건과 결과 사이의 관계를 분석해 특정 현상이 어떤 맥락에서 발생했는지 파악합니다.</p></article>
+        <article class="cvc"><span class="en">EXPLAIN</span><h3>답변의 근거와 도출 과정을 확인</h3><p>AI가 제시한 결과를 그대로 받아들이는 것이 아니라, 답변에 사용된 데이터와 문서, 변수와 관계, 계산식과 분석 과정을 확인할 수 있습니다.</p></article>
+        <article class="cvc"><span class="en">REASON</span><h3>원인과 영향을 따라 실행 가능한 답을 도출</h3><p>AI Engine Document는 문서 검색, 데이터 조회, 관계 탐색, 인과추론, 시뮬레이션을 조합해 복잡한 업무 질문에 답합니다. 단순히 &ldquo;무슨 일이 있었는가&rdquo;를 설명하는 데서 멈추지 않고 실행 가능한 답까지 연결합니다.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t2e">
+    <div class="wrap">
+      <div class="left-head"><p class="eyebrow dot">Key Features</p><h2 class="h2" id="t2e">주요 기능</h2></div>
+      <div class="kf">
+        <article class="kfc"><span class="mk">01</span><h3>지능형 문서 검색</h3><p>키워드 검색이 아니라 업무 질문으로 필요한 문서와 내용을 찾습니다.</p><q>&ldquo;이 고객과 체결한 계약 중 납기 지연 시 위약금 조건이 있는 계약은 무엇인가요?&rdquo;</q><q>&ldquo;최신 내부 승인 기준에서 경영진 보고가 필요한 금액 기준은 얼마인가요?&rdquo;</q></article>
+        <article class="kfc"><span class="mk">02</span><h3>근거 추적 답변</h3><p>모든 답변에 원문 위치, 문서 버전, 페이지·조항·표 위치를 제공합니다. AI가 만든 답변인지, 문서에 실제로 근거가 있는지 명확히 구분할 수 있습니다.</p></article>
+        <article class="kfc"><span class="mk">03</span><h3>문서 간 관계 분석</h3><p>유사 규정, 상충 조항, 참조 문서, 선행·후행 절차, 개정 이력을 연결해 보여줍니다. 여러 문서에 흩어진 기준을 하나의 관점에서 확인할 수 있습니다.</p></article>
+        <article class="kfc"><span class="mk">04</span><h3>지식 자동 분류</h3><p>문서 유형, 적용 대상, 버전, 담당 부서, 유효 기간, 중요도 등을 자동으로 정리합니다. 문서 관리자는 문서를 단순 보관하는 대신, 업무에서 실제로 쓰이는 지식으로 운영할 수 있습니다.</p></article>
+        <article class="kfc"><span class="mk">05</span><h3>업무별 질의 에이전트</h3><p>법무·계약, 재무·회계, 인사·노무, 정책·규정, 연구·기술, 고객지원 등 목적별 질의 환경을 제공합니다. 동일한 문서라도 담당자의 역할에 맞게 필요한 정보와 근거를 중심으로 제시합니다.</p></article>
+        <article class="kfc"><span class="mk">06</span><h3>지식 축적</h3><p>현장 질문, 답변, 검토 이력, 사용자 피드백을 축적합니다. 시간이 지날수록 조직의 문서 지식이 더 정확하고 재사용 가능한 형태로 발전합니다.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec mist" aria-labelledby="t2f">
+    <div class="wrap exp">
+      <div>
+        <div class="left-head" style="margin-bottom:24px"><p class="eyebrow dot">Expectation</p><h2 class="h2" id="t2f">기대 효과</h2></div>
+        <ul class="elist">
+          <li>문서 검색과 자료 확인에 소요되는 시간을 줄입니다.</li>
+          <li>담당자가 바뀌어도 업무 기준과 판단 근거를 쉽게 확인할 수 있습니다.</li>
+          <li>문서 간 기준 불일치, 누락, 구버전 사용 위험을 줄입니다.</li>
+          <li>AI 답변의 출처를 확인할 수 있어 내부 검토와 감사 대응이 쉬워집니다.</li>
+          <li>개인에게만 있던 노하우를 조직이 재사용 가능한 지식으로 전환합니다.</li>
+          <li>문서 검색에서 끝나지 않고, 계약·보고·감사·교육·고객 대응 업무까지 연결합니다</li>
+        </ul>
+      </div>
+      <div class="screens" data-screens>
+        <div class="stabs" role="tablist" aria-label="화면 예시">
+          <button class="stab" type="button" role="tab" aria-selected="true" data-src="../assets/img/f5eb38b84331.jpg" data-cap="문서 등록">문서 등록</button>
+          <button class="stab" type="button" role="tab" aria-selected="false" data-src="../assets/img/87a07bb74c3a.jpg" data-cap="문서 탐색 · AI 질의 · 근거 뷰어">AI 질의·근거 뷰어</button>
+          <button class="stab" type="button" role="tab" aria-selected="false" data-src="../assets/img/b0500fe7ff43.jpg" data-cap="관계 뷰">관계 뷰</button>
+          <button class="stab" type="button" role="tab" aria-selected="false" data-src="../assets/img/e3845a28864b.jpg" data-cap="업무 연동">업무 연동</button>
+        </div>
+        <div class="sframe"><div class="bar"><span>AI Engine Document Workspace</span></div><img src="../assets/img/f5eb38b84331.jpg" alt="AI Engine Document 화면 예시: 문서 등록" width="1200" height="817"></div>
+        <p class="scap">화면 예시입니다. 실제 화면은 도입 환경에 따라 달라질 수 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t2g">
+    <div class="wrap reco">
+      <div class="reco-img"><img src="../assets/img/6f340b6d9960.jpg" alt="상자와 책상 위에 쌓인 문서 더미" width="1200" height="839"></div>
+      <div>
+        <p class="eyebrow dot">Recommended for companies like this</p>
+        <h2 class="h2" id="t2g" style="margin-top:12px">이런 기업에 권합니다</h2>
+        <ul class="rlist">
+          <li><span>01</span>계약서, 제안서, 정책자료, 내부 규정 관리가 많은 기업</li>
+          <li><span>02</span>금융·보험·공공기관처럼 규정과 승인 절차 문서가 중요한 조직</li>
+          <li><span>03</span>연구보고서, 기술문서, 특허·논문 자료가 방대한 R&amp;D 조직</li>
+          <li><span>04</span>문서 기반 온보딩과 교육이 반복되는 조직</li>
+          <li><span>05</span>문서 검색은 되지만, 근거 확인과 업무 적용이 어려운 조직</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0" aria-label="도입 문의">
+    <div class="wrap"><div class="ctab"><div><h2>문서는 많지만, 필요한 지식은 찾기 어렵다면</h2><p>AI Engine Document로 문서를 찾는 시간에서 판단하는 시간으로 바꾸세요.</p></div><div class="btns"><a class="btn btn-white" href="contact.html?type=adoption">도입 문의하기</a><button class="btn btn-ghost" type="button" data-go="ai-engine-factory">AI Engine Factory 보기</button></div></div></div>
+  </section>
+</div>
+
+<!-- =====================================================================
+     VIEW 3. AI Engine Factory - 슬라이드 14~21
+     ===================================================================== -->
+<div class="pview" id="v-ai-engine-factory" hidden>
+  <section class="phero on-dark" aria-labelledby="t3">
+    <div class="wrap">
+      <nav class="crumb" aria-label="현재 위치"><a href="index.html">Home</a><i></i><a href="#product" data-go="product">Product</a><i></i><span aria-current="page">AI Engine Factory</span></nav>
+      <div class="phero-grid">
+        <div class="phero-l">
+          <p class="eyebrow">Product 02</p>
+          <h1 id="t3">AI Engine Factory</h1>
+          <p class="tag">원인을 찾고, 효과를 예측하는 제조 AI</p>
+          <p class="body">생산, 품질, 설비, 공정, 자재, 공급망 데이터를 연결해 불량과 수율 저하의 원인을 분석하고, 가장 효과적인 개선 조치를 제안합니다.</p>
+          <div class="hl"><b>예측을 넘어, 개선으로</b><span>AI Engine Factory는 제조 현장의 데이터를 원인 분석, 효과 예측, 실행 조치로 연결합니다.</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn btn-teal" href="contact.html?type=adoption">도입 문의하기</a></div>
+        </div>
+        <div class="phero-r">
+          <div class="flowv" aria-label="원인 분석에서 실행 조치까지">
+            <span class="cap">AI ENGINE FACTORY</span>
+            <div class="st"><span class="n">01</span><b>원인 분석</b></div><span class="dn"></span>
+            <div class="st"><span class="n">02</span><b>효과 예측</b></div><span class="dn"></span>
+            <div class="st"><span class="n">03</span><b>실행 조치</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t3a">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">What problem does it solve?</p>
+        <h2 class="h2" id="t3a">&ldquo;무엇이 문제인가&rdquo;를 넘어, <span class="acc">&ldquo;어디를 어떻게 바꿔야 개선되는가&rdquo;까지</span></h2>
+        <p class="lead">제조 현장에는 데이터가 충분합니다. 하지만 데이터가 많다고 해서 의사결정이 쉬워지는 것은 아닙니다.</p>
+      </div>
+      <div class="probs nt">
+        <div class="prob"><span class="n">01</span><span>불량률이 올랐는데 원인이 설비인지, 원자재인지, 공정 조건인지 확인이 어렵습니다.</span></div>
+        <div class="prob"><span class="n">02</span><span>예측 모델은 위험을 알려주지만, &ldquo;그래서 무엇을 바꿔야 하는지&rdquo;는 알려주지 않습니다.</span></div>
+        <div class="prob"><span class="n">03</span><span>동일한 문제가 라인·공장·제품에 따라 반복됩니다.</span></div>
+        <div class="prob"><span class="n">04</span><span>숙련 엔지니어의 경험에 의존해 대응 속도와 품질이 사람마다 달라집니다.</span></div>
+        <div class="prob"><span class="n">05</span><span>공정 변경이 품질, 생산량, 원가에 미치는 영향을 사전에 검증하기 어렵습니다.</span></div>
+      </div>
+      <p class="note" style="font-weight:700;color:var(--ink)">AI Engine Factory는 &ldquo;무엇이 문제인가&rdquo;를 넘어, &ldquo;어디를 어떻게 바꿔야 개선되는가&rdquo;까지 답합니다.</p>
+
+      <div class="fig" role="figure" aria-label="데이터, 원인 분석, 실행 조치로 이어지는 흐름">
+        <div class="fig-h"><span class="en">DATA TO ACTION</span><b>현장 데이터에서 현장 적용까지</b></div>
+        <div class="gflow">
+          <div class="grp"><span class="gl">데이터</span><div class="gs">
+            <div class="srow"><span class="s first">현장 데이터 입력</span><span class="d">MES · ERP · QMS · SCADA<br>센서 · 검사 · 작업지시</span></div>
+            <div class="srow"><span class="s">데이터 구조화</span><span class="d">설비 · 공정 · 제품 · Lot<br>자재 · 작업자 · 품질 · 환경</span></div>
+            <div class="srow"><span class="s">지식 연결</span><span class="d">공정 온톨로지 · 품질 이력<br>설비 이력 · 운영 조건</span></div>
+          </div></div>
+          <div class="grp"><span class="gl">원인 분석</span><div class="gs">
+            <div class="srow"><span class="s">인과 분석</span><span class="d">Causal Claim · Causal Graph<br>Root Cause · Effect Estimate</span></div>
+            <div class="srow"><span class="s">검증</span><span class="d">신뢰 구간 · 데이터 지지도<br>민감도 · 반증 검증</span></div>
+          </div></div>
+          <div class="grp"><span class="gl">실행 조치</span><div class="gs">
+            <div class="srow"><span class="s">의사결정</span><span class="d">What-if · 반사실 분석<br>개선 우선순위 · 실행 조치</span></div>
+            <div class="srow"><span class="s last">현장 적용</span><span class="d">품질 대응 · 설비 정비 · 공정 조정<br>생산계획 · 보고</span></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec mist" aria-labelledby="t3b">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">How does it work?</p>
+        <h2 class="h2" id="t3b"><span class="nw">AI Engine Factory</span>의 작동 방식</h2>
+      </div>
+      <div class="how">
+        <div>
+          <ol class="olist">
+            <li><p>AI Engine Factory는 MES, ERP, QMS, SCADA, 설비 로그, 센서 데이터, 작업지시, 검사 성적서를 설비·공정·제품·Lot·자재·작업자·불량·검사값·환경 조건으로 연결된 하나의 온톨로지로 통합합니다.</p></li>
+            <li><p>이를 통해 특정 불량이나 수율 저하가 어떤 설비, 공정, 자재, 작업 조건과 연결되어 있는지 추적합니다.</p></li>
+            <li><p>단순 상관관계가 아니라 인과 경로를 분석해, 불량률·수율·사이클타임 등 목표 KPI에 영향을 주는 핵심 요인을 우선 제시합니다.</p></li>
+            <li><p>&ldquo;온도를 낮추면 불량률이 얼마나 줄어들까?&rdquo;처럼 조치 효과를 정량적으로 추정하고, 설비·교대조·제품군 등 조건별 효과도 분석합니다.</p></li>
+            <li><p>민감도 분석과 데이터 지지도 점검을 통해 결과의 신뢰도를 검증합니다.</p></li>
+            <li><p>What-if 시뮬레이션으로 예방정비 주기 변경, 공정 조건 조정, 자재 Lot 교체 등의 조치 전·후 결과를 비교합니다.</p></li>
+            <li><p>분석 결과를 바탕으로 우선 점검 대상과 조정할 공정 조건, 정비·품질 대응을 제안하며, 그 근거와 인과 경로를 함께 제공합니다.</p></li>
+          </ol>
+        </div>
+        <div class="fig" style="margin-top:0" role="figure" aria-label="공장 데이터 처리 6단계">
+          <div class="fig-h"><span class="en">PROCESS</span><b>공장 데이터에서 실행 조치까지</b></div>
+          <div class="vflow">
+            <div class="in"><b>공장 데이터</b><div class="chips"><span class="chip">MES</span><span class="chip">ERP</span><span class="chip">QMS</span><span class="chip">SCADA</span><span class="chip">설비 로그</span><span class="chip">센서 데이터</span><span class="chip">작업지시</span><span class="chip">검사 성적서</span></div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>1. 데이터 온톨로지 연결</b><small>10개 기본 객체로 통합</small></div><div class="d">설비·공정·자재·조건<br>불량·수율 원인 추적</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>2. 원인 경로 분석</b><small>상관이 아닌 인과 경로</small></div><div class="d">변수 경로 그래프화<br>KPI 영향 요인 우선순위</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>3. 인과 효과 정량 추정</b><small>효과 크기·신뢰 구간</small></div><div class="d">전체 평균 효과 ATE<br>조건별 효과 CATE</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>4. 결과 검증</b><small>신뢰도 함께 제공</small></div><div class="d">민감도 분석·반증 검증<br>데이터 지지도 점검</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep"><div class="s"><b>5. What-if 시뮬레이션</b><small>개입 시나리오·반사실 분석</small></div><div class="d">조치 전·후<br>예상 결과 비교</div></div>
+            <div class="vdn"><i></i></div>
+            <div class="vstep last"><div class="s"><b>6. 실행 조치 제안</b><small>근거·경로와 함께 제시</small></div><div class="d">점검 대상·공정 조건<br>정비·품질 대응</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fig" role="figure" aria-label="공장 온톨로지 기본 객체">
+        <div class="fig-h"><span class="en">FACTORY ONTOLOGY</span><b>공장 온톨로지 기본 객체</b></div>
+        <div class="objs">
+          <div class="obj"><b>Machine</b><span>설비·장치·모듈</span></div>
+          <div class="obj"><b>Mold</b><span>금형·지그·공구</span></div>
+          <div class="obj"><b>Process</b><span>공정·라인·작업 단계</span></div>
+          <div class="obj"><b>Operator</b><span>작업자·교대조</span></div>
+          <div class="obj"><b>Product</b><span>제품·품목·모델</span></div>
+          <div class="obj"><b>Defect</b><span>불량·부적합·품질 이상</span></div>
+          <div class="obj"><b>Lot</b><span>생산 Lot·배치·작업 단위</span></div>
+          <div class="obj"><b>Measurement</b><span>검사값·센서 측정값</span></div>
+          <div class="obj"><b>Material</b><span>원자재·부자재·소모품</span></div>
+          <div class="obj"><b>Environment</b><span>온도·습도·먼지 등</span></div>
+        </div>
+        <div class="adn" aria-hidden="true"><i></i></div><div class="obj-out"><b>불량·수율 저하 추적</b><small>어떤 설비·공정·자재·작업 조건과 연결되는가</small></div>
+      </div>
+
+      <div class="fig" role="figure" aria-label="원인에서 목표 KPI까지의 인과 경로 예시">
+        <div class="fig-h"><span class="en">CAUSAL PATH</span><b>인과 경로 예시</b></div>
+        <div class="cpath">
+          <div class="cnode cause"><b>공정 온도 상승</b><small>원인</small></div><span class="arw" aria-hidden="true"></span>
+          <div class="cnode"><b>점도 변화</b><small>매개 변수</small></div><span class="arw" aria-hidden="true"></span>
+          <div class="cnode"><b>코팅 두께 감소</b><small>매개 변수</small></div><span class="arw" aria-hidden="true"></span>
+          <div class="cnode kpi"><b>불량률 증가</b><small>목표 KPI</small></div>
+        </div>
+        <p class="cpath-note">불량률·수율·사이클타임 등 목표 KPI에 영향이 큰 요인을 우선 제시</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t3c">
+    <div class="wrap">
+      <div class="left-head">
+        <p class="eyebrow dot">Structure</p>
+        <h2 class="h2" id="t3c"><span class="nw">AI Engine Factory</span>의 4개 층</h2>
+        <p class="lead">AI Engine Factory는 4개 층으로 구성됩니다. 공장의 데이터를 읽어 들이는 층에서 시작해, 제조 현장의 의사결정을 돕는 애플리케이션까지 하나의 흐름으로 이어집니다.</p>
+      </div>
+      <div class="lyr" role="figure" aria-label="AI Engine Factory 4계층 구조">
+        <div class="ly l4c"><div class="ly-h"><small>LAYER 4</small><b class="kr">제조 의사결정 애플리케이션</b><em>현장의 판단으로 연결합니다</em><div class="chips"><span class="chip">불량·수율 원인 분석</span><span class="chip">최적 조건·재발 방지 대응</span><span class="chip">공급 리스크 조기 감지</span><span class="chip">재고·생산·납기 최적화</span></div></div>
+          <div class="ly-d">분석 결과를 두 영역의 의사결정에 제공합니다.<ul><li>공정·품질·수율: 불량·수율 원인 분석, 최적 조건·재발 방지 대응</li><li>자재·공급망·재고: 공급 리스크 조기 감지, 재고·생산·납기 최적화</li></ul></div></div>
+        <div class="up" aria-hidden="true"><i></i></div>
+        <div class="ly l3c"><div class="ly-h"><small>LAYER 3</small><b>AI Engine Factory Reasoning Platform</b><em>원인을 찾고 최적안을 도출합니다</em><div class="chips"><span class="chip">원인·영향 분석</span><span class="chip">조치별 효과 예측</span><span class="chip">비용·납기·품질 제약 최적화</span><span class="chip">결과 모니터링·효과 검증</span><span class="chip">근거 추적·감사 로그</span></div></div>
+          <div class="ly-d"><ul><li>공정 조건, 자재 Lot, 공급 요인이 KPI에 미치는 원인과 영향을 분석합니다.</li><li>조치별 효과를 미리 예측합니다.</li><li>비용·납기·품질 제약을 반영해 최적안을 도출합니다.</li><li>현장 조치 후에는 결과를 모니터링하고 개선 효과를 검증합니다.</li><li>이 모든 과정은 근거 추적·감사 로그로 기록합니다.</li></ul></div></div>
+        <div class="up" aria-hidden="true"><i></i></div>
+        <div class="ly l2c"><div class="ly-h"><small>LAYER 2</small><b>Ontology &amp; Evidence Layer</b><em>의미를 정의하고 근거를 남깁니다</em><div class="chips"><span class="chip en">Domain Ontology</span><span class="chip en">Enterprise Ontology</span><span class="chip en">Entity Resolution</span><span class="chip en">Observation</span><span class="chip en">M-AST</span><span class="chip en">Provenance</span></div></div>
+          <div class="ly-d"><ul><li>Domain Ontology와 Enterprise Ontology로 제품·공정·설비·자재 같은 업무 객체와 속성, 관계를 정의합니다.</li><li>Entity Resolution으로 시스템마다 다르게 기록된 같은 대상을 하나로 연결합니다.</li><li>Observation으로 관측된 사실을 기록합니다.</li><li>M-AST로 문서 구조를 정리합니다.</li><li>Provenance로 모든 정보의 출처를 관리합니다.</li></ul></div></div>
+        <div class="up" aria-hidden="true"><i></i></div>
+        <div class="ly l1c"><div class="ly-h"><small>LAYER 1</small><b>Factory Data Adapters</b><em>공장 데이터를 읽어 들입니다</em><div class="chips"><span class="chip">MES</span><span class="chip">ERP</span><span class="chip">QMS</span><span class="chip">SCADA</span><span class="chip">설비</span><span class="chip">자재</span><span class="chip">공급망</span></div></div>
+          <div class="ly-d">MES, ERP, QMS, SCADA, 설비, 자재, 공급망 데이터를 받아들여 분석할 수 있는 형태로 통합합니다.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec mist" aria-labelledby="t3d">
+    <div class="wrap">
+      <div class="left-head"><p class="eyebrow dot">Core Value</p><h2 class="h2" id="t3d"><span class="nw">AI Engine Factory</span>의 핵심 가치</h2></div>
+      <div class="cv">
+        <article class="cvc"><span class="en">CONNECT</span><h3>흩어진 공장 데이터를 하나의 의미 체계로 연결</h3><p>MES, ERP, QMS, SCADA, 설비, 자재, 공급망 데이터를 하나로 연결합니다. 시스템마다 다른 형식과 용어로 관리되던 데이터를 온톨로지의 업무 객체와 속성, 관계를 기준으로 통합합니다. 그리고 각 데이터가 무엇을 의미하는지, 서로 어떻게 연결되는지를 정의합니다.</p></article>
+        <article class="cvc"><span class="en">UNDERSTAND</span><h3>공정과 결과 사이의 관계를 이해</h3><p>AI Engine Factory는 데이터의 표면적인 값만 확인하지 않습니다. 시스템마다 다르게 기록된 같은 대상을 하나로 묶고, 관측된 사실을 함께 읽습니다. 이를 바탕으로 공정 조건, 자재 Lot, 공급 요인과 KPI 사이의 관계를 분석해, 불량이나 수율 저하가 어떤 맥락에서 발생했는지 파악합니다.</p></article>
+        <article class="cvc"><span class="en">EXPLAIN</span><h3>분석 결과의 근거와 도출 과정을 확인</h3><p>AI가 제시한 결과를 그대로 받아들일 필요가 없습니다. 분석에 사용된 데이터와 변수, 관계와 계산식, 분석 과정을 출처와 함께 확인할 수 있습니다.</p></article>
+        <article class="cvc"><span class="en">REASON</span><h3>원인과 영향을 따라 실행 가능한 최적안을 도출</h3><p>AI Engine Factory는 원인·영향 분석과 조치별 효과 예측을 조합하고, 비용·납기·품질 제약을 반영해 최적안을 도출합니다. 단순히 &ldquo;무슨 일이 있었는가&rdquo;를 설명하는 데서 멈추지 않고, 현장 조치 후 결과를 모니터링하고 개선 효과를 검증하는 데까지 연결합니다. 그 결과는 불량·수율 원인 분석, 최적 조건·재발 방지 대응, 공급 리스크 조기 감지, 재고·생산·납기 최적화 같은 제조 의사결정으로 이어집니다.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t3e">
+    <div class="wrap">
+      <div class="left-head"><p class="eyebrow dot">Key Features</p><h2 class="h2" id="t3e">주요 기능</h2></div>
+      <div class="kf">
+        <article class="kfc"><span class="mk">01</span><h3>공정 온톨로지</h3><p>제품–공정–설비–자재–Lot–작업자–품질–유지보수 데이터를 업무 구조로 연결합니다. 공장·라인·제품군이 달라져도 공통 개념을 재사용하고, 현장 특성은 하위 온톨로지로 확장할 수 있습니다</p></article>
+        <article class="kfc"><span class="mk">02</span><h3>Root Cause 분석</h3><p>불량, 수율 저하, 사이클타임 증가, 설비 다운타임 등의 원인 경로를 자동 탐색합니다. 여러 요인이 얽힌 복합 문제에서도 결과에 영향을 준 주요 경로를 우선적으로 보여줍니다.</p></article>
+        <article class="kfc"><span class="mk">03</span><h3>인과 효과 추정</h3><p>공정 조건, 설비 상태, 자재 특성, 작업 패턴이 품질과 생산 KPI에 미치는 효과를 추정합니다. DML, 이중차분(DiD), g-formula, IPW, 회귀불연속설계(RDD) 등 문제 성격에 맞는 추정 방법을 활용할 수 있습니다.</p></article>
+        <article class="kfc"><span class="mk">04</span><h3>What-if 시뮬레이션</h3><p>공정 조건·설비 상태·자재 특성 변경에 따른 품질 및 생산 영향을 사전에 예측합니다. 실제 라인 테스트 전에 개선 방향을 비교하고, 리스크가 큰 조건을 걸러낼 수 있습니다.</p></article>
+        <article class="kfc"><span class="mk">05</span><h3>개선 우선순위 제안</h3><p>KPI 영향도, 실행 가능성, 비용·제약 조건을 고려해 우선 조치 항목을 제시합니다. &ldquo;무엇이 문제인가&rdquo;에서 끝나지 않고, &ldquo;무엇부터 바꿔야 하는가&rdquo;를 제안합니다.</p></article>
+        <article class="kfc"><span class="mk">06</span><h3>설명 가능한 분석 화면</h3><p>인과 경로, 근거 데이터, 추정 결과, 신뢰도, 예상 효과를 함께 제공합니다. 엔지니어와 현장 관리자가 AI 결과를 검토하고 의사결정에 활용하기 쉽도록 설계되어 있습니다.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec mist" aria-labelledby="t3f">
+    <div class="wrap exp">
+      <div>
+        <div class="left-head" style="margin-bottom:24px"><p class="eyebrow dot">Expectation</p><h2 class="h2" id="t3f">기대 효과</h2></div>
+        <ul class="elist">
+          <li>불량 원인 파악과 대응에 걸리는 시간을 줄입니다.</li>
+          <li>경험 의존형 대응을 데이터·근거 기반 의사결정으로 전환합니다.</li>
+          <li>불필요한 공정 변경과 반복 실험을 줄입니다.</li>
+          <li>수율, 품질, 설비 가동률, 생산 안정성 개선에 집중할 수 있습니다.</li>
+          <li>현장·품질·생산·설비 조직이 같은 근거 위에서 빠르게 협업합니다.</li>
+          <li>현장의 대응 경험을 조직의 의사결정 지식으로 축적합니다.</li>
+        </ul>
+      </div>
+      <div class="screens" data-screens>
+        <div class="stabs" role="tablist" aria-label="화면 예시">
+          <button class="stab" type="button" role="tab" aria-selected="true" data-src="../assets/img/a437bcd44808.jpg" data-cap="현황 대시보드 · 이상 탐지">현황 대시보드</button>
+          <button class="stab" type="button" role="tab" aria-selected="false" data-src="../assets/img/97f217d59e4e.jpg" data-cap="원인 분석">원인 분석</button>
+          <button class="stab" type="button" role="tab" aria-selected="false" data-src="../assets/img/429742385651.jpg" data-cap="What-if 시뮬레이션 · 조치 추천">What-if 시뮬레이션</button>
+          <button class="stab" type="button" role="tab" aria-selected="false" data-src="../assets/img/2b890044920e.jpg" data-cap="실행 이력 · 보고·협업">실행 이력</button>
+        </div>
+        <div class="sframe"><div class="bar"><span>AI Engine Factory Workspace</span></div><img src="../assets/img/a437bcd44808.jpg" alt="AI Engine Factory 화면 예시: 현황 대시보드 · 이상 탐지" width="1200" height="861"></div>
+        <p class="scap">화면 예시입니다. 실제 화면은 도입 환경에 따라 달라질 수 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="t3g">
+    <div class="wrap reco">
+      <div class="reco-img"><img src="../assets/img/b49ff17952e8.jpg" alt="데이터로 연결된 스마트 공장 이미지" width="1200" height="581"></div>
+      <div>
+        <p class="eyebrow dot">Recommended for companies like this</p>
+        <h2 class="h2" id="t3g" style="margin-top:12px">이런 기업에 권합니다</h2>
+        <ul class="rlist">
+          <li><span>01</span>다단계 공정과 다양한 설비를 운영하는 제조기업</li>
+          <li><span>02</span>불량·수율·품질 편차 문제가 반복되는 현장</li>
+          <li><span>03</span>설비 데이터와 품질 데이터를 연결해 활용하고 싶은 스마트팩토리 조직</li>
+          <li><span>04</span>신제품 개발, 레시피 전환, 공정 최적화를 반복하는 R&amp;D·생산 조직</li>
+          <li><span>05</span>생산계획, 공급망, 품질, 설비 의사결정을 통합하려는 기업</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0" aria-label="도입 문의">
+    <div class="wrap"><div class="ctab"><div><h2>예측을 넘어, 개선으로</h2><p>AI Engine Factory는 제조 현장의 데이터를 원인 분석, 효과 예측, 실행 조치로 연결합니다.</p></div><div class="btns"><a class="btn btn-white" href="contact.html?type=adoption">도입 문의하기</a><button class="btn btn-ghost" type="button" data-go="ai-engine-document">AI Engine Document 보기</button></div></div></div>
+  </section>
+</div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="logo" href="index.html" aria-label="EVA 홈"><svg class="mark" viewBox="0 0 995 930" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z"/></svg><b>EVA</b></a>
+        <p class="foot-tag">EMPOWERING VALUE THROUGH AI</p>
+      </div>
+      <div class="foot-right">
+        <nav class="foot-menus" aria-label="하단 메뉴">
+          <div><h4>Product</h4><ul><li><a href="#ai-engine-document">AI Engine Document</a></li><li><a href="#ai-engine-factory">AI Engine Factory</a></li></ul></div>
+          <div><h4>Industry</h4><ul><li><a href="industry.html#manufacturing">Manufacturing</a></li><li><a href="industry.html#finance">Finance</a></li></ul></div>
+          <div><h4>Resource</h4><ul><li><a href="rnd.html#rnd">R&amp;D</a></li></ul></div>
+          <div><h4>Company</h4><ul><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></div>
+        </nav>
+        <div class="partner">
+          <small>PARTNER</small>
+          <span class="plate"><img src="../assets/img/a7d02eebe501.png" alt="NVIDIA Inception Program" width="180" height="63"></span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 EVA. All rights reserved.</span>
+      <a href="privacy.html">개인정보처리방침</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* 보기 전환: #product / #ai-engine-document / #ai-engine-factory */
+  var VIEWS = ["product", "ai-engine-document", "ai-engine-factory"];
+  var TITLES = { "product": "EVA Product | AI Engine", "ai-engine-document": "EVA Product | AI Engine Document", "ai-engine-factory": "EVA Product | AI Engine Factory" };
+  function route(){
+    var h = (location.hash || "").replace("#", "");
+    var v = VIEWS.indexOf(h) > -1 ? h : "product";
+    VIEWS.forEach(function(id){ document.getElementById("v-" + id).hidden = id !== v; });
+    document.title = TITLES[v];
+    window.scrollTo({top:0, left:0, behavior:"instant"});
+  }
+  function go(id){ if (location.hash === "#" + id) route(); else location.hash = id; }
+  window.addEventListener("hashchange", route);
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-go]");
+    if (t){ e.preventDefault(); go(t.getAttribute("data-go")); return; }
+    var s = e.target.closest(".stab");
+    if (s){
+      var box = s.closest("[data-screens]"), img = box.querySelector(".sframe img");
+      [].forEach.call(box.querySelectorAll(".stab"), function(b){ b.setAttribute("aria-selected", b === s ? "true" : "false"); });
+      img.src = s.getAttribute("data-src");
+      img.alt = img.alt.split(":")[0] + ": " + s.getAttribute("data-cap");
+    }
+  });
+
+  /* 모바일 메뉴 */
+  var nav = document.getElementById("nav"), btn = document.getElementById("menuBtn");
+  function setMenu(o){ nav.classList.toggle("open", o); btn.setAttribute("aria-expanded", o ? "true" : "false"); btn.textContent = o ? "닫기" : "메뉴"; }
+  btn.addEventListener("click", function(){ setMenu(!nav.classList.contains("open")); });
+  nav.addEventListener("click", function(e){ if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && nav.classList.contains("open")){ setMenu(false); btn.focus(); } });
+
+  route();
+})();
+</script>
+<script>
+/* Product 첫 화면: 웨이퍼 맵 애니메이션 (스캔선이 지나가며 이상 칩(회색)과 원인 칩(파랑)이 켜지고, 서로 연결) */
+(function(){
+  var cv = document.getElementById("waferViz"); if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext("2d"), W = 0, H = 0, cx = 0, cy = 0, R = 0, cells = [], ang = -Math.PI / 2, last = 0, raf = 0, onScreen = true;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var N = 13, TAU = Math.PI * 2, MAXON = 12;
+  function layout(){
+    var r = cv.getBoundingClientRect(); if (r.width < 10) return false;
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = W / 2; cy = H / 2; R = Math.min(W, H) / 2 - 12;
+    var s = (R * 2 * 0.86) / N, g = Math.max(2, s * 0.11); cells = [];
+    for (var i = 0; i < N; i++) for (var j = 0; j < N; j++){
+      var x = cx + (i - N / 2) * s, y = cy + (j - N / 2) * s, far = 0;
+      [[0,0],[s,0],[0,s],[s,s]].forEach(function(c){ far = Math.max(far, Math.hypot(x + c[0] - cx, y + c[1] - cy)); });
+      if (far > R * 0.93) continue;
+      cells.push({ x: x + g / 2, y: y + g / 2, w: s - g, a: Math.atan2(y + s / 2 - cy, x + s / 2 - cx), k: 0, t: 0, life: 0 });
+    }
+    return true;
+  }
+  function active(){ return cells.filter(function(c){ return c.k; }); }
+  function light(c, k){ c.k = k || (Math.random() < 0.62 ? 1 : 2); c.life = c.t = 3.6 + Math.random() * 2.4; }
+  function env(c){ var age = c.life - c.t; return Math.max(0, Math.min(1, age / 0.45, c.t / 0.9)); }
+  function rr(x, y, w, h, r){ ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); }
+  function step(dt){
+    var prev = ang; ang += dt * 0.85;
+    var on = active().length;
+    cells.forEach(function(c){
+      if (c.k){ c.t -= dt; if (c.t <= 0){ c.k = 0; } return; }
+      var d = ((c.a - prev) % TAU + TAU) % TAU;
+      if (d <= ang - prev && on < MAXON && Math.random() < 0.2){ light(c); on++; }
+    });
+  }
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    var gd = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R);
+    gd.addColorStop(0, "rgba(40,90,170,.30)"); gd.addColorStop(1, "rgba(20,55,120,.12)");
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.fillStyle = gd; ctx.fill();
+    for (var n = 0; n < 22; n++){
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, ang - (n + 1) * 0.045, ang - n * 0.045); ctx.closePath();
+      ctx.fillStyle = "rgba(120,170,255," + (0.16 * (1 - n / 22)).toFixed(3) + ")"; ctx.fill();
+    }
+    cells.forEach(function(c){ rr(c.x, c.y, c.w, c.w, 2); ctx.fillStyle = "rgba(125,160,220,.17)"; ctx.fill(); });
+    var on = active(), blues = on.filter(function(c){ return c.k === 1; });
+    ctx.setLineDash([3, 4]); ctx.lineWidth = 1.2;
+    on.forEach(function(c){
+      if (c.k !== 2 || !blues.length) return;
+      var b = blues.reduce(function(m, o){ return Math.hypot(o.x - c.x, o.y - c.y) < Math.hypot(m.x - c.x, m.y - c.y) ? o : m; });
+      ctx.strokeStyle = "rgba(142,187,255," + (0.55 * Math.min(env(c), env(b))).toFixed(3) + ")";
+      ctx.beginPath(); ctx.moveTo(c.x + c.w / 2, c.y + c.w / 2); ctx.lineTo(b.x + b.w / 2, b.y + b.w / 2); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+    on.forEach(function(c){
+      var e = env(c); ctx.globalAlpha = e;
+      rr(c.x, c.y, c.w, c.w, 2); ctx.fillStyle = c.k === 1 ? "#2F7BEA" : "#9AA7B4"; ctx.fill();
+      var age = c.life - c.t;
+      if (c.k === 1 && age < 1){ ctx.globalAlpha = 1 - age; ctx.strokeStyle = "#8EBBFF"; ctx.lineWidth = 1.5; var p = age * 8; rr(c.x - p, c.y - p, c.w + p * 2, c.w + p * 2, 4); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+    });
+    ctx.lineWidth = 1.5; ctx.strokeStyle = "rgba(150,190,240,.55)";
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy + R, 9, 0, TAU); ctx.fillStyle = "#0A2551"; ctx.fill(); ctx.stroke();
+  }
+  function seed(k){ var pool = cells.slice().sort(function(){ return Math.random() - 0.5; }); for (var i = 0; i < k && i < pool.length; i++){ light(pool[i], i % 3 === 2 ? 2 : 1); pool[i].t = pool[i].life * (0.3 + Math.random() * 0.6); } }
+  function frame(ts){
+    raf = 0; if (!onScreen) return;
+    var dt = last ? Math.min(0.05, (ts - last) / 1000) : 0; last = ts;
+    if (!cells.length && !layout()) { raf = requestAnimationFrame(frame); return; }
+    step(dt); draw(); raf = requestAnimationFrame(frame);
+  }
+  function start(){ if (reduce){ if (layout()){ seed(9); cells.forEach(function(c){ if (c.k) c.t = c.life / 2; }); draw(); } return; } if (!raf){ last = 0; raf = requestAnimationFrame(frame); } }
+  if (window.ResizeObserver) new ResizeObserver(function(){ if (layout()){ seed(5); if (reduce) start(); } }).observe(cv);
+  if (window.IntersectionObserver) new IntersectionObserver(function(es){ onScreen = es[0].isIntersecting; if (onScreen) start(); }, { threshold: 0 }).observe(cv);
+  document.addEventListener("visibilitychange", function(){ onScreen = !document.hidden; if (onScreen) start(); });
+  if (layout()) seed(5);
+  start();
+})();
+</script>
+
+<nav class="m-tab" aria-label="모바일 주 메뉴"><a href="index.html" data-t="home">Home</a><a href="product.html#product" data-t="product">Product</a><a href="industry.html#industry" data-t="industry">Industry</a><a href="rnd.html#rnd" data-t="rnd">R&amp;D</a><a href="company.html#about" data-t="company">Company</a></nav>
+<button class="m-top" type="button">맨 위로</button>
+<script>
+/* 모바일 웹 버전: 하단 탭·하위 탭 현재 위치 표시, 맨 위로, 입력 중 하단 탭 숨김 */
+(function(){
+  var page = document.body.getAttribute("data-page");
+  var tab = document.querySelector('.m-tab a[data-t="' + page + '"]');
+  if (tab) tab.setAttribute("aria-current", "page");
+  var sub = document.querySelector(".m-sub");
+  function syncSub(){
+    if (!sub) return;
+    var links = [].slice.call(sub.querySelectorAll("a")), h = (location.hash || "").replace("#", "");
+    var hit = links.filter(function(a){ return a.getAttribute("data-h") === h; })[0] || links[0];
+    links.forEach(function(a){ if (a === hit) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (hit && sub.scrollWidth > sub.clientWidth) sub.scrollTo({ left: hit.offsetLeft - 16, behavior: "smooth" });
+  }
+  window.addEventListener("hashchange", syncSub); syncSub();
+  var topBtn = document.querySelector(".m-top");
+  function onScroll(){ if (topBtn) topBtn.classList.toggle("on", window.scrollY > 700); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  if (topBtn) topBtn.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
+  function isField(el){ return el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !/^(checkbox|radio|button|submit)$/.test(el.type || ""); }
+  document.addEventListener("focusin", function(e){ if (isField(e.target)) document.body.classList.add("m-typing"); });
+  document.addEventListener("focusout", function(e){ if (isField(e.target)) document.body.classList.remove("m-typing"); });
+})();
+</script>
+<script>
+/* 언어 선택: 다른 언어를 누르면 현재 화면(해시)과 문의 유형(쿼리)을 유지한 채 이동 */
+document.addEventListener("click", function(e){ var a = e.target.closest && e.target.closest(".lang-sw a"); if (!a) return; e.preventDefault(); if (a.classList.contains("on")) return; location.href = a.getAttribute("href") + location.search + location.hash; });
+</script>
+</body>
+</html>

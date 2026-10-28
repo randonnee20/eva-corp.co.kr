@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<link href="assets/img/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>EVA Industry</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+/* 한글 본문: Pretendard(OFL-1.1) KS X 1001 서브셋 내장 / 영문 라벨·숫자: Poppins */
+@font-face{font-family:"Pretendard EVA";src:url(assets/fonts/PretendardKS.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+:root{
+  --navy:#0B2B3A;
+  --navy-2:#0F3A4C;
+  --navy-3:#15505F;
+  --teal:#14968E;
+  --teal-dk:#0E7B74;
+  --teal-hi:#3CCABB;
+  --teal-soft:#E7F5F3;
+  --ink:#0E202C;
+  --body:#53646F;
+  --muted:#80909A;
+  --line:#E0E8EB;
+  --mist:#F4F7F9;
+  --paper:#FFFFFF;
+  --warn:#DB6A2C;
+  --on-dark:#FFFFFF;
+  --on-dark-2:#B9CAD2;
+  --f-kr:"Pretendard EVA","Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --f-en:"Poppins","Pretendard EVA","Apple SD Gothic Neo",sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--body);
+  font-family:var(--f-kr);font-size:16px;line-height:1.7;font-weight:400;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-0.005em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{color:var(--ink);font-weight:700;letter-spacing:-0.03em;line-height:1.3;text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--teal-hi);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.acc{color:var(--teal)}
+.blk{display:block}
+.nw{white-space:nowrap}
+.en{font-family:var(--f-en)}
+
+/* 공통 타이포 */
+.eyebrow{font-family:var(--f-en);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);line-height:1.4}
+.eyebrow.ko{font-family:var(--f-kr);font-size:13.5px;font-weight:700;letter-spacing:.01em;text-transform:none}
+.eyebrow.dot{display:inline-flex;align-items:center;gap:8px}
+.eyebrow.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.h2{font-size:clamp(26px,1.9vw + 14px,40px)}
+.h2 .acc{display:block}
+.lead{font-size:16.5px;line-height:1.8;color:var(--body);max-width:64ch}
+.sec{padding-block:clamp(72px,8vw,108px)}
+.sec-head{display:grid;gap:12px;justify-items:center;text-align:center;margin-bottom:clamp(40px,5vw,56px)}
+.sec-head .lead{margin-top:6px}
+.rule{width:40px;height:2px;background:var(--teal);border-radius:2px;margin-top:4px}
+.on-dark h2,.on-dark h3{color:var(--on-dark)}
+.on-dark .acc{color:var(--teal-hi)}
+.on-dark .eyebrow{color:var(--teal-hi)}
+
+/* 버튼 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 24px;border-radius:7px;font-family:var(--f-kr);font-size:15px;font-weight:700;letter-spacing:-0.01em;border:1.5px solid transparent;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-teal{background:var(--teal);color:var(--on-dark)}
+.btn-teal:hover{background:var(--teal-dk)}
+.btn-ghost{border-color:rgba(255,255,255,.45);color:var(--on-dark)}
+.btn-ghost:hover{border-color:var(--on-dark);background:rgba(255,255,255,.07)}
+.btn-white{background:var(--paper);color:var(--navy)}
+.btn-white:hover{background:var(--teal-soft)}
+.btn-dark{background:var(--navy);color:var(--on-dark)}
+.btn-dark:hover{background:var(--navy-3)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+/* CSS 화살표 */
+.arw{position:relative;display:inline-block;width:26px;height:12px;flex:none;color:var(--teal);vertical-align:middle}
+.arw::before{content:"";position:absolute;left:0;right:2px;top:50%;height:2px;margin-top:-1px;background:currentColor;border-radius:2px}
+.arw::after{content:"";position:absolute;right:1px;top:50%;width:8px;height:8px;margin-top:-4px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+
+/* 표식(아이콘 대신 번호) */
+.mk{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-en);font-weight:600;font-size:14px;color:var(--teal);background:var(--teal-soft);border:1px solid #CDEBE6}
+
+
+/* ---------- 공통: 상단바 ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-en);color:var(--navy)}
+.logo .mark{display:block;width:34px;height:auto;flex:none;color:var(--navy)}
+.logo b{font-size:24px;font-weight:700;letter-spacing:.03em;line-height:1}
+.nav{display:flex;align-items:center;gap:40px}
+.nav .gnb{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.gnb > li{position:relative}
+.nav a.m{display:block;font-family:var(--f-en);font-size:15px;font-weight:600;color:#2F414D;padding:24px 16px;position:relative}
+.nav a.m::after{content:"";position:absolute;left:16px;right:16px;bottom:16px;height:2px;background:var(--teal);transform:scaleX(0);transition:transform .2s}
+.gnb > li:hover > a.m,.gnb > li:focus-within > a.m{color:var(--teal)}
+.gnb > li:hover > a.m::after,.gnb > li:focus-within > a.m::after{transform:scaleX(1)}
+.sub{list-style:none;margin:0;padding:8px;position:absolute;left:50%;top:calc(100% - 8px);min-width:210px;transform:translate(-50%,6px);background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 22px 40px -20px rgba(11,43,58,.35);opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.gnb > li:hover .sub,.gnb > li:focus-within .sub{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.sub a{display:block;padding:10px 14px;border-radius:7px;font-family:var(--f-en);font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap}
+.sub a:hover,.sub a:focus-visible{background:var(--teal-soft);color:var(--teal-dk)}
+.menu-btn{display:none;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:7px;background:var(--paper);font-weight:700;font-size:14px;color:var(--navy);cursor:pointer}
+.gnb > li.is-on > a.m{color:var(--teal)}
+.gnb > li.is-on > a.m::after{transform:scaleX(1)}
+
+/* Layout: Industry - Overview(히어로 / 산업 카드 / 공통 접근 4단계 / CTA), Manufacturing·Finance(히어로 / 필요성 / 해결 영역 도식 / 도입 6단계 / 기대 효과 / AX 영역 2개(사진+아코디언) / CTA) */
+[hidden]{display:none!important}
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-family:var(--f-en);font-size:13px;font-weight:500;color:var(--on-dark-2)}
+.crumb a:hover{color:var(--on-dark)}
+.crumb i{width:5px;height:5px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg);opacity:.7}
+.crumb span[aria-current]{color:var(--on-dark)}
+.mist{background:var(--mist)}
+.left-head{display:grid;gap:12px;margin-bottom:clamp(30px,4vw,44px);max-width:880px}
+.left-head .h2 .acc{display:block}
+.left-head .lead{margin-top:4px}
+.left-head .lead + .lead{margin-top:0}
+.h2.sm{font-size:clamp(22px,1.2vw + 14px,30px);line-height:1.45}
+.eyebrow.ko{color:var(--teal)}
+.fig{border:1px solid var(--line);border-radius:16px;background:var(--paper);padding:clamp(20px,3vw,32px)}
+.fig-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;margin-bottom:20px}
+.fig-h .en{font-family:var(--f-en);font-size:12px;letter-spacing:.18em;font-weight:600;color:var(--teal)}
+.concl{margin-top:clamp(24px,3vw,32px);border-radius:14px;background:var(--teal-soft);border:1px solid #CBE9E5;border-left:4px solid var(--teal);padding:18px 22px;font-size:clamp(16px,.4vw + 13.5px,18px);font-weight:700;color:var(--ink);line-height:1.65;letter-spacing:-0.02em}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+
+/* 히어로 */
+.chero{background:var(--navy);position:relative;overflow:hidden}
+.chero::before{content:"";position:absolute;inset:0;background:radial-gradient(55% 110% at 100% 0%,rgba(60,202,187,.18),transparent 62%),radial-gradient(45% 80% at 0% 100%,rgba(21,80,95,.85),transparent 70%);pointer-events:none}
+.chero::after{content:"";position:absolute;right:4%;top:0;width:min(460px,42%);height:100%;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1.4px);background-size:18px 18px;-webkit-mask-image:linear-gradient(200deg,#000 15%,transparent 75%);mask-image:linear-gradient(200deg,#000 15%,transparent 75%);pointer-events:none}
+.chero .wrap{position:relative;z-index:1;padding-block:clamp(36px,4vw,52px) clamp(64px,8vw,104px)}
+.chero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:30px}
+.chero-l{display:grid;gap:20px;min-width:0}
+.chero h1{color:var(--on-dark);font-family:var(--f-en);font-size:clamp(32px,2.4vw + 16px,54px);font-weight:700;letter-spacing:-0.03em;line-height:1.2;text-wrap:balance}
+.chero h1 .acc{color:var(--teal-hi)}
+.chero .tag{color:var(--teal-hi);font-size:clamp(18px,.7vw + 14px,23px);font-weight:700;letter-spacing:-0.03em;line-height:1.5}
+.chero .body{display:grid;gap:12px;max-width:62ch}
+.chero .body p{color:var(--on-dark-2);font-size:16.5px;line-height:1.85}
+.chero .btns{margin-top:6px}
+.hpanel{width:min(340px,100%);justify-self:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:22px;display:grid}
+.hpanel .cap{font-family:var(--f-en);font-size:11.5px;letter-spacing:.18em;font-weight:600;color:var(--teal-hi);margin-bottom:14px}
+.hpanel .st{border-radius:10px;padding:13px 16px;display:grid;justify-items:center;text-align:center;gap:2px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.hpanel .st:last-child{background:var(--teal);border-color:var(--teal)}
+.hpanel .st small{font-family:var(--f-en);font-size:11px;letter-spacing:.16em;font-weight:600;color:var(--teal-hi)}
+.hpanel .st:last-child small{color:#D2F4EF}
+.hpanel .st b{color:var(--on-dark);font-size:16.5px;font-weight:700;letter-spacing:-0.02em}
+.hpanel .st span{color:var(--on-dark-2);font-size:13.5px;font-weight:600;line-height:1.5}
+.hpanel .st:last-child span{color:#E3FAF7}
+.dn{display:block;width:2px;height:16px;margin:0 auto;position:relative;background:rgba(255,255,255,.35)}
+.dn::after{content:"";position:absolute;left:50%;bottom:0;width:7px;height:7px;margin-left:-4px;border-right:2px solid rgba(255,255,255,.55);border-bottom:2px solid rgba(255,255,255,.55);transform:rotate(45deg)}
+
+/* Overview: 산업 카드 */
+.icards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.icard{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--paper);display:grid;grid-template-rows:auto auto auto 1fr auto;transition:box-shadow .2s,transform .2s}
+.icard:hover{box-shadow:0 26px 50px -30px rgba(11,43,58,.45);transform:translateY(-3px)}
+@supports (grid-template-rows:subgrid){
+  .icard{grid-row:span 5;grid-template-rows:subgrid;row-gap:0}
+}
+.icard-img{position:relative;aspect-ratio:16/8;overflow:hidden;background:var(--navy)}
+.icard-img img{width:100%;height:100%;object-fit:cover;display:block}
+.icard-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,43,58,0) 30%,rgba(11,43,58,.88))}
+.icard-img span{position:absolute;left:28px;bottom:20px;z-index:1;font-family:var(--f-en);font-size:clamp(22px,1vw + 15px,28px);font-weight:700;color:var(--on-dark);letter-spacing:-0.02em;line-height:1.2}
+.icard h3{padding:24px 28px 0;font-size:clamp(18px,.5vw + 14px,21px);line-height:1.45}
+.icard > p{padding:10px 28px 0;font-size:15.5px;line-height:1.8}
+.irows{margin:20px 28px 0;display:grid;align-content:start}
+.irow{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;align-items:start;padding:12px 0;border-top:1px dashed #D3DFE4}
+.irow small{font-size:13px;font-weight:700;color:var(--teal-dk);padding-top:5px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:13.5px;font-weight:600;color:var(--ink);background:var(--teal-soft);border:1px solid #CBE9E5;border-radius:8px;padding:5px 10px;line-height:1.4}
+.irow.bal .tags span{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.ilink{margin:8px 28px 26px;padding-top:16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--teal-dk)}
+.ilink .arw{width:22px}
+.ilink:hover{color:var(--teal)}
+
+/* Overview: 공통 접근 방식 */
+.flowline{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 12px;margin-bottom:clamp(32px,4vw,44px);padding:16px 20px;border-radius:12px;background:var(--paper);border:1px solid var(--line)}
+.flowline span{font-size:15px;font-weight:700;color:var(--ink);padding:6px 14px;border-radius:999px;background:var(--teal-soft);border:1px solid #CBE9E5}
+.flowline span:last-child{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.flowline .arw{width:20px;height:10px}
+.proc{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;position:relative}
+.proc::before{content:"";position:absolute;top:31px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,#BFE3DF,var(--teal) 70%,var(--navy))}
+.proc li{display:grid;grid-template-rows:auto auto 1fr;justify-items:center;text-align:center;gap:14px;position:relative}
+.proc .c{width:64px;height:64px;border-radius:50%;background:var(--paper);border:2px solid var(--teal);display:grid;place-items:center;font-family:var(--f-en);font-size:16px;font-weight:600;color:var(--teal);position:relative;z-index:1;box-shadow:0 0 0 8px var(--mist)}
+.proc li:last-child .c{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.proc h3{font-size:17px;line-height:1.45;letter-spacing:-0.02em}
+.proc p{font-size:15px;line-height:1.75;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;align-self:stretch;width:100%}
+
+/* 서비스: 왜 필요한가 */
+.why{display:grid;grid-template-columns:minmax(0,4fr) 150px minmax(0,7fr);align-items:center}
+.why-data{background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;align-content:center;gap:14px}
+.why-lb{font-size:13px;font-weight:700;color:var(--teal-dk)}
+.why-data .tags span{background:var(--paper);border:1px dashed #A9C3CB;font-size:14px;padding:7px 12px}
+.why-gap{display:grid;align-content:center;justify-items:center;gap:10px;padding:0 12px;text-align:center}
+.why-gap .arw{color:var(--warn);width:34px}
+.why-gap p{font-size:13px;font-weight:600;color:var(--muted);line-height:1.55}
+.why-list{border:1px solid #F3D9C6;background:#FFFAF6;border-radius:14px;padding:20px 22px;display:grid;align-content:start;gap:10px}
+.why-list .why-lb{color:#B4501C}
+.why-list ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.why-list li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:center;background:var(--paper);border:1px solid #F3E2D5;border-radius:10px;padding:11px 14px}
+.why-list li span{width:30px;height:30px;border-radius:50%;background:#FBE9DD;color:#B4501C;font-family:var(--f-en);font-size:12px;font-weight:600;display:grid;place-items:center}
+.why-list li p{font-size:15px;font-weight:600;color:var(--ink);line-height:1.55}
+
+/* Finance: 축적된 데이터 원통형 스택 */
+.why.fin{align-items:stretch}
+.why-data.db{background:radial-gradient(90% 60% at 50% 100%,rgba(60,202,187,.28),transparent 70%),linear-gradient(165deg,var(--navy-3),var(--navy) 70%);border-color:var(--navy);padding:24px 22px 26px;justify-items:center;align-content:space-between;gap:18px;position:relative;overflow:hidden}
+.why-data.db::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.10) 1px,transparent 1.4px);background-size:16px 16px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 70%);mask-image:linear-gradient(180deg,#000,transparent 70%);pointer-events:none}
+.why-data.db .why-lb{color:var(--teal-hi);justify-self:start;position:relative}
+.cyl{position:relative;width:min(250px,100%);display:grid;gap:4px;padding-top:15px;margin-bottom:6px}
+.cyl::after{content:"";position:absolute;left:-6%;right:-6%;bottom:-22px;height:30px;border-radius:50%;background:radial-gradient(closest-side,rgba(60,202,187,.45),transparent);filter:blur(2px);z-index:0}
+.lyr{--a:#1FB3A6;--b:#0E6F6A;--t:#7FE6DA;position:relative;height:46px;border-radius:0 0 50% 50% / 0 0 15px 15px;background:linear-gradient(90deg,var(--b),var(--a) 42%,var(--b));display:grid;grid-template-columns:auto auto;justify-content:center;align-items:baseline;gap:8px;padding-top:16px;color:var(--on-dark);box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
+.lyr::before{content:"";position:absolute;left:0;right:0;top:-15px;height:30px;border-radius:50%;background:radial-gradient(70% 90% at 40% 35%,var(--t),var(--a) 75%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+.lyr b,.lyr small{position:relative;z-index:1}
+.lyr b{font-size:15.5px;font-weight:700;letter-spacing:-0.02em;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.lyr small{font-family:var(--f-en);font-size:10.5px;font-weight:600;letter-spacing:.14em;opacity:.8}
+.lyr:nth-child(1){z-index:6;--a:#2CC3B4;--b:#13847C;--t:#9BF0E6}
+.lyr:nth-child(2){z-index:5;--a:#22AFA3;--b:#0F756F;--t:#7EE3D8}
+.lyr:nth-child(3){z-index:4;--a:#1A9A92;--b:#0C6762;--t:#5FCFC4}
+.lyr:nth-child(4){z-index:3;--a:#16828A;--b:#0B575E;--t:#46B7B3}
+.lyr:nth-child(5){z-index:2;--a:#146C7D;--b:#0B4855;--t:#2F9AA2}
+.lyr:nth-child(6){z-index:1;--a:#13586E;--b:#0A3B4A;--t:#22808E}
+.a-res.c{justify-items:center;text-align:center}
+
+/* 서비스: 해결 영역 도식 */
+.area{display:grid;gap:16px}
+.arow{display:grid;grid-template-columns:minmax(0,3fr) 48px minmax(0,4fr) 48px minmax(0,4fr);align-items:stretch}
+.a-name{background:var(--navy);border-radius:14px;padding:26px 26px;display:grid;align-content:center;gap:8px;min-height:180px;position:relative;overflow:hidden}
+.a-name::after{content:"";position:absolute;right:-50px;bottom:-60px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(60,202,187,.25),transparent 70%)}
+.a-name small{font-family:var(--f-en);font-size:12px;letter-spacing:.18em;font-weight:600;color:var(--teal-hi);position:relative}
+.a-name b{font-size:clamp(18px,.6vw + 14px,21px);color:var(--on-dark);line-height:1.45;letter-spacing:-0.03em;position:relative}
+.a-x{display:grid;place-items:center}
+.a-x .arw{color:#8BA3AE}
+.a-x.to .arw{color:var(--teal)}
+.a-iss{border:1px solid #F3D9C6;background:#FFFAF6;border-radius:14px;padding:16px;display:grid;align-content:center;gap:10px}
+.a-iss .g{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.a-iss .g span{flex:0 0 calc(50% - 4px);background:var(--paper);border:1px solid #F0D2BC;border-radius:10px;padding:12px 8px;text-align:center;font-size:15px;font-weight:700;color:#B4501C}
+.a-iss .g.c3 span{flex-basis:calc(33.333% - 6px)}
+.a-iss small{text-align:center;font-size:12.5px;font-weight:600;color:#B4501C}
+.a-res{background:var(--teal-soft);border:1px solid #CBE9E5;border-radius:14px;padding:24px 26px;display:grid;align-content:center}
+.a-res p{font-size:clamp(16px,.5vw + 13px,19px);font-weight:600;color:var(--ink);line-height:1.65;letter-spacing:-0.02em}
+.a-res em{font-style:normal;font-weight:700;color:var(--teal-dk)}
+
+/* 서비스: 도입 절차 6단계 */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.steps > li{display:grid;grid-template-rows:auto 1fr;gap:18px;position:relative;min-width:0}
+.steps > li:not(:last-child)::before{content:"";position:absolute;top:23px;left:50%;width:calc(100% + 14px);height:2px;background:linear-gradient(90deg,#AFDCD7,var(--teal))}
+.sc{width:46px;height:46px;border-radius:50%;border:2px solid var(--teal);background:var(--paper);color:var(--teal);font-family:var(--f-en);font-size:16px;font-weight:600;display:grid;place-items:center;justify-self:center;position:relative;z-index:1}
+.steps > li:last-child .sc{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.sbox{border:1px solid var(--line);border-radius:14px;background:var(--paper);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+.sh{background:var(--mist);padding:16px 16px 14px;border-bottom:1px solid var(--line);display:grid;gap:4px}
+.sh small{font-family:var(--f-en);font-size:11.5px;letter-spacing:.14em;font-weight:600;color:var(--teal)}
+.sh b{font-size:16.5px;color:var(--ink);line-height:1.4;letter-spacing:-0.03em}
+.sb{padding:14px 16px 16px;display:grid;align-content:start;gap:10px}
+.sb > small{font-size:12.5px;font-weight:600;color:var(--muted)}
+.sb .tags span{font-size:13px;padding:5px 9px}
+.acts{display:grid;gap:8px}
+.acts span{border:1px solid var(--line);background:var(--mist);border-radius:10px;padding:12px;font-size:14px;font-weight:600;color:var(--ink);line-height:1.45}
+.sf{margin:0 16px;padding:12px 0 16px;border-top:1px dashed #C9D7DE;font-size:13.5px;line-height:1.6;color:var(--body)}
+.sf b{color:var(--ink)}
+.steps > li:last-child .sbox{background:var(--navy);border-color:var(--navy)}
+.steps > li:last-child .sh{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.steps > li:last-child .sh small{color:var(--teal-hi)}
+.steps > li:last-child .sh b{color:var(--on-dark)}
+.sb .kn{font-size:17px;font-weight:600;color:var(--on-dark);line-height:1.75;letter-spacing:-0.02em}
+.sb .kn em{font-style:normal;font-weight:700;color:var(--teal-hi)}
+
+/* 서비스: 기대 효과 (다크 띠) */
+.band{background:var(--navy);position:relative;overflow:hidden}
+.band::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 90% at 100% 0%,rgba(60,202,187,.14),transparent 62%);pointer-events:none}
+.band .wrap{position:relative}
+.band .h2{color:var(--on-dark)}
+.bens{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.bens li{border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);padding:24px 20px;display:grid;align-content:start;gap:10px}
+.bens li > span{font-family:var(--f-en);font-size:12px;letter-spacing:.16em;font-weight:600;color:var(--teal-hi)}
+.bens b{font-size:17.5px;color:var(--on-dark);letter-spacing:-0.03em;line-height:1.4}
+.bens p{font-size:14.5px;line-height:1.75;color:var(--on-dark-2)}
+
+/* 서비스: AX 영역 (사진 + 아코디언) */
+.ax{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,64px);align-items:start}
+.ax.rev{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.ax.rev .ax-photo{order:2}
+.ax-photo{margin:0;position:sticky;top:100px;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--navy)}
+.ax-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ax-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,43,58,0) 55%,rgba(11,43,58,.8))}
+.ax-photo figcaption{position:absolute;left:24px;right:24px;bottom:20px;z-index:1;display:grid;gap:2px}
+.ax-photo figcaption small{font-family:var(--f-en);font-size:12px;letter-spacing:.18em;font-weight:600;color:var(--teal-hi)}
+.ax-photo figcaption b{font-size:17px;color:var(--on-dark);letter-spacing:-0.02em;line-height:1.45}
+.ax-body{display:grid;gap:12px;min-width:0}
+.ax-t{font-size:clamp(24px,1.3vw + 15px,34px);color:var(--teal-dk)}
+.ax-body .lead{max-width:none}
+.alist{margin-top:16px;border-top:1px solid var(--line)}
+.alist details{border-bottom:1px solid var(--line);transition:border-color .2s}
+.alist summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:40px minmax(0,1fr) 24px;align-items:center;gap:12px;padding:20px 4px}
+.alist summary::-webkit-details-marker{display:none}
+.alist summary .n{font-family:var(--f-en);font-size:13px;font-weight:600;color:var(--teal)}
+.alist summary b{font-size:clamp(16.5px,.4vw + 14px,19px);color:var(--ink);letter-spacing:-0.03em;line-height:1.45;transition:color .2s}
+.alist summary .chev{justify-self:center;width:10px;height:10px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-3px) rotate(45deg);transition:transform .2s,border-color .2s}
+.alist summary:hover b{color:var(--teal-dk)}
+.alist details[open]{border-bottom-color:var(--teal)}
+.alist details[open] summary b{color:var(--teal-dk)}
+.alist details[open] summary .chev{transform:translateY(2px) rotate(225deg);border-color:var(--teal)}
+.alist .ad{padding:0 4px 22px 56px}
+.alist .ad p{font-size:15.5px;line-height:1.85;color:#3F515C}
+.mist .ax-photo{box-shadow:0 30px 60px -40px rgba(11,43,58,.5)}
+
+/* CTA */
+.ctab{border-radius:16px;background:linear-gradient(105deg,var(--teal-dk),var(--navy-2) 55%,var(--navy));padding:clamp(30px,4vw,48px) clamp(24px,4vw,52px);display:flex;align-items:center;justify-content:space-between;gap:24px 32px;flex-wrap:wrap;position:relative;overflow:hidden}
+.ctab::after{content:"";position:absolute;right:-40px;top:-60px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,.1);box-shadow:0 0 0 40px rgba(255,255,255,.03);pointer-events:none}
+.ctab > div{position:relative;z-index:1;display:grid;gap:10px;min-width:0;max-width:660px}
+.ctab .en{font-family:var(--f-en);font-size:12px;letter-spacing:.18em;font-weight:600;color:var(--teal-hi)}
+.ctab h2{color:var(--on-dark);font-size:clamp(22px,1vw + 14px,30px)}
+.ctab p{color:#CFE0E6;font-size:15.5px;line-height:1.75}
+.ctab p b{color:var(--on-dark)}
+.ctab .btns{position:relative;z-index:1}
+
+/* ---------- 공통: 하단 ---------- */
+.foot{background:#08202B;color:#9AB0BB;padding-block:56px 28px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px 56px;flex-wrap:wrap}
+.foot-brand{min-width:0}
+.foot-right{display:flex;align-items:flex-start;gap:56px;flex-wrap:wrap}
+.foot-menus{display:grid;grid-template-columns:repeat(4,auto);gap:24px 44px}
+.partner{display:grid;justify-items:end;gap:12px;padding-left:44px;border-left:1px solid rgba(255,255,255,.1)}
+.partner small{font-family:var(--f-en);font-size:11.5px;letter-spacing:.16em;font-weight:600;color:#8AA1AD}
+.partner .plate{display:inline-flex;background:#FFFFFF;border-radius:8px;padding:10px 16px}
+.partner img{display:block;width:170px;height:auto}
+.foot .logo{color:var(--on-dark)}
+.foot .logo .mark{width:40px;color:var(--on-dark)}
+.foot .logo b{font-size:26px}
+.foot-tag{font-family:var(--f-en);font-size:12px;letter-spacing:.1em;font-weight:600;color:var(--teal-hi);margin-top:14px}
+.foot h4{color:var(--on-dark);font-size:14px;margin-bottom:14px;font-family:var(--f-en);font-weight:600;letter-spacing:.01em}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;font-family:var(--f-en)}
+.foot a:hover{color:var(--on-dark)}
+.foot-bot{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px}
+.foot-bot a{color:#C9D7DE}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:1100px){
+  .nav a.m{padding-inline:12px}
+  .nav a.m::after{left:12px;right:12px}
+  .steps{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}
+  .steps > li::before{display:none}
+  .bens{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .arow{grid-template-columns:minmax(0,1fr) 40px minmax(0,1.3fr) 40px minmax(0,1.3fr)}
+  .a-name{padding:22px 20px}
+}
+@media (max-width:960px){
+  .nav .gnb,.nav .btn{display:none}
+  .menu-btn{display:inline-flex;align-items:center}
+  .nav.open{position:absolute;left:0;right:0;top:72px;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -20px rgba(11,43,58,.3);padding:12px max(20px,env(safe-area-inset-right,0px)) 20px max(20px,env(safe-area-inset-left,0px));display:grid;gap:12px}
+  .nav.open .gnb{display:grid;gap:4px}
+  .nav.open a.m{padding:10px 0 4px;font-size:15.5px;color:var(--ink)}
+  .nav.open a.m::after{display:none}
+  .nav.open .sub{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;padding:0 0 8px 12px;min-width:0;background:transparent;display:grid;gap:0}
+  .nav.open .sub a{padding:7px 10px;font-size:14px;color:var(--body)}
+  .nav.open .btn{display:inline-flex;justify-self:start}
+  .foot-top,.foot-right{flex-direction:column;gap:32px}
+  .foot-menus{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+  .partner{justify-items:start;padding-left:0;border-left:0}
+  .chero-grid{grid-template-columns:minmax(0,1fr)}
+  .hpanel{justify-self:start}
+  .icards{grid-template-columns:minmax(0,1fr)}
+  .icard{grid-row:auto;grid-template-rows:auto auto auto auto auto}
+  .proc{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px}
+  .proc::before{display:none}
+  .why{grid-template-columns:minmax(0,1fr)}
+  .why-gap{padding:14px 0}
+  .why-gap .arw{transform:rotate(90deg)}
+  .arow{grid-template-columns:minmax(0,1fr)}
+  .area{gap:36px}
+  .a-name{min-height:0}
+  .a-x{height:40px}
+  .a-x .arw{transform:rotate(90deg)}
+  .ax,.ax.rev{grid-template-columns:minmax(0,1fr);gap:28px}
+  .ax.rev .ax-photo{order:0}
+  .ax-photo{position:relative;top:auto;aspect-ratio:16/9}
+}
+@media (max-width:768px){
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bens{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .icard h3,.icard > p{padding-inline:20px}
+  .irows{margin-inline:20px}
+  .ilink{margin-inline:20px}
+  .irow{grid-template-columns:minmax(0,1fr);gap:8px}
+  .irow small{padding-top:0}
+  .proc{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .bens{grid-template-columns:minmax(0,1fr)}
+  .a-iss .g span,.a-iss .g.c3 span{flex-basis:calc(50% - 4px)}
+  .alist summary{grid-template-columns:30px minmax(0,1fr) 20px;gap:10px}
+  .alist .ad{padding-left:44px}
+  .ctab .btns .btn{flex:1 1 100%}
+  .chero .btns .btn{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* 대표 화면(Product·Industry 첫 화면): 서브 화면과 구분되는 바탕색과 움직이는 그림 */
+.hub .wrap{padding-block:clamp(36px,4vw,52px) clamp(72px,8vw,112px)}
+.hub::after{display:none}
+.hub .hub-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+.hub .phero-l,.hub .chero-l{animation:hubrise .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes hubrise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hv{position:relative;width:100%;max-width:520px;justify-self:end;aspect-ratio:1/1}
+.hv canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hv-chart{aspect-ratio:5/4;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09)}
+.hub-blue{background:linear-gradient(155deg,#0D3168 0%,#0A2551 45%,#071A3B 100%)}
+.hub-blue::before{background:radial-gradient(48% 70% at 78% 48%,rgba(59,130,246,.26),transparent 70%),radial-gradient(40% 60% at 0% 100%,rgba(9,40,88,.9),transparent 70%)}
+.hub-blue .eyebrow,.hub-blue .tag{color:#8EBBFF}
+.hub-blue .crumb{color:#A9BFE0}
+.hub-teal{background:linear-gradient(155deg,#0B4F51 0%,#073C41 45%,#052A31 100%)}
+.hub-teal::before{background:radial-gradient(52% 72% at 78% 48%,rgba(60,202,187,.22),transparent 70%),radial-gradient(40% 60% at 0% 100%,rgba(3,28,34,.9),transparent 70%)}
+.hub-teal h1 .acc{color:#7FF2E3}
+.hub-teal .crumb{color:#A8D3CF}
+@media (max-width:960px){
+  .hub .hub-grid{grid-template-columns:minmax(0,1fr)}
+  .hv{justify-self:center;max-width:400px}
+}
+@media (max-width:640px){ .hv{max-width:320px} .hv-chart{max-width:360px} }
+</style>
+<meta content="#0B2B3A" name="theme-color"/>
+<style>
+/* ===== 모바일 웹 버전(768px 이하): 앱 형태 화면 ===== */
+.m-tab,.m-sub,.m-cta,.m-top{display:none}
+@keyframes mfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:768px){
+  html{-webkit-text-size-adjust:100%}
+  body{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+  .top-in{height:56px}
+  .top .logo .mark{width:28px;height:28px}
+  .menu-btn,.nav{display:none!important}
+  .m-cta{display:inline-flex;align-items:center;height:34px;padding:0 16px;border-radius:999px;background:var(--teal);color:var(--on-dark);font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+  body[data-page="contact"] .m-cta{visibility:hidden}
+  .m-sub{display:flex;gap:6px;position:sticky;top:calc(56px + env(safe-area-inset-top,0px));z-index:45;padding:9px 16px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+  .m-sub::-webkit-scrollbar{display:none}
+  .m-sub a{flex:none;padding:7px 15px;border-radius:999px;font-family:var(--f-en);font-size:13.5px;font-weight:600;color:var(--body);background:var(--mist);border:1px solid var(--line);white-space:nowrap;transition:background .2s,color .2s}
+  .m-sub a[aria-current]{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+  .m-tab{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:60;height:calc(62px + env(safe-area-inset-bottom,0px));padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);box-shadow:0 -10px 28px -20px rgba(11,43,58,.4);transition:transform .22s ease}
+  .m-tab a{display:grid;justify-items:center;align-content:center;gap:6px;font-family:var(--f-en);font-size:12.5px;font-weight:600;color:var(--muted)}
+  .m-tab a::before{content:"";width:20px;height:3px;border-radius:3px;background:transparent;transition:background .2s}
+  .m-tab a[aria-current]{color:var(--navy)}
+  .m-tab a[aria-current]::before{background:var(--teal)}
+  body.m-typing .m-tab{transform:translateY(110%)}
+  .m-top{display:block;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:55;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--navy);font:inherit;font-size:12.5px;font-weight:700;box-shadow:0 12px 26px -14px rgba(11,43,58,.55);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;cursor:pointer}
+  .m-top.on{opacity:1;pointer-events:auto;transform:none}
+  body.m-typing .m-top{opacity:0;pointer-events:none}
+  .crumb{display:none!important}
+  #view-detail .crumb{display:flex!important}
+  .foot{padding-block:36px 24px}
+  .foot-menus{display:none!important}
+  .foot-bot{margin-top:28px}
+  main{animation:mfade .35s ease both}
+}
+@media (max-width:768px) and (prefers-reduced-motion:reduce){main{animation:none}}
+</style>
+<style>
+/* 영문판 보정: 영어 문구 길이에 맞춘 너비·글자 크기 */
+html[lang="en"] .assert dl{grid-template-columns:104px minmax(0,1fr) 104px minmax(0,1fr)}
+@media (max-width:640px){ html[lang="en"] .assert dl{grid-template-columns:104px minmax(0,1fr)} }
+html[lang="en"] .assert dt{overflow-wrap:normal;word-break:normal}
+html[lang="en"] .tile .t{font-size:clamp(14px,4.2cqw,26px)}
+html[lang="en"] .lyr b{font-size:14.5px}
+html[lang="en"] .stats .v{font-size:clamp(16px,.8vw + 9px,21px)}
+html[lang="en"] .hero h1{font-size:clamp(30px,1.8vw + 17px,46px)}
+html[lang="en"] .hero-copy{max-width:760px}
+.ko-note{margin:8px 0 0;font-size:12.5px;color:var(--muted);text-align:center}
+</style>
+<style>
+/* 언어 선택(KOR | ENG): 두 언어를 함께 보여 주고 현재 언어를 강조 */
+.lang-sw{display:inline-flex;align-items:center;gap:2px;margin-left:8px;font-family:var(--f-en);font-size:12.5px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.lang-sw a{padding:6px 6px;color:var(--muted);border-radius:6px;transition:color .2s}
+.lang-sw a:hover{color:var(--teal-dk)}
+.lang-sw a.on{color:var(--navy);box-shadow:inset 0 -2px 0 var(--teal);border-radius:0;cursor:default}
+.lang-sw span{color:#C5D2D8;font-weight:400}
+.lang-sw.m-only{display:none}
+@media (max-width:960px){ .nav .lang-sw{display:none} .lang-sw.m-only{display:inline-flex;margin-left:auto} }
+@media (max-width:768px){ .lang-sw.m-only{margin-right:-16px;font-size:12px} .lang-sw.m-only a{padding:6px 4px} }
+</style>
+<link rel="alternate" hreflang="en" href="industry.html">
+<link rel="alternate" hreflang="ko" href="ko/industry.html">
+<link rel="alternate" hreflang="x-default" href="industry.html">
+</head>
+<body data-page="industry">
+<header class="top">
+<div class="wrap top-in">
+<a aria-label="EVA home" class="logo" href="index.html"><svg aria-hidden="true" class="mark" focusable="false" viewbox="0 0 995 930"><path d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z" fill="currentColor" fill-rule="evenodd"></path></svg><b>EVA</b></a>
+<nav aria-label="Main menu" class="nav" id="nav">
+<ul class="gnb">
+<li><a class="m" href="product.html#product">Product</a>
+<ul class="sub"><li><a href="product.html#ai-engine-document">AI Engine Document</a></li><li><a href="product.html#ai-engine-factory">AI Engine Factory</a></li></ul></li>
+<li class="is-on"><a aria-current="page" class="m" href="#industry">Industry</a>
+<ul class="sub"><li><a href="#manufacturing">Manufacturing</a></li><li><a href="#finance">Finance</a></li></ul></li>
+<li><a class="m" href="rnd.html#rnd">Resource</a>
+<ul class="sub"><li><a href="rnd.html#rnd">R&amp;D</a></li></ul></li>
+<li><a class="m" href="company.html#about">Company</a>
+<ul class="sub"><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></li>
+</ul>
+<a class="btn btn-teal btn-sm" href="contact.html?type=diagnosis">Request a Data Diagnosis</a>
+<div class="lang-sw" role="group" aria-label="Language"><a href="ko/industry.html" hreflang="ko" lang="ko" aria-label="한국어">KOR</a><span aria-hidden="true">|</span><a href="industry.html" hreflang="en" lang="en" aria-label="English" class="on" aria-current="true">ENG</a></div></nav>
+<div class="lang-sw m-only" role="group" aria-label="Language"><a href="ko/industry.html" hreflang="ko" lang="ko" aria-label="한국어">KOR</a><span aria-hidden="true">|</span><a href="industry.html" hreflang="en" lang="en" aria-label="English" class="on" aria-current="true">ENG</a></div>
+    <a class="m-cta" href="contact.html?type=diagnosis">Contact</a>
+<button aria-controls="nav" aria-expanded="false" class="menu-btn" id="menuBtn" type="button">Menu</button>
+</div>
+</header>
+<nav aria-label="Submenu" class="m-sub"><a data-h="industry" href="#industry">Overview</a><a data-h="manufacturing" href="#manufacturing">Manufacturing</a><a data-h="finance" href="#finance">Finance</a></nav>
+<main id="industry-page">
+<!-- =====================================================================
+     VIEW: Industry Overview (슬라이드 1~4)
+     ===================================================================== -->
+<div class="iview" id="v-industry">
+<section aria-labelledby="io-t" class="chero on-dark hub hub-teal">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="crumb"><a href="index.html">Home</a><i></i><span aria-current="page">Industry</span></nav>
+<div class="chero-grid hub-grid">
+<div class="chero-l">
+<p class="eyebrow" style="color:var(--teal-hi)">Industry</p>
+<h1 id="io-t">Turn industry data into <span class="acc nw">better decisions</span></h1>
+<div class="body">
+<p>From process conditions on the factory floor to pricing policies in finance, we analyze the causal relationships in your data to find the root causes of problems, predict the effects of change, and propose actionable improvements.</p>
+</div>
+<div class="btns">
+<a class="btn btn-teal" href="#manufacturing">Explore Manufacturing Service</a>
+<a class="btn btn-ghost" href="#finance">Explore Finance Service</a>
+</div>
+</div>
+<div aria-hidden="true" class="hv hv-chart"><canvas id="fcViz"></canvas></div>
+</div>
+</div>
+</section>
+<section aria-labelledby="io-1" class="sec">
+<div class="wrap">
+<div class="left-head">
+<p class="eyebrow dot">Our Industries</p>
+<h2 class="h2" id="io-1">Industries differ, but <span class="acc">what matters is deciding what to change</span></h2>
+<p class="lead">In manufacturing, quality and productivity must be weighed together with inventory and delivery. In finance, the balance between profit and risk must be found amid changing customers and markets.</p>
+<p class="lead">We connect each industry’s data and business conditions to support decisions that fit your operations and your business.</p>
+</div>
+<div class="icards">
+<article class="icard">
+<div class="icard-img"><img alt="Production equipment inside a manufacturing plant" src="assets/img/dbea297d6682.jpg"/><span>Manufacturing Service</span></div>
+<h3>Turn shop-floor data into improvement and response</h3>
+<p>We connect production, quality, yield, materials, and supply chain data to analyze the root causes of problems. We predict the impact of changing process conditions and operating plans, and propose improvements that balance quality, productivity, and supply stability.</p>
+<div aria-label="Manufacturing Service structure" class="irows" role="figure">
+<div class="irow"><small>Connected Data</small><div class="tags"><span>Production</span><span>Quality</span><span>Yield</span><span>Materials</span><span>Supply Chain</span></div></div>
+<div class="irow"><small>Conditions to Change</small><div class="tags"><span>Process Conditions</span><span>Operating Plans</span></div></div>
+<div class="irow bal"><small>Weighed Together</small><div class="tags"><span>Quality</span><span>Productivity</span><span>Supply Stability</span></div></div>
+</div>
+<a class="ilink" href="#manufacturing">Explore Manufacturing Service <span aria-hidden="true" class="arw"></span></a>
+</article>
+<article class="icard">
+<div class="icard-img"><img alt="Financial charts and coins" src="assets/img/fdc548ee8092.jpg"/><span>Finance Service</span></div>
+<h3>Connect financial decisions to a balance of profit and risk</h3>
+<p>We connect customer, credit, transaction, product, and market data to analyze the effects of financial decisions. We predict the impact of changing approval policies, loan terms, and product pricing, and propose strategies that balance profit and risk.</p>
+<div aria-label="Finance Service structure" class="irows" role="figure">
+<div class="irow"><small>Connected Data</small><div class="tags"><span>Customer</span><span>Credit</span><span>Transaction</span><span>Product</span><span>Market</span></div></div>
+<div class="irow"><small>Conditions to Change</small><div class="tags"><span>Approval Policy</span><span>Loan Terms</span><span>Product Pricing</span></div></div>
+<div class="irow bal"><small>Weighed Together</small><div class="tags"><span>Profit</span><span>Risk</span></div></div>
+</div>
+<a class="ilink" href="#finance">Explore Finance Service <span aria-hidden="true" class="arw"></span></a>
+</article>
+</div>
+</div>
+</section>
+<section aria-labelledby="io-2" class="sec mist">
+<div class="wrap">
+<div class="left-head">
+<p class="eyebrow dot">How It Works</p>
+<h2 class="h2" id="io-2">Understand causes, compare effects, and <span class="acc">turn them into action</span></h2>
+<p class="lead">We go beyond simply predicting outcomes to analyze which changes lead to which different results. We connect the distinct operations of manufacturing and finance through one flow: ‘cause analysis → effect prediction → action planning → result validation.’</p>
+</div>
+<div aria-label="Flow of cause analysis, effect prediction, action planning, and result validation" class="flowline" role="figure"><span>Cause Analysis</span><i aria-hidden="true" class="arw"></i><span>Effect Prediction</span><i aria-hidden="true" class="arw"></i><span>Action Planning</span><i aria-hidden="true" class="arw"></i><span>Result Validation</span></div>
+<ol class="proc">
+<li><span class="c">01</span><h3>Connect operations and data</h3><p>We define the challenges and goals to address, and connect the relevant data within its business context.</p></li>
+<li><span class="c">02</span><h3>Find the causes that change outcomes</h3><p>We analyze how key factors such as process conditions, materials, customer characteristics, and policies affect outcomes.</p></li>
+<li><span class="c">03</span><h3>Compare the effects of each alternative</h3><p>We predict outcomes when conditions and policies change, and compare action plans against goals and constraints.</p></li>
+<li><span class="c">04</span><h3>Keep improving through results</h3><p>We validate before-and-after changes and feed the results into the next decision.</p></li>
+</ol>
+</div>
+</section>
+<section aria-labelledby="io-3" class="sec cta-sec">
+<div class="wrap">
+<div class="ctab">
+<div>
+<span class="en">CONTACT</span>
+<h2 id="io-3">Your industry’s next decision <span class="nw">starts with data</span></h2>
+<p>Is there a process you want to improve, a supply issue to solve, or a financial policy you want to change?<br/>Based on your business challenges and existing data, we work with you to define the AX areas that apply.</p>
+</div>
+<div class="btns"><a class="btn btn-white" href="contact.html?type=adoption">Inquire About Industry AX</a></div>
+</div>
+</div>
+</section>
+</div>
+<!-- =====================================================================
+     VIEW: Manufacturing Service (슬라이드 5~13)
+     ===================================================================== -->
+<div class="iview" hidden="" id="v-manufacturing">
+<section aria-labelledby="im-t" class="chero on-dark">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="crumb"><a href="index.html">Home</a><i></i><a href="#industry">Industry</a><i></i><span aria-current="page">Manufacturing</span></nav>
+<div class="chero-grid">
+<div class="chero-l">
+<p class="eyebrow" style="color:var(--teal-hi)">Industry / Manufacturing</p>
+<h1 id="im-t">Manufacturing Service</h1>
+<p class="tag">Turn shop-floor data into improvement and response</p>
+<div class="body">
+<p>We connect production, quality, yield, materials, and supply chain data to find the root causes of problems, predict improvement effects, and support actionable decisions.</p>
+</div>
+<div class="btns">
+<a class="btn btn-teal" href="product.html#ai-engine-factory">Explore AI Engine Factory</a>
+<a class="btn btn-ghost" href="contact.html?type=adoption">Inquire About Manufacturing Service</a>
+</div>
+</div>
+<div aria-label="Cause analysis, effect prediction, and action" class="hpanel">
+<span class="cap">MANUFACTURING SERVICE</span>
+<div class="st"><small>01</small><b>Cause Analysis</b></div><span class="dn"></span>
+<div class="st"><small>02</small><b>Effect Prediction</b></div><span class="dn"></span>
+<div class="st"><small>03</small><b>Action</b></div>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="im-1" class="sec">
+<div class="wrap">
+<div class="left-head">
+<p class="eyebrow ko">Why do manufacturing sites need AI Engine Factory?</p>
+<h2 class="h2" id="im-1">There is plenty of data, but <span class="acc">knowing “what to change” is hard</span></h2>
+<p class="lead">Manufacturing sites constantly accumulate equipment data, process recipes, inspection results, material lots, environmental conditions, and work history. But when data is scattered across systems and process conditions are not linked to quality outcomes, the following problems keep recurring.</p>
+</div>
+<div aria-label="Scattered data and recurring problems" class="why fin" role="figure">
+<div class="why-data db">
+<span class="why-lb">Constantly Accumulating Data</span>
+<div aria-label="Equipment data, process recipes, inspection results, material lots, environmental conditions, and work history" class="cyl">
+<div class="lyr"><b>Equipment Data</b><small>EQUIPMENT</small></div>
+<div class="lyr"><b>Process Recipes</b><small>RECIPE</small></div>
+<div class="lyr"><b>Inspection Results</b><small>INSPECTION</small></div>
+<div class="lyr"><b>Material Lot</b><small>MATERIAL LOT</small></div>
+<div class="lyr"><b>Env. Conditions</b><small>ENVIRONMENT</small></div>
+<div class="lyr"><b>Work History</b><small>WORK HISTORY</small></div>
+</div>
+</div>
+<div class="why-gap"><span aria-hidden="true" class="arw"></span><p>When scattered across systems<br/>and left unconnected</p></div>
+<div class="why-list">
+<span class="why-lb">Recurring Problems</span>
+<ol>
+<li><span>01</span><p>When yield drops, it is hard to tell whether the cause is the equipment, the recipe, or the raw materials.</p></li>
+<li><span>02</span><p>With many process variables acting at once, it is hard to decide which conditions to adjust first.</p></li>
+<li><span>03</span><p>A small anomaly in one process leads to downstream defects or customer claims.</p></li>
+<li><span>04</span><p>It is hard to clearly determine how a specific material lot affects quality.</p></li>
+<li><span>05</span><p>Attempts to cut inventory lead to material shortages or delivery delays.</p></li>
+</ol>
+</div>
+</div>
+<p class="concl">Manufacturing Service connects your data and analyzes causes and effects to propose improvement directions the shop floor can act on.</p>
+</div>
+</section>
+<section aria-labelledby="im-2" class="sec mist">
+<div class="wrap">
+<div class="left-head">
+<p class="eyebrow ko">What problems does AI Engine Factory solve?</p>
+<h2 class="h2" id="im-2">From quality issues to supply risks, <span class="acc">it is hard to “find the cause and decide what to change”</span></h2>
+<p class="lead">Manufacturing sites face recurring defects, yield loss, quality variation, and process anomalies. Material shortages, excess inventory, supply disruptions, and delivery delays occur as well. Yet it is difficult to identify the root causes and decide on the best response while weighing process, quality, and yield together with inventory, production, and delivery.</p>
+</div>
+<div aria-label="Two solution areas of AI Engine Factory" class="area" role="figure">
+<div class="arow">
+<div class="a-name"><small>AREA 01</small><b>Process, Quality &amp; Yield Improvement</b></div>
+<div class="a-x"><span aria-hidden="true" class="arw"></span></div>
+<div class="a-iss"><div class="g"><span>Defects</span><span>Yield Loss</span><span>Quality Variation</span><span>Process Anomalies</span></div></div>
+<div class="a-x to"><span aria-hidden="true" class="arw"></span></div>
+<div class="a-res c"><p>Find the <em>root cause</em>,<br/>then propose <em>optimal conditions</em> and <em>preventive actions</em></p></div>
+</div>
+<div class="arow">
+<div class="a-name"><small>AREA 02</small><b>Materials, Supply Chain &amp; Inventory</b></div>
+<div class="a-x"><span aria-hidden="true" class="arw"></span></div>
+<div class="a-iss"><div class="g"><span>Material Shortages</span><span>Excess Inventory</span><span>Supply Disruptions</span><span>Delivery Delays</span></div></div>
+<div class="a-x to"><span aria-hidden="true" class="arw"></span></div>
+<div class="a-res c"><p>Detect <em>supply risks</em> early,<br/>and optimize <em>inventory, production &amp; delivery</em> together</p></div>
+</div>
+</div>
+<p class="concl">AI Engine Factory finds the causes of process and quality problems to propose optimal conditions and preventive actions, and detects supply risks early to optimize inventory, production, and delivery together.</p>
+</div>
+</section>
+<section aria-labelledby="im-3" class="sec">
+<div class="wrap">
+<div class="left-head">
+<p class="eyebrow ko">Manufacturing Service Adoption Process</p>
+<h2 class="h2" id="im-3">From shop-floor challenges to full operation</h2>
+</div>
+<ol class="steps">
+<li><span class="sc">1</span><div class="sbox"><div class="sh"><small>STEP 01</small><b>Define Shop-Floor Challenges</b></div><div class="sb"><small>Target KPIs</small><div class="tags"><span>Yield</span><span>Defects</span><span>Cost</span><span>Delivery</span><span>Inventory</span></div></div><p class="sf">Select the <b>KPIs to improve</b> from these</p></div></li>
+<li><span class="sc">2</span><div class="sbox"><div class="sh"><small>STEP 02</small><b>Connect Data</b></div><div class="sb"><small>Data to Integrate</small><div class="tags"><span>MES</span><span>ERP</span><span>QMS</span><span>SCADA</span><span>Equipment</span><span>Materials</span><span>Supply Chain</span></div></div><p class="sf"><b>Integrate</b> the data above</p></div></li>
+<li><span class="sc">3</span><div class="sbox"><div class="sh"><small>STEP 03</small><b>Cause &amp; Impact Analysis</b></div><div class="sb"><small>Analysis Factors</small><div class="tags"><span>Process Conditions</span><span>Material Lot</span><span>Supply Factors</span></div></div><p class="sf">Analyze how these factors <b>relate to KPIs</b></p></div></li>
+<li><span class="sc">4</span><div class="sbox"><div class="sh"><small>STEP 04</small><b>Scenarios &amp; Optimization</b></div><div class="sb"><div class="acts"><span>Predict Effects by Action</span><span>Apply Cost, Delivery &amp; Quality Constraints</span><span>Derive the Optimal Plan</span></div></div></div></li>
+<li><span class="sc">5</span><div class="sbox"><div class="sh"><small>STEP 05</small><b>Execution &amp; Validation</b></div><div class="sb"><div class="acts"><span>Execute On-Site Actions</span><span>Monitor Results</span><span>Validate Improvements</span></div></div></div></li>
+<li><span class="sc">6</span><div class="sbox"><div class="sh"><small>STEP 06</small><b>Build Knowledge</b></div><div class="sb"><p class="kn">Accumulate <em>successes and failures</em> as organizational <em>decision-making knowledge</em></p></div></div></li>
+</ol>
+</div>
+</section>
+<section aria-labelledby="im-4" class="sec band on-dark">
+<div class="wrap">
+<div class="left-head">
+<h2 class="h2" id="im-4">For a fast-changing manufacturing environment</h2>
+</div>
+<ul class="bens">
+<li><span>01</span><b>Rapid Root-Cause Identification</b><p>Narrows down the causes of yield loss, defects, and supply disruptions based on data.</p></li>
+<li><span>02</span><b>Precise Improvement Direction</b><p>Recommends which process conditions, materials, and supply plans to change.</p></li>
+<li><span>03</span><b>Proactive Risk Response</b><p>Prepares in advance for downstream defects, customer claims, production stoppages, and delivery delays.</p></li>
+<li><span>04</span><b>Integrated Decision-Making</b><p>Quality, production, inventory, purchasing, and supply chain teams decide on the same evidence.</p></li>
+<li><span>05</span><b>Continuous Improvement</b><p>On-site response experience builds up as organizational decision-making knowledge.</p></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="im-5" class="sec">
+<div class="wrap ax">
+<figure class="ax-photo"><img alt="Manufacturing process equipment" src="assets/img/9b5a096534e4.jpg"/><figcaption><small>AREA 01</small><b>Process, Quality &amp; Yield Improvement</b></figcaption></figure>
+<div class="ax-body">
+<p class="eyebrow dot">AREA 01</p>
+<h2 class="ax-t" id="im-5">Process, quality &amp; yield improvement AX</h2>
+<p class="lead">From the causes of yield loss to the impact of process conditions and raw materials, we analyze the causal relationships in manufacturing data to propose improvements that raise quality and productivity.</p>
+<div class="alist">
+<details name="m-ax1" open=""><summary><span class="n">01</span><b>Semiconductor Process Yield Improvement</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes the relationships between yield and equipment, recipes, materials, environment, and work history to identify the key factors affecting yield and their contributions.</p></div></details>
+<details name="m-ax1"><summary><span class="n">02</span><b>Multivariate Process Condition Optimization</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes how multiple process variables such as temperature, pressure, time, speed, and concentration affect quality, and recommends optimal conditions.</p></div></details>
+<details name="m-ax1"><summary><span class="n">03</span><b>Defect Propagation Tracing &amp; Recurrence Prevention</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Traces the paths by which a small anomaly in a specific process leads to downstream defects or customer claims, and identifies points for preemptive action.</p></div></details>
+<details name="m-ax1"><summary><span class="n">04</span><b>Raw Material Lot Impact Analysis</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes the relationships between lot-level characteristics of raw materials and components, incoming inspection results, and storage and input history, and yield, reliability, and defect rates, to identify the key lots affecting quality and the contribution of each factor.</p></div></details>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="im-6" class="sec mist">
+<div class="wrap ax rev">
+<figure class="ax-photo"><img alt="Factory interior with materials and a production line" src="assets/img/dbea297d6682.jpg"/><figcaption><small>AREA 02</small><b>Materials, Supply Chain &amp; Inventory</b></figcaption></figure>
+<div class="ax-body">
+<p class="eyebrow dot">AREA 02</p>
+<h2 class="ax-t" id="im-6">Materials, supply chain &amp; inventory AX</h2>
+<p class="lead">From supply chain risks to raw material supply and inventory operations, we analyze the causal relationships among key factors to reduce production disruptions and support stable supply and efficient inventory operations.</p>
+<div class="alist">
+<details name="m-ax2" open=""><summary><span class="n">01</span><b>Supply Chain Risk Early Warning</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Links suppliers, raw materials, lead times, geopolitical risks, quality history, and production plans to detect potential supply disruptions early.</p></div></details>
+<details name="m-ax2"><summary><span class="n">02</span><b>Raw Material Supply &amp; Inventory Optimization</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>An AI that analyzes the relationships among demand changes, order quantities, safety stock, delivery, and price fluctuations to reduce both excess inventory and material shortages at the same time.</p></div></details>
+<details name="m-ax2"><summary><span class="n">03</span><b>Integrated Inventory, Production &amp; Delivery Decisions</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Calculates optimal plans across the entire value chain so that decisions to cut inventory do not lead to production stoppages or delivery delays.</p></div></details>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="im-7" class="sec cta-sec">
+<div class="wrap">
+<div class="ctab">
+<div>
+<span class="en">MANUFACTURING SERVICE</span>
+<h2 id="im-7">Connect shop-floor problems <span class="nw">to improvement</span></h2>
+<p>Manufacturing Service connects manufacturing data through <b>cause analysis → effect prediction → action</b>.</p>
+</div>
+<div class="btns"><a class="btn btn-white" href="contact.html?type=adoption">Inquire About Manufacturing Service</a><a class="btn btn-ghost" href="product.html#ai-engine-factory">Explore AI Engine Factory</a></div>
+</div>
+</div>
+</section>
+</div>
+<!-- =====================================================================
+     VIEW: Finance Service (슬라이드 14~22)
+     ===================================================================== -->
+<div class="iview" hidden="" id="v-finance">
+<section aria-labelledby="if-t" class="chero on-dark">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="crumb"><a href="index.html">Home</a><i></i><a href="#industry">Industry</a><i></i><span aria-current="page">Finance</span></nav>
+<div class="chero-grid">
+<div class="chero-l">
+<p class="eyebrow" style="color:var(--teal-hi)">Industry / Finance</p>
+<h1 id="if-t">Finance Service</h1>
+<p class="tag">Turn financial decisions into a balance of profit and risk</p>
+<div class="body">
+<p>We connect credit policy, loan terms, delinquency response, product pricing, and promotion effects to help financial institutions make more accurate and explainable decisions.</p>
+</div>
+<div class="btns">
+<a class="btn btn-teal" href="product.html#ai-engine-document">Explore AI Engine Document</a>
+<a class="btn btn-ghost" href="contact.html?type=adoption&amp;industry=finance">Inquire About Finance Service</a>
+</div>
+</div>
+<div aria-label="Cause analysis, effect prediction, optimal strategy, and execution validation" class="hpanel">
+<span class="cap">FINANCE SERVICE</span>
+<div class="st"><small>01</small><b>Cause Analysis</b></div><span class="dn"></span>
+<div class="st"><small>02</small><b>Effect Prediction</b></div><span class="dn"></span>
+<div class="st"><small>03</small><b>Optimal Strategy</b></div><span class="dn"></span>
+<div class="st"><small>04</small><b>Execution Validation</b></div>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="if-1" class="sec">
+<div class="wrap">
+<div class="left-head">
+<p class="eyebrow ko">Why do financial institutions need AI Engine?</p>
+<h2 class="h2" id="if-1">Prediction alone <span class="acc">cannot tell you the best action</span></h2>
+<p class="lead">Financial institutions have accumulated ample customer, credit, transaction, product, channel, and market data. But even with abundant data, the following questions remain hard to answer.</p>
+</div>
+<div aria-label="Accumulated data and hard-to-answer questions" class="why fin" role="figure">
+<div class="why-data db">
+<span class="why-lb">Ample Accumulated Data</span>
+<div aria-label="Customer, credit, transaction, product, channel, and market data" class="cyl">
+<div class="lyr"><b>Customer</b><small>CUSTOMER</small></div>
+<div class="lyr"><b>Credit</b><small>CREDIT</small></div>
+<div class="lyr"><b>Transaction</b><small>TRANSACTION</small></div>
+<div class="lyr"><b>Product</b><small>PRODUCT</small></div>
+<div class="lyr"><b>Channel</b><small>CHANNEL</small></div>
+<div class="lyr"><b>Market</b><small>MARKET</small></div>
+</div>
+</div>
+<div class="why-gap"><span aria-hidden="true" class="arw"></span><p>Even with abundant data</p></div>
+<div class="why-list">
+<span class="why-lb">Hard-to-Answer Questions</span>
+<ol>
+<li><span>01</span><p>Lowering interest rates increases loan demand, but how will delinquency rates and margins change?</p></li>
+<li><span>02</span><p>Raising credit limits increases revenue, but how much more risk does it add?</p></li>
+<li><span>03</span><p>Which delinquency prevention actions should be taken first, and for which customers, to have the greatest effect?</p></li>
+<li><span>04</span><p>If premiums go up, how much will renewal rates and customer churn change?</p></li>
+<li><span>05</span><p>What effect do promotions and fee policies actually have on profit and customer relationships?</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="if-2" class="sec mist">
+<div class="wrap">
+<div class="left-head">
+<p class="eyebrow dot">Finance Service</p>
+<h2 class="h2 sm" id="if-2">Finance Service goes beyond predicting risk: <span class="acc">it analyzes the outcomes of financial actions and proposes optimal execution strategies</span></h2>
+</div>
+<div aria-label="Two solution areas of Finance Service" class="area" role="figure">
+<div class="arow">
+<div class="a-name"><small>AREA 01</small><b>Corporate Credit Policy &amp;<br/>Lending Strategy Optimization</b></div>
+<div class="a-x"><span aria-hidden="true" class="arw"></span></div>
+<div class="a-iss"><div class="g c3"><span>Approval</span><span>Credit Limit</span><span>Interest Rate</span><span>Delinquency</span><span>Collections</span></div><small>Decisions on These Items</small></div>
+<div class="a-x to"><span aria-hidden="true" class="arw"></span></div>
+<div class="a-res c"><p><em>Lending decisions</em> that<br/>balance <em>credit risk</em><br/>and <em>profitability</em></p></div>
+</div>
+<div class="arow">
+<div class="a-name"><small>AREA 02</small><b>Financial Product<br/>Pricing &amp; Margin Optimization</b></div>
+<div class="a-x"><span aria-hidden="true" class="arw"></span></div>
+<div class="a-iss"><div class="g c3"><span>Interest Rate</span><span>Premium</span><span>Fees</span><span>Promotions</span><span>Lifetime Value</span></div></div>
+<div class="a-x to"><span aria-hidden="true" class="arw"></span></div>
+<div class="a-res c"><p><em>Pricing &amp; margin strategies</em><br/>that raise both<br/><em>customer value</em> and <em>profitability</em></p></div>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="if-3" class="sec">
+<div class="wrap">
+<div class="left-head">
+<p class="eyebrow ko">Finance Service Adoption Process</p>
+<h2 class="h2" id="if-3">Turning financial decisions into strategy</h2>
+</div>
+<ol class="steps">
+<li><span class="sc">1</span><div class="sbox"><div class="sh"><small>STEP 01</small><b>Define Decision Challenges</b></div><div class="sb"><small>Target Objectives</small><div class="tags"><span>Approval</span><span>Interest Rate</span><span>Credit Limit</span><span>Delinquency</span><span>Collections</span><span>Premium</span><span>Promotions</span></div></div><p class="sf">Set your <b>objectives</b> from these</p></div></li>
+<li><span class="sc">2</span><div class="sbox"><div class="sh"><small>STEP 02</small><b>Connect Data</b></div><div class="sb"><small>Data to Integrate</small><div class="tags"><span>Customer</span><span>Credit</span><span>Transaction</span><span>Product</span><span>Channel</span><span>Market</span><span>Policy</span></div></div><p class="sf"><b>Integrate</b> the data above</p></div></li>
+<li><span class="sc">3</span><div class="sbox"><div class="sh"><small>STEP 03</small><b>Cause &amp; Effect Analysis</b></div><div class="sb"><small>Analysis Factors</small><div class="tags"><span>Interest Rate</span><span>Credit Limit</span><span>Actions</span><span>Promotions</span></div></div><p class="sf">Analyze how these factors <b>affect outcomes</b></p></div></li>
+<li><span class="sc">4</span><div class="sbox"><div class="sh"><small>STEP 04</small><b>Scenarios &amp; Optimization</b></div><div class="sb"><small>Factors Considered</small><div class="tags"><span>Risk</span><span>Profit</span><span>Customer Experience</span><span>Regulatory Constraints</span></div></div><p class="sf"><b>Compare alternatives</b> with these factors in mind</p></div></li>
+<li><span class="sc">5</span><div class="sbox"><div class="sh"><small>STEP 05</small><b>Execution &amp; Validation</b></div><div class="sb"><div class="acts"><span>Execute Policies &amp; Campaigns</span><span>Monitor Results</span><span>Validate Effects</span></div></div></div></li>
+<li><span class="sc">6</span><div class="sbox"><div class="sh"><small>STEP 06</small><b>Build Knowledge</b></div><div class="sb"><p class="kn">Accumulate <em>policy, action &amp; outcome data</em> as organizational <em>decision-making knowledge</em></p></div></div></li>
+</ol>
+</div>
+</section>
+<section aria-labelledby="if-4" class="sec band on-dark">
+<div class="wrap">
+<div class="left-head">
+<h2 class="h2" id="if-4">For more accurate, explainable financial decisions</h2>
+</div>
+<ul class="bens">
+<li><span>01</span><b>Balancing Risk and Return</b><p>Builds lending strategies that weigh approval rates, delinquency rates, and margins together.</p></li>
+<li><span>02</span><b>Pre-Validating Action Effects</b><p>Confirms the expected effects of changes to interest rates, credit limits, premiums, and promotions before execution.</p></li>
+<li><span>03</span><b>Optimal Response per Customer</b><p>Designs delinquency prevention, collections, product offers, and benefits to fit each customer’s situation.</p></li>
+<li><span>04</span><b>Explainable Decisions</b><p>Provides the evidence for why each condition and action was proposed.</p></li>
+<li><span>05</span><b>Continuous Policy Improvement</b><p>Accumulates execution results and customer responses to improve the accuracy of financial decisions.</p></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="if-5" class="sec">
+<div class="wrap ax">
+<figure class="ax-photo"><img alt="Meeting to review financial documents" src="assets/img/300002345f63.jpg"/><figcaption><small>AREA 01</small><b>Corporate Credit Policy &amp; Lending Strategy Optimization</b></figcaption></figure>
+<div class="ax-body">
+<p class="eyebrow dot">AREA 01</p>
+<h2 class="ax-t" id="if-5">Corporate credit policy &amp; lending strategy optimization AX</h2>
+<p class="lead">From credit assessment and loan approval to interest rate and credit limit setting and delinquency management, we analyze the causal relationships among key factors to propose lending strategies that balance profit and risk.</p>
+<div class="alist">
+<details name="f-ax1" open=""><summary><span class="n">01</span><b>Credit Assessment &amp; Loan Approval</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Links corporate clients’ financial, credit, transaction, industry, and market data to analyze repayment capacity and default risk, supporting approve, decline, and conditional approval decisions.</p></div></details>
+<details name="f-ax1"><summary><span class="n">02</span><b>Loan Interest Rate &amp; Credit Limit Optimization</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes how loan interest rates, credit limits, repayment terms, and collateral conditions affect approval rates, delinquency rates, and profitability, and proposes optimal terms by customer and portfolio.</p></div></details>
+<details name="f-ax1"><summary><span class="n">03</span><b>Delinquency Prevention &amp; Debt Restructuring</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes repayment history, cash flow, industry risk, and transaction patterns to identify the likelihood and causes of delinquency, and proposes effective prevention and restructuring strategies for each customer.</p></div></details>
+<details name="f-ax1"><summary><span class="n">04</span><b>Collections Strategy Optimization</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes customer circumstances, delinquency stage, past response history, and channel response to propose collections strategies that weigh recovery likelihood against cost.</p></div></details>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="if-6" class="sec mist">
+<div class="wrap ax rev">
+<figure class="ax-photo"><img alt="Financial charts and coins" src="assets/img/fdc548ee8092.jpg"/><figcaption><small>AREA 02</small><b>Financial Product Pricing &amp; Margin Optimization</b></figcaption></figure>
+<div class="ax-body">
+<p class="eyebrow dot">AREA 02</p>
+<h2 class="ax-t" id="if-6">Financial product pricing &amp; margin optimization AX</h2>
+<p class="lead">From loan interest rates and premiums to promotions and fees, we analyze how pricing policies causally affect customer behavior and profit, and propose optimal plans that balance risk, competitiveness, and long-term profitability.</p>
+<div class="alist">
+<details name="f-ax2" open=""><summary><span class="n">01</span><b>Loan Interest Rates &amp; Risk-Based Pricing</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes customer creditworthiness, collateral, transaction history, market interest rates, and competitive conditions to propose loan interest rate strategies that balance risk and profitability.</p></div></details>
+<details name="f-ax2"><summary><span class="n">02</span><b>Premium &amp; Renewal Optimization</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes customer risk, insurance product characteristics, renewal history, and the competitive environment to determine how premium levels and renewal strategies affect retention, loss ratios, and profitability.</p></div></details>
+<details name="f-ax2"><summary><span class="n">03</span><b>Customer Lifetime Value &amp; Margin Optimization</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes customers’ transaction history, product holdings, channel usage, churn likelihood, and cross-sell response to propose strategies that raise both customer lifetime value and margins.</p></div></details>
+<details name="f-ax2"><summary><span class="n">04</span><b>Promotion &amp; Fee Effects</b><i aria-hidden="true" class="chev"></i></summary><div class="ad"><p>Analyzes the relationships between promotion type, target customers, fee structure, channel, and timing, and revenue, new customer acquisition, churn, and margins, to propose profitable promotion strategies.</p></div></details>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="if-7" class="sec cta-sec">
+<div class="wrap">
+<div class="ctab">
+<div>
+<span class="en">FINANCE SERVICE</span>
+<h2 id="if-7">Go beyond prediction and design the effects of your financial decisions</h2>
+<p>Finance Service connects financial institutions’ data through <b>cause analysis → effect prediction → optimal strategy → execution validation</b>.</p>
+</div>
+<div class="btns"><a class="btn btn-white" href="contact.html?type=adoption&amp;industry=finance">Inquire About Finance Service</a><a class="btn btn-ghost" href="product.html#ai-engine-document">Explore AI Engine Document</a></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer class="foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-brand">
+<a aria-label="EVA home" class="logo" href="index.html"><svg aria-hidden="true" class="mark" focusable="false" viewbox="0 0 995 930"><path d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z" fill="currentColor" fill-rule="evenodd"></path></svg><b>EVA</b></a>
+<p class="foot-tag">EMPOWERING VALUE THROUGH AI</p>
+</div>
+<div class="foot-right">
+<nav aria-label="Footer menu" class="foot-menus">
+<div><h4>Product</h4><ul><li><a href="product.html#ai-engine-document">AI Engine Document</a></li><li><a href="product.html#ai-engine-factory">AI Engine Factory</a></li></ul></div>
+<div><h4>Industry</h4><ul><li><a href="#manufacturing">Manufacturing</a></li><li><a href="#finance">Finance</a></li></ul></div>
+<div><h4>Resource</h4><ul><li><a href="rnd.html#rnd">R&amp;D</a></li></ul></div>
+<div><h4>Company</h4><ul><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></div>
+</nav>
+<div class="partner">
+<small>PARTNER</small>
+<span class="plate"><img alt="NVIDIA Inception Program" height="63" src="assets/img/a7d02eebe501.png" width="180"/></span>
+</div>
+</div>
+</div>
+<div class="foot-bot">
+<span>© 2026 EVA. All rights reserved.</span>
+<a href="privacy.html">Privacy Policy</a>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var IDS = ["industry", "manufacturing", "finance"];
+  var TITLES = { "industry": "EVA Industry", "manufacturing": "EVA Industry | Manufacturing", "finance": "EVA Industry | Finance" };
+  var current = "industry";
+  function route(){
+    var h = (location.hash || "").replace("#", "");
+    if (h === "contact"){
+      var v = document.getElementById("v-" + current);
+      var c = v && v.querySelector(".cta-sec");
+      if (c){ c.scrollIntoView({behavior:"smooth", block:"start"}); }
+      return;
+    }
+    current = IDS.indexOf(h) >= 0 ? h : "industry";
+    IDS.forEach(function(id){ document.getElementById("v-" + id).hidden = id !== current; });
+    document.title = TITLES[current];
+    window.scrollTo({top:0, left:0, behavior:"instant"});
+  }
+  window.addEventListener("hashchange", route);
+
+  var nav = document.getElementById("nav"), btn = document.getElementById("menuBtn");
+  function setMenu(o){ nav.classList.toggle("open", o); btn.setAttribute("aria-expanded", o ? "true" : "false"); btn.textContent = o ? "Close" : "Menu"; }
+  btn.addEventListener("click", function(){ setMenu(!nav.classList.contains("open")); });
+  nav.addEventListener("click", function(e){ if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && nav.classList.contains("open")){ setMenu(false); btn.focus(); } });
+
+  route();
+})();
+</script>
+<script>
+/* Industry 첫 화면: 효과 예측 차트 애니메이션 (실제 추세 -> 기준 시점 -> 조치 전(점선)/조치 후(밝은 선)와 예측 범위) */
+(function(){
+  var cv = document.getElementById("fcViz"); if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext("2d"), W = 0, H = 0, raf = 0, t0 = 0, onScreen = true, obs = [], bars = [], base = [], act = [], cyc = -1;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var T = 9.5, NO = 30, NF = 14;
+  function layout(){
+    var r = cv.getBoundingClientRect(); if (r.width < 10) return false;
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return true;
+  }
+  function gen(){
+    var v = 0.5, raw = []; obs = []; bars = []; base = []; act = [];
+    for (var i = 0; i < NO; i++){ v += (Math.random() - 0.5) * 0.09; v = Math.max(0.32, Math.min(0.66, v)); raw.push(v); bars.push(0.25 + Math.random() * 0.75); }
+    for (i = 0; i < NO; i++){ var a = raw[Math.max(0, i - 1)], b = raw[i], c = raw[Math.min(NO - 1, i + 1)]; obs.push((a + b * 2 + c) / 4); }
+    var L = obs[NO - 1];
+    for (var k = 0; k <= NF; k++){ var q = k / NF; base.push(L - q * 0.03 + Math.sin(k * 1.3) * 0.008); act.push(L + Math.pow(q, 1.15) * 0.26); }
+  }
+  var X0, X1, XS, Y0, Y1, BY;
+  function geo(){ X0 = W * 0.07; X1 = W * 0.95; XS = X0 + (X1 - X0) * 0.64; Y0 = H * 0.1; Y1 = H * 0.74; BY = H * 0.9; }
+  function px(i){ return X0 + (XS - X0) * (i / (NO - 1)); }
+  function fx(k){ return XS + (X1 - XS) * (k / NF); }
+  function py(v){ return Y1 - (Y1 - Y0) * v; }
+  function ease(x){ x = Math.max(0, Math.min(1, x)); return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+  function path(pts, upto){
+    ctx.beginPath();
+    var n = Math.max(1, Math.floor(upto)), fr = upto - Math.floor(upto);
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (var i = 1; i <= n && i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    if (n < pts.length - 1 && fr > 0){ var a = pts[n], b = pts[n + 1]; ctx.lineTo(a[0] + (b[0] - a[0]) * fr, a[1] + (b[1] - a[1]) * fr); }
+  }
+  function draw(p){
+    geo(); ctx.clearRect(0, 0, W, H);
+    var fade = p > T - 0.6 ? Math.max(0, (T - p) / 0.6) : Math.min(1, p / 0.4);
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = "rgba(255,255,255,.07)"; ctx.lineWidth = 1;
+    for (var g = 0; g <= 4; g++){ var gy = Y0 + (Y1 - Y0) * g / 4; ctx.beginPath(); ctx.moveTo(X0, gy); ctx.lineTo(X1, gy); ctx.stroke(); }
+    ctx.globalAlpha = fade;
+    var po = ease(p / 3.2) * (NO - 1), pts = obs.map(function(v, i){ return [px(i), py(v)]; });
+    var bw = (XS - X0) / NO * 0.55;
+    for (var i = 0; i < NO; i++){ if (i > po) break; var h = (BY - Y1 - 14) * bars[i]; ctx.fillStyle = "rgba(127,242,227,.22)"; ctx.fillRect(px(i) - bw / 2, BY - h, bw, h); }
+    path(pts, po); var ex = X0 + (XS - X0) * (po / (NO - 1));
+    ctx.save(); ctx.lineTo(ex, Y1); ctx.lineTo(X0, Y1); ctx.closePath();
+    var ag = ctx.createLinearGradient(0, Y0, 0, Y1); ag.addColorStop(0, "rgba(60,202,187,.30)"); ag.addColorStop(1, "rgba(60,202,187,0)");
+    ctx.fillStyle = ag; ctx.fill(); ctx.restore();
+    path(pts, po); ctx.strokeStyle = "rgba(255,255,255,.88)"; ctx.lineWidth = 2.2; ctx.lineJoin = "round"; ctx.stroke();
+    var cu = Math.min(1, Math.max(0, (p - 3.2) / 0.6));
+    if (cu > 0){
+      ctx.globalAlpha = fade * cu; ctx.setLineDash([4, 5]); ctx.strokeStyle = "rgba(255,255,255,.4)"; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(XS, Y0 - 6); ctx.lineTo(XS, BY); ctx.stroke(); ctx.setLineDash([]);
+    }
+    var q = ease((p - 3.8) / 2.0) * NF;
+    if (p > 3.8){
+      var bp = base.map(function(v, k){ return [fx(k), py(v)]; }), ap = act.map(function(v, k){ return [fx(k), py(v)]; });
+      var n = Math.floor(q);
+      ctx.globalAlpha = fade * Math.min(1, q / NF + 0.2);
+      ctx.beginPath();
+      for (var k = 0; k <= n; k++){ var w = (k / NF) * (Y1 - Y0) * 0.11; k ? ctx.lineTo(ap[k][0], ap[k][1] - w) : ctx.moveTo(ap[k][0], ap[k][1]); }
+      for (k = n; k >= 0; k--){ var w2 = (k / NF) * (Y1 - Y0) * 0.11; ctx.lineTo(ap[k][0], ap[k][1] + w2); }
+      ctx.closePath(); ctx.fillStyle = "rgba(60,202,187,.16)"; ctx.fill();
+      ctx.globalAlpha = fade;
+      path(bp, q); ctx.setLineDash([5, 5]); ctx.strokeStyle = "rgba(255,255,255,.5)"; ctx.lineWidth = 1.8; ctx.stroke(); ctx.setLineDash([]);
+      ctx.save(); ctx.shadowColor = "rgba(60,202,187,.7)"; ctx.shadowBlur = 12;
+      path(ap, q); ctx.strokeStyle = "#5FE8D6"; ctx.lineWidth = 2.8; ctx.stroke(); ctx.restore();
+      if (p > 5.8){
+        var gp = Math.min(1, (p - 5.8) / 0.5), xe = fx(NF) + 10, ya = py(act[NF]), yb = py(base[NF]);
+        ctx.globalAlpha = fade * gp; ctx.strokeStyle = "#7FF2E3"; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(xe, yb); ctx.lineTo(xe, yb + (ya - yb) * gp); ctx.moveTo(xe - 4, yb); ctx.lineTo(xe + 4, yb); if (gp >= 1){ ctx.moveTo(xe - 4, ya); ctx.lineTo(xe + 4, ya); } ctx.stroke();
+        var pulse = 4 + Math.sin(p * 5) * 1.5;
+        ctx.fillStyle = "#5FE8D6"; ctx.beginPath(); ctx.arc(fx(NF), ya, pulse, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "rgba(255,255,255,.75)"; ctx.beginPath(); ctx.arc(fx(NF), yb, 3.2, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    if (cu > 0){
+      ctx.globalAlpha = fade * cu; var sy = py(obs[NO - 1]);
+      ctx.fillStyle = "#0A4246"; ctx.beginPath(); ctx.arc(XS, sy, 6.5, 0, Math.PI * 2); ctx.fill();
+      ctx.lineWidth = 2.5; ctx.strokeStyle = "#FFFFFF"; ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = "rgba(255,255,255,.18)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X0, BY + 0.5); ctx.lineTo(X1, BY + 0.5); ctx.stroke();
+  }
+  function frame(ts){
+    raf = 0; if (!onScreen) return;
+    if (!W && !layout()){ raf = requestAnimationFrame(frame); return; }
+    if (!t0) t0 = ts;
+    var el = (ts - t0) / 1000, c = Math.floor(el / T);
+    if (c !== cyc){ cyc = c; gen(); }
+    draw(el - c * T); raf = requestAnimationFrame(frame);
+  }
+  function start(){ if (reduce){ if (layout()){ if (!obs.length) gen(); draw(7.5); } return; } if (!raf) raf = requestAnimationFrame(frame); }
+  if (window.ResizeObserver) new ResizeObserver(function(){ if (layout() && reduce) start(); }).observe(cv);
+  if (window.IntersectionObserver) new IntersectionObserver(function(es){ onScreen = es[0].isIntersecting; if (onScreen) start(); }, { threshold: 0 }).observe(cv);
+  document.addEventListener("visibilitychange", function(){ onScreen = !document.hidden; if (onScreen) start(); });
+  start();
+})();
+</script>
+<nav aria-label="Mobile main menu" class="m-tab"><a data-t="home" href="index.html">Home</a><a data-t="product" href="product.html#product">Product</a><a data-t="industry" href="industry.html#industry">Industry</a><a data-t="rnd" href="rnd.html#rnd">R&amp;D</a><a data-t="company" href="company.html#about">Company</a></nav>
+<button class="m-top" type="button">Back to Top</button>
+<script>
+/* 모바일 웹 버전: 하단 탭·하위 탭 현재 위치 표시, 맨 위로, 입력 중 하단 탭 숨김 */
+(function(){
+  var page = document.body.getAttribute("data-page");
+  var tab = document.querySelector('.m-tab a[data-t="' + page + '"]');
+  if (tab) tab.setAttribute("aria-current", "page");
+  var sub = document.querySelector(".m-sub");
+  function syncSub(){
+    if (!sub) return;
+    var links = [].slice.call(sub.querySelectorAll("a")), h = (location.hash || "").replace("#", "");
+    var hit = links.filter(function(a){ return a.getAttribute("data-h") === h; })[0] || links[0];
+    links.forEach(function(a){ if (a === hit) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (hit && sub.scrollWidth > sub.clientWidth) sub.scrollTo({ left: hit.offsetLeft - 16, behavior: "smooth" });
+  }
+  window.addEventListener("hashchange", syncSub); syncSub();
+  var topBtn = document.querySelector(".m-top");
+  function onScroll(){ if (topBtn) topBtn.classList.toggle("on", window.scrollY > 700); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  if (topBtn) topBtn.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
+  function isField(el){ return el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !/^(checkbox|radio|button|submit)$/.test(el.type || ""); }
+  document.addEventListener("focusin", function(e){ if (isField(e.target)) document.body.classList.add("m-typing"); });
+  document.addEventListener("focusout", function(e){ if (isField(e.target)) document.body.classList.remove("m-typing"); });
+})();
+</script>
+<script>
+/* 언어 선택: 다른 언어를 누르면 현재 화면(해시)과 문의 유형(쿼리)을 유지한 채 이동 */
+document.addEventListener("click", function(e){ var a = e.target.closest && e.target.closest(".lang-sw a"); if (!a) return; e.preventDefault(); if (a.classList.contains("on")) return; location.href = a.getAttribute("href") + location.search + location.hash; });
+</script>
+</body>
+</html>

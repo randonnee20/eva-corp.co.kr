@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<link href="assets/img/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>EVA Data Diagnosis Inquiry</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+/* 한글 본문: Pretendard(OFL-1.1) KS X 1001 서브셋 내장 / 영문 라벨·숫자: Poppins */
+@font-face{font-family:"Pretendard EVA";src:url(assets/fonts/PretendardKS.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+:root{
+  --navy:#0B2B3A;
+  --navy-2:#0F3A4C;
+  --navy-3:#15505F;
+  --teal:#14968E;
+  --teal-dk:#0E7B74;
+  --teal-hi:#3CCABB;
+  --teal-soft:#E7F5F3;
+  --ink:#0E202C;
+  --body:#53646F;
+  --muted:#80909A;
+  --line:#E0E8EB;
+  --mist:#F4F7F9;
+  --paper:#FFFFFF;
+  --warn:#DB6A2C;
+  --on-dark:#FFFFFF;
+  --on-dark-2:#B9CAD2;
+  --f-kr:"Pretendard EVA","Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --f-en:"Poppins","Pretendard EVA","Apple SD Gothic Neo",sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--body);
+  font-family:var(--f-kr);font-size:16px;line-height:1.7;font-weight:400;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-0.005em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{color:var(--ink);font-weight:700;letter-spacing:-0.03em;line-height:1.3;text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--teal-hi);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.acc{color:var(--teal)}
+.blk{display:block}
+.nw{white-space:nowrap}
+.en{font-family:var(--f-en)}
+
+/* 공통 타이포 */
+.eyebrow{font-family:var(--f-en);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);line-height:1.4}
+.eyebrow.ko{font-family:var(--f-kr);font-size:13.5px;font-weight:700;letter-spacing:.01em;text-transform:none}
+.eyebrow.dot{display:inline-flex;align-items:center;gap:8px}
+.eyebrow.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.h2{font-size:clamp(26px,1.9vw + 14px,40px)}
+.h2 .acc{display:block}
+.lead{font-size:16.5px;line-height:1.8;color:var(--body);max-width:64ch}
+.sec{padding-block:clamp(72px,8vw,108px)}
+.sec-head{display:grid;gap:12px;justify-items:center;text-align:center;margin-bottom:clamp(40px,5vw,56px)}
+.sec-head .lead{margin-top:6px}
+.rule{width:40px;height:2px;background:var(--teal);border-radius:2px;margin-top:4px}
+.on-dark h2,.on-dark h3{color:var(--on-dark)}
+.on-dark .acc{color:var(--teal-hi)}
+.on-dark .eyebrow{color:var(--teal-hi)}
+
+/* 버튼 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 24px;border-radius:7px;font-family:var(--f-kr);font-size:15px;font-weight:700;letter-spacing:-0.01em;border:1.5px solid transparent;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-teal{background:var(--teal);color:var(--on-dark)}
+.btn-teal:hover{background:var(--teal-dk)}
+.btn-ghost{border-color:rgba(255,255,255,.45);color:var(--on-dark)}
+.btn-ghost:hover{border-color:var(--on-dark);background:rgba(255,255,255,.07)}
+.btn-white{background:var(--paper);color:var(--navy)}
+.btn-white:hover{background:var(--teal-soft)}
+.btn-dark{background:var(--navy);color:var(--on-dark)}
+.btn-dark:hover{background:var(--navy-3)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+/* CSS 화살표 */
+.arw{position:relative;display:inline-block;width:26px;height:12px;flex:none;color:var(--teal);vertical-align:middle}
+.arw::before{content:"";position:absolute;left:0;right:2px;top:50%;height:2px;margin-top:-1px;background:currentColor;border-radius:2px}
+.arw::after{content:"";position:absolute;right:1px;top:50%;width:8px;height:8px;margin-top:-4px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+
+/* 표식(아이콘 대신 번호) */
+.mk{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-en);font-weight:600;font-size:14px;color:var(--teal);background:var(--teal-soft);border:1px solid #CDEBE6}
+
+
+[hidden]{display:none!important}
+/* ---------- 공통: 상단바 ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-en);color:var(--navy)}
+.logo .mark{display:block;width:34px;height:auto;flex:none;color:var(--navy)}
+.logo b{font-size:24px;font-weight:700;letter-spacing:.03em;line-height:1}
+.nav{display:flex;align-items:center;gap:40px}
+.nav .gnb{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.gnb > li{position:relative}
+.nav a.m{display:block;font-family:var(--f-en);font-size:15px;font-weight:600;color:#2F414D;padding:24px 16px;position:relative}
+.nav a.m::after{content:"";position:absolute;left:16px;right:16px;bottom:16px;height:2px;background:var(--teal);transform:scaleX(0);transition:transform .2s}
+.gnb > li:hover > a.m,.gnb > li:focus-within > a.m{color:var(--teal)}
+.gnb > li:hover > a.m::after,.gnb > li:focus-within > a.m::after{transform:scaleX(1)}
+.sub{list-style:none;margin:0;padding:8px;position:absolute;left:50%;top:calc(100% - 8px);min-width:210px;transform:translate(-50%,6px);background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 22px 40px -20px rgba(11,43,58,.35);opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.gnb > li:hover .sub,.gnb > li:focus-within .sub{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.sub a{display:block;padding:10px 14px;border-radius:7px;font-family:var(--f-en);font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap}
+.sub a:hover,.sub a:focus-visible{background:var(--teal-soft);color:var(--teal-dk)}
+.menu-btn{display:none;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:7px;background:var(--paper);font-weight:700;font-size:14px;color:var(--navy);cursor:pointer}
+
+/* Layout: 데이터 진단 문의 - 다크 페이지 헤더 / 좌측 안내 + 우측 문의 양식 / 관리자용 문의 내역 테이블과 상세 패널 */
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-family:var(--f-en);font-size:13px;font-weight:500;color:var(--on-dark-2)}
+.crumb a:hover{color:var(--on-dark)}
+.crumb i{width:5px;height:5px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg);opacity:.7}
+.crumb span[aria-current]{color:var(--on-dark)}
+.phead{background:var(--navy);position:relative;overflow:hidden}
+.phead::before{content:"";position:absolute;inset:0;background:radial-gradient(55% 120% at 100% 0%,rgba(60,202,187,.16),transparent 62%);pointer-events:none}
+.phead::after{content:"";position:absolute;right:5%;top:0;width:min(420px,40%);height:100%;background-image:radial-gradient(rgba(255,255,255,.13) 1px,transparent 1.4px);background-size:18px 18px;-webkit-mask-image:linear-gradient(200deg,#000 15%,transparent 75%);mask-image:linear-gradient(200deg,#000 15%,transparent 75%);pointer-events:none}
+.phead .wrap{position:relative;z-index:1;padding-block:clamp(36px,4vw,52px) clamp(44px,5vw,64px);display:grid;gap:16px}
+.phead h1{color:var(--on-dark);font-size:clamp(30px,2vw + 18px,46px);font-weight:700;letter-spacing:-0.035em}
+.phead .lead{color:var(--on-dark-2);max-width:60ch}
+.ph-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 24px}
+.ph-row .btn{height:40px;font-size:14px}
+
+/* 문의 양식 */
+.cgrid{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(28px,4vw,56px);align-items:start}
+.aside{display:grid;gap:18px;position:sticky;top:96px}
+.aside h2{font-size:clamp(22px,1vw + 15px,28px)}
+.aside p{font-size:15px;line-height:1.8}
+.steps{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:14.5px;font-weight:600;color:var(--ink)}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+.steps li span{width:32px;height:32px;border-radius:50%;background:var(--teal-soft);color:var(--teal-dk);font-family:var(--f-en);font-size:12px;font-weight:600;display:grid;place-items:center}
+.note-box{background:var(--mist);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.7;color:var(--body)}
+.note-box b{color:var(--ink)}
+
+form.card{border:1px solid var(--line);border-radius:16px;background:var(--paper);padding:clamp(22px,3vw,36px);display:grid;gap:26px;box-shadow:0 26px 60px -48px rgba(11,43,58,.6)}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:16px;min-width:0}
+legend{padding:0;margin-bottom:14px;font-family:var(--f-en);font-size:12px;letter-spacing:.16em;font-weight:600;color:var(--teal);display:flex;align-items:center;gap:10px;width:100%}
+legend::after{content:"";flex:1;height:1px;background:var(--line)}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.fld{display:grid;gap:7px;min-width:0}
+.fld > label,.fld > .lbl{font-size:14px;font-weight:700;color:var(--ink)}
+.req{color:var(--warn);margin-left:3px;font-weight:700}
+.opt{color:var(--muted);font-weight:500;font-size:12.5px;margin-left:6px}
+input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--paper);border:1px solid #CBD6DB;border-radius:8px;padding:11px 13px;min-height:46px;transition:border-color .15s,box-shadow .15s}
+textarea{min-height:170px;resize:vertical;line-height:1.7}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:36px}
+input::placeholder,textarea::placeholder{color:#9AA8B0}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(20,150,142,.15)}
+.fld.bad input,.fld.bad select,.fld.bad textarea,.choice.bad{border-color:var(--warn)}
+.err{font-size:12.5px;color:var(--warn);font-weight:600;min-height:0}
+.err:empty{display:none}
+.hint{font-size:12.5px;color:var(--muted)}
+.choice{display:flex;flex-wrap:wrap;gap:8px;border:1px solid transparent;border-radius:10px}
+.choice label{position:relative;cursor:pointer}
+.choice input{position:absolute;opacity:0;width:1px;height:1px}
+.choice span{display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:1px solid #CBD6DB;border-radius:999px;font-size:14px;font-weight:600;color:var(--body);background:var(--paper);transition:background .15s,border-color .15s,color .15s}
+.choice label:hover span{border-color:var(--teal)}
+.choice input:checked + span{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.choice input:focus-visible + span{outline:2px solid var(--teal-hi);outline-offset:2px}
+.counter{justify-self:end;font-family:var(--f-en);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.consents{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:20px}
+.cons{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:start;font-size:14.5px;color:var(--ink);font-weight:600;line-height:1.5}
+.cons input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--teal)}
+.cons .tag{font-size:12.5px;font-weight:700;margin-right:4px}
+.cons .tag.r{color:var(--warn)}
+.cons .tag.o{color:var(--muted)}
+.cons button{border:0;background:none;padding:0;font:inherit;font-size:13px;font-weight:600;color:var(--teal-dk);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.terms{margin:2px 0 4px 32px;background:var(--mist);border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.75;color:var(--body)}
+.terms dl{margin:0;display:grid;grid-template-columns:92px minmax(0,1fr);gap:6px 12px}
+.terms dt{font-weight:700;color:var(--ink)}
+.terms dd{margin:0}
+.submit-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.submit-row .btn{min-width:200px;height:52px;font-size:16px}
+.submit-row .btn[disabled]{opacity:.6;cursor:default;transform:none}
+.form-msg{font-size:14px;font-weight:600;color:var(--warn)}
+.done{border:1px solid #CBE9E5;background:var(--teal-soft);border-radius:16px;padding:clamp(28px,4vw,44px);display:grid;gap:12px;justify-items:start}
+.done .en{font-family:var(--f-en);font-size:12px;letter-spacing:.18em;font-weight:600;color:var(--teal-dk)}
+.done h2{font-size:clamp(22px,1vw + 15px,28px)}
+.done p{font-size:15px;line-height:1.8}
+.done dl{margin:6px 0 0;display:grid;grid-template-columns:96px minmax(0,1fr);gap:6px 14px;font-size:14px}
+.done dt{color:var(--muted);font-weight:600}
+.done dd{margin:0;color:var(--ink);font-weight:700}
+
+
+/* ---------- 공통: 하단 ---------- */
+.foot{background:#08202B;color:#9AB0BB;padding-block:56px 28px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px 56px;flex-wrap:wrap}
+.foot-brand{min-width:0}
+.foot-right{display:flex;align-items:flex-start;gap:56px;flex-wrap:wrap}
+.foot-menus{display:grid;grid-template-columns:repeat(4,auto);gap:24px 44px}
+.partner{display:grid;justify-items:end;gap:12px;padding-left:44px;border-left:1px solid rgba(255,255,255,.1)}
+.partner small{font-family:var(--f-en);font-size:11.5px;letter-spacing:.16em;font-weight:600;color:#8AA1AD}
+.partner .plate{display:inline-flex;background:#FFFFFF;border-radius:8px;padding:10px 16px}
+.partner img{display:block;width:170px;height:auto}
+.foot .logo{color:var(--on-dark)}
+.foot .logo .mark{width:40px;color:var(--on-dark)}
+.foot .logo b{font-size:26px}
+.foot-tag{font-family:var(--f-en);font-size:12px;letter-spacing:.1em;font-weight:600;color:var(--teal-hi);margin-top:14px}
+.foot h4{color:var(--on-dark);font-size:14px;margin-bottom:14px;font-family:var(--f-en);font-weight:600;letter-spacing:.01em}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;font-family:var(--f-en)}
+.foot a:hover{color:var(--on-dark)}
+.foot-bot{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px}
+.foot-bot a{color:#C9D7DE}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:1100px){
+  .nav a.m{padding-inline:12px}
+  .nav a.m::after{left:12px;right:12px}
+}
+@media (max-width:960px){
+  .nav .gnb,.nav .btn{display:none}
+  .menu-btn{display:inline-flex;align-items:center}
+  .nav.open{position:absolute;left:0;right:0;top:72px;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -20px rgba(11,43,58,.3);padding:12px max(20px,env(safe-area-inset-right,0px)) 20px max(20px,env(safe-area-inset-left,0px));display:grid;gap:12px}
+  .nav.open .gnb{display:grid;gap:4px}
+  .nav.open a.m{padding:10px 0 4px;font-size:15.5px;color:var(--ink)}
+  .nav.open a.m::after{display:none}
+  .nav.open .sub{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;padding:0 0 8px 12px;min-width:0;background:transparent;display:grid;gap:0}
+  .nav.open .sub a{padding:7px 10px;font-size:14px;color:var(--body)}
+  .nav.open .btn{display:inline-flex;justify-self:start}
+  .foot-top,.foot-right{flex-direction:column;gap:32px}
+  .foot-menus{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+  .partner{justify-items:start;padding-left:0;border-left:0}
+  .cgrid{grid-template-columns:minmax(0,1fr)}
+  .aside{position:static}
+}
+@media (max-width:640px){
+  .row2{grid-template-columns:minmax(0,1fr)}
+  .terms{margin-left:0}
+  .terms dl{grid-template-columns:minmax(0,1fr)}
+  .submit-row .btn{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.hpw{position:absolute!important;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+</style>
+<meta content="#0B2B3A" name="theme-color"/>
+<style>
+/* ===== 모바일 웹 버전(768px 이하): 앱 형태 화면 ===== */
+.m-tab,.m-sub,.m-cta,.m-top{display:none}
+@keyframes mfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:768px){
+  html{-webkit-text-size-adjust:100%}
+  body{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+  .top-in{height:56px}
+  .top .logo .mark{width:28px;height:28px}
+  .menu-btn,.nav{display:none!important}
+  .m-cta{display:inline-flex;align-items:center;height:34px;padding:0 16px;border-radius:999px;background:var(--teal);color:var(--on-dark);font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+  body[data-page="contact"] .m-cta{visibility:hidden}
+  .m-sub{display:flex;gap:6px;position:sticky;top:calc(56px + env(safe-area-inset-top,0px));z-index:45;padding:9px 16px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+  .m-sub::-webkit-scrollbar{display:none}
+  .m-sub a{flex:none;padding:7px 15px;border-radius:999px;font-family:var(--f-en);font-size:13.5px;font-weight:600;color:var(--body);background:var(--mist);border:1px solid var(--line);white-space:nowrap;transition:background .2s,color .2s}
+  .m-sub a[aria-current]{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+  .m-tab{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:60;height:calc(62px + env(safe-area-inset-bottom,0px));padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);box-shadow:0 -10px 28px -20px rgba(11,43,58,.4);transition:transform .22s ease}
+  .m-tab a{display:grid;justify-items:center;align-content:center;gap:6px;font-family:var(--f-en);font-size:12.5px;font-weight:600;color:var(--muted)}
+  .m-tab a::before{content:"";width:20px;height:3px;border-radius:3px;background:transparent;transition:background .2s}
+  .m-tab a[aria-current]{color:var(--navy)}
+  .m-tab a[aria-current]::before{background:var(--teal)}
+  body.m-typing .m-tab{transform:translateY(110%)}
+  .m-top{display:block;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:55;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--navy);font:inherit;font-size:12.5px;font-weight:700;box-shadow:0 12px 26px -14px rgba(11,43,58,.55);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;cursor:pointer}
+  .m-top.on{opacity:1;pointer-events:auto;transform:none}
+  body.m-typing .m-top{opacity:0;pointer-events:none}
+  .crumb{display:none!important}
+  #view-detail .crumb{display:flex!important}
+  .foot{padding-block:36px 24px}
+  .foot-menus{display:none!important}
+  .foot-bot{margin-top:28px}
+  main{animation:mfade .35s ease both}
+}
+@media (max-width:768px) and (prefers-reduced-motion:reduce){main{animation:none}}
+</style>
+<style>
+/* 영문판 보정: 영어 문구 길이에 맞춘 너비·글자 크기 */
+html[lang="en"] .assert dl{grid-template-columns:104px minmax(0,1fr) 104px minmax(0,1fr)}
+@media (max-width:640px){ html[lang="en"] .assert dl{grid-template-columns:104px minmax(0,1fr)} }
+html[lang="en"] .assert dt{overflow-wrap:normal;word-break:normal}
+html[lang="en"] .tile .t{font-size:clamp(14px,4.2cqw,26px)}
+html[lang="en"] .lyr b{font-size:14.5px}
+html[lang="en"] .stats .v{font-size:clamp(16px,.8vw + 9px,21px)}
+html[lang="en"] .hero h1{font-size:clamp(30px,1.8vw + 17px,46px)}
+html[lang="en"] .hero-copy{max-width:760px}
+.ko-note{margin:8px 0 0;font-size:12.5px;color:var(--muted);text-align:center}
+</style>
+<style>
+/* 언어 선택(KOR | ENG): 두 언어를 함께 보여 주고 현재 언어를 강조 */
+.lang-sw{display:inline-flex;align-items:center;gap:2px;margin-left:8px;font-family:var(--f-en);font-size:12.5px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.lang-sw a{padding:6px 6px;color:var(--muted);border-radius:6px;transition:color .2s}
+.lang-sw a:hover{color:var(--teal-dk)}
+.lang-sw a.on{color:var(--navy);box-shadow:inset 0 -2px 0 var(--teal);border-radius:0;cursor:default}
+.lang-sw span{color:#C5D2D8;font-weight:400}
+.lang-sw.m-only{display:none}
+@media (max-width:960px){ .nav .lang-sw{display:none} .lang-sw.m-only{display:inline-flex;margin-left:auto} }
+@media (max-width:768px){ .lang-sw.m-only{margin-right:-16px;font-size:12px} .lang-sw.m-only a{padding:6px 4px} }
+</style>
+<link rel="alternate" hreflang="en" href="contact.html">
+<link rel="alternate" hreflang="ko" href="ko/contact.html">
+<link rel="alternate" hreflang="x-default" href="contact.html">
+</head>
+<body data-page="contact">
+<header class="top">
+<div class="wrap top-in">
+<a aria-label="EVA home" class="logo" href="index.html"><svg aria-hidden="true" class="mark" focusable="false" viewbox="0 0 995 930"><path d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z" fill="currentColor" fill-rule="evenodd"></path></svg><b>EVA</b></a>
+<nav aria-label="Main menu" class="nav" id="nav">
+<ul class="gnb">
+<li><a class="m" href="product.html#product">Product</a>
+<ul class="sub"><li><a href="product.html#ai-engine-document">AI Engine Document</a></li><li><a href="product.html#ai-engine-factory">AI Engine Factory</a></li></ul></li>
+<li><a class="m" href="industry.html#industry">Industry</a>
+<ul class="sub"><li><a href="industry.html#manufacturing">Manufacturing</a></li><li><a href="industry.html#finance">Finance</a></li></ul></li>
+<li><a class="m" href="rnd.html#rnd">Resource</a>
+<ul class="sub"><li><a href="rnd.html#rnd">R&amp;D</a></li></ul></li>
+<li><a class="m" href="company.html#about">Company</a>
+<ul class="sub"><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></li>
+</ul>
+<a class="btn btn-teal btn-sm" href="contact.html?type=diagnosis">Request a Data Diagnosis</a>
+<div class="lang-sw" role="group" aria-label="Language"><a href="ko/contact.html" hreflang="ko" lang="ko" aria-label="한국어">KOR</a><span aria-hidden="true">|</span><a href="contact.html" hreflang="en" lang="en" aria-label="English" class="on" aria-current="true">ENG</a></div></nav>
+<div class="lang-sw m-only" role="group" aria-label="Language"><a href="ko/contact.html" hreflang="ko" lang="ko" aria-label="한국어">KOR</a><span aria-hidden="true">|</span><a href="contact.html" hreflang="en" lang="en" aria-label="English" class="on" aria-current="true">ENG</a></div>
+    <a class="m-cta" href="contact.html?type=diagnosis">Contact</a>
+<button aria-controls="nav" aria-expanded="false" class="menu-btn" id="menuBtn" type="button">Menu</button>
+</div>
+</header>
+<main id="contact-page">
+<!-- ===================== 문의 양식 ===================== -->
+<div class="cview" id="v-contact">
+<section aria-labelledby="ct-t" class="phead on-dark">
+<div class="wrap">
+<nav aria-label="Breadcrumb" class="crumb"><a href="index.html">Home</a><i></i><span aria-current="page">Request a Data Diagnosis</span></nav>
+<div class="ph-row">
+<div style="display:grid;gap:14px">
+<p class="eyebrow" style="color:var(--teal-hi)">Contact</p>
+<h1 id="ct-t">Request a Data Diagnosis</h1>
+<p class="lead">Tell us about the problem you want to solve and your current situation. Our team will review it and get back to you.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="sec" style="padding-top:clamp(44px,5vw,64px)">
+<div class="wrap cgrid">
+<aside class="aside">
+<p class="eyebrow dot">How it works</p>
+<h2>How the inquiry process works</h2>
+<ol class="steps">
+<li><span>01</span>Submit the inquiry form</li>
+<li><span>02</span>Our team reviews your inquiry</li>
+<li><span>03</span>We schedule a consultation</li>
+</ol>
+<p class="note-box">Fields marked <b class="req" style="margin:0">*</b> are required. Using your work email helps us review your inquiry faster.</p>
+</aside>
+<div id="formArea">
+<form class="card" id="inqForm" novalidate=""><div aria-hidden="true" class="hpw"><label>Website<input autocomplete="off" name="website" tabindex="-1" type="text"/></label></div>
+<fieldset>
+<legend>CONTACT INFO</legend>
+<div class="row2">
+<div class="fld"><label for="f-last">Last Name<span class="req">*</span></label><input autocomplete="family-name" id="f-last" maxlength="40" name="lastName" required="" type="text"/><span class="err"></span></div>
+<div class="fld"><label for="f-first">First Name<span class="req">*</span></label><input autocomplete="given-name" id="f-first" maxlength="40" name="firstName" required="" type="text"/><span class="err"></span></div>
+</div>
+<div class="fld"><label for="f-company">Company<span class="req">*</span></label><input autocomplete="organization" id="f-company" maxlength="80" name="company" required="" type="text"/><span class="err"></span></div>
+<div class="row2">
+<div class="fld"><label for="f-industry">Industry<span class="req">*</span></label>
+<select id="f-industry" name="industry" required="">
+<option value="">Please select</option>
+<option value="반도체·전자">Semiconductors &amp; Electronics</option><option value="자동차·모빌리티">Automotive &amp; Mobility</option><option value="기계·장비">Machinery &amp; Equipment</option><option value="화학·소재">Chemicals &amp; Materials</option><option value="철강·금속">Steel &amp; Metals</option><option value="에너지·유틸리티">Energy &amp; Utilities</option><option value="바이오·제약·헬스케어">Biotech, Pharma &amp; Healthcare</option><option value="금융·보험">Finance &amp; Insurance</option><option value="리테일·커머스">Retail &amp; Commerce</option><option value="물류·유통">Logistics &amp; Distribution</option><option value="공공·정부기관">Public Sector &amp; Government</option><option value="연구기관·대학">Research Institutes &amp; Universities</option><option value="기타">Other</option>
+</select><span class="err"></span></div>
+<div class="fld"><label for="f-role">Job Role<span class="req">*</span></label>
+<select id="f-role" name="role" required="">
+<option value="">Please select</option>
+<option value="경영진">Executive / C-level</option><option value="중간 관리자">Middle Management</option><option value="실무 담당자">Individual Contributor / Staff</option><option value="엔지니어·개발자">Engineer / Developer</option><option value="연구원">Researcher</option><option value="기타">Other</option>
+</select><span class="err"></span></div>
+</div>
+<div class="row2">
+<div class="fld"><label for="f-dept">Department<span class="opt">Optional</span></label><input id="f-dept" maxlength="60" name="department" type="text"/></div>
+<div class="fld"><label for="f-pos">Job Title<span class="opt">Optional</span></label><input id="f-pos" maxlength="40" name="position" type="text"/></div>
+</div>
+<div class="fld"><label for="f-email">Work Email<span class="req">*</span></label><input autocomplete="email" id="f-email" maxlength="120" name="email" placeholder="name@company.com" required="" type="email"/><span class="err"></span></div>
+<div class="row2">
+<div class="fld"><label for="f-country">Country / Region<span class="req">*</span></label>
+<select id="f-country" name="country" required="">
+<option value="대한민국">South Korea</option><option value="미국">United States</option><option value="일본">Japan</option><option value="중국">China</option><option value="대만">Taiwan</option><option value="베트남">Vietnam</option><option value="싱가포르">Singapore</option><option value="독일">Germany</option><option value="기타">Other</option>
+</select><span class="err"></span></div>
+<div class="fld"><label for="f-phone">Phone<span class="opt">Optional</span></label><input autocomplete="tel" id="f-phone" maxlength="30" name="phone" placeholder="+82 10 0000 0000" type="tel"/><span class="err"></span></div>
+</div>
+</fieldset>
+<fieldset>
+<legend>INQUIRY</legend>
+<div class="fld"><span class="lbl" id="l-help">How can we help you?<span class="req">*</span></span>
+<div aria-labelledby="l-help" class="choice" data-name="helpType" role="radiogroup">
+<label><input name="helpType" type="radio" value="도입 및 상담 문의"/><span>Adoption &amp; Consultation Inquiry</span></label>
+<label><input name="helpType" type="radio" value="데이터 진단 요청"/><span>Data Diagnosis Request</span></label>
+<label><input name="helpType" type="radio" value="파트너십 문의"/><span>Partnership Inquiry</span></label>
+<label><input name="helpType" type="radio" value="기술 지원 문의"/><span>Technical Support Inquiry</span></label>
+<label><input name="helpType" type="radio" value="기타 문의"/><span>Other Inquiry</span></label>
+</div><span class="err"></span></div>
+<div class="fld"><span class="lbl" id="l-stage">What stage is your company at in its AI adoption plans?<span class="req">*</span></span>
+<div aria-labelledby="l-stage" class="choice" data-name="aiStage" role="radiogroup">
+<label><input name="aiStage" type="radio" value="AI 활용방안 기술 탐색"/><span>Exploring AI Use Cases &amp; Technologies</span></label>
+<label><input name="aiStage" type="radio" value="PoC 또는 도입 예정"/><span>PoC or Adoption Planned</span></label>
+<label><input name="aiStage" type="radio" value="일부 현장 적용"/><span>Applied at Some Sites</span></label>
+<label><input name="aiStage" type="radio" value="전사 확산·고도화"/><span>Scaling Company-wide</span></label>
+<label><input name="aiStage" type="radio" value="아직 계획 없음"/><span>No Plans Yet</span></label>
+</div><span class="err"></span></div>
+<div class="fld"><label for="f-msg">Message<span class="req">*</span></label>
+<textarea id="f-msg" maxlength="3000" name="message" placeholder="Feel free to describe the problem you want to solve, the data you have, and the results you expect." required=""></textarea>
+<span class="counter" id="msgCount">0 / 3,000</span><span class="err"></span></div>
+</fieldset>
+<div class="consents">
+<div class="fld" style="gap:4px">
+<label class="cons"><input id="f-privacy" name="consentPrivacy" type="checkbox"/><span><span class="tag r">(Required)</span>I agree to the collection and use of my personal information.</span><button aria-controls="termsP" aria-expanded="false" data-toggle="termsP" type="button">View Details</button></label>
+<div class="terms" hidden="" id="termsP"><dl><dt>Information collected</dt><dd>Last name, first name, company, industry, job role, department, job title, email, country/region, phone, message</dd><dt>Purpose of use</dt><dd>Reviewing and responding to inquiries, and conducting consultations</dd><dt>Retention period</dt><dd>In accordance with Section 3 of the Privacy Policy, your information is destroyed without delay once the purpose of handling your inquiry is achieved, unless retention is required by applicable law, in which case it is kept for the legally required period.</dd></dl></div>
+<span class="err"></span>
+</div>
+<label class="cons"><input id="f-mkt" name="consentMarketing" type="checkbox"/><span><span class="tag o">(Optional)</span>I agree to receive marketing information.</span><span></span></label>
+</div>
+<div class="submit-row">
+<span class="form-msg" id="formMsg" role="alert"></span>
+<button class="btn btn-teal" id="submitBtn" type="submit">Submit Inquiry</button>
+</div>
+</form>
+<div class="done" hidden="" id="doneBox" tabindex="-1">
+<span class="en">THANK YOU</span>
+<h2>Your inquiry has been received</h2>
+<p>Our team will review your inquiry and contact you at the email address you provided.</p>
+<dl id="doneDl"></dl>
+<button class="btn btn-teal btn-sm" id="againBtn" type="button">Submit a New Inquiry</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer class="foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-brand">
+<a aria-label="EVA home" class="logo" href="index.html"><svg aria-hidden="true" class="mark" focusable="false" viewbox="0 0 995 930"><path d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z" fill="currentColor" fill-rule="evenodd"></path></svg><b>EVA</b></a>
+<p class="foot-tag">EMPOWERING VALUE THROUGH AI</p>
+</div>
+<div class="foot-right">
+<nav aria-label="Footer menu" class="foot-menus">
+<div><h4>Product</h4><ul><li><a href="product.html#ai-engine-document">AI Engine Document</a></li><li><a href="product.html#ai-engine-factory">AI Engine Factory</a></li></ul></div>
+<div><h4>Industry</h4><ul><li><a href="industry.html#manufacturing">Manufacturing</a></li><li><a href="industry.html#finance">Finance</a></li></ul></div>
+<div><h4>Resource</h4><ul><li><a href="rnd.html#rnd">R&amp;D</a></li></ul></div>
+<div><h4>Company</h4><ul><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></div>
+</nav>
+<div class="partner">
+<small>PARTNER</small>
+<span class="plate"><img alt="NVIDIA Inception Program" height="63" src="assets/img/a7d02eebe501.png" width="180"/></span>
+</div>
+</div>
+</div>
+<div class="foot-bot">
+<span>© 2026 EVA. All rights reserved.</span>
+<a href="privacy.html">Privacy Policy</a>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  /* =====================================================================
+     문의 저장 방식
+     - claude.ai 미리보기: 페이지 저장소(inquiries)에 저장
+     - 실제 홈페이지(GitHub Pages): 폼 전달 서비스(Web3Forms/Formspree)로 보내 메일로 받음
+     ===================================================================== */
+  /* ===== 문의 메일 전송 설정 (이 블록만 고치면 전송 서비스를 바꿀 수 있습니다) ===== */
+  var FORM_PROVIDER = "web3forms";                  // "web3forms" 또는 "formspree"
+  var WEB3FORMS_KEY = "8693b6a8-c916-4b35-94d9-7a4a46ef5798"; // 서비스에서 발급받은 값
+  var FORMSPREE_ID  = "여기에_FORMSPREE_FORM_ID";    // formspree 사용 시 발급받은 값
+  var FALLBACK_MAIL = "contact@eva-corp.co.kr";     // 전송 실패 시 안내할 주소
+  var PAGE_T0 = Date.now();                         // 페이지 연 시각 (빠른 제출 차단용)
+  var EN = document.documentElement.lang === "en";
+
+  /* [입력 name, 메일에 보일 한글 이름, 영문 이름] : 메일 본문에 이 순서로 나옵니다 */
+  var FIELDS = [
+    ["lastName", "성", "Last name"], ["firstName", "이름", "First name"],
+    ["company", "회사명", "Company"], ["industry", "산업", "Industry"],
+    ["role", "직무 역할", "Job role"], ["department", "부서", "Department"],
+    ["position", "직급", "Job title"], ["country", "국가/지역", "Country/Region"],
+    ["phone", "전화", "Phone"], ["helpType", "도움이 필요한 부분", "How can we help"],
+    ["aiStage", "AI 도입 단계", "AI adoption stage"], ["message", "문의 내용", "Message"]
+  ];
+  var LBL = EN
+    ? { mk: "Marketing consent", yes: "Yes", no: "No",
+        lg: "Page language", lv: "English", at: "Submitted at (KST)" }
+    : { mk: "마케팅 수신 동의", yes: "동의", no: "미동의",
+        lg: "제출 페이지 언어", lv: "한국어", at: "접수 시각(KST)" };
+
+  function buildBody(data){
+    var prefix = EN ? "[EVA Website] " : "[EVA 홈페이지 문의] ";
+    var subject = prefix + data.helpType + " - " + data.company +
+                  " " + data.lastName + data.firstName;
+    var body = FORM_PROVIDER === "formspree"
+      ? { _subject: subject }
+      : { access_key: WEB3FORMS_KEY, subject: subject, from_name: "EVA Website" };
+    body.email = data.email;      // 받는 쪽에서 '답장'을 누르면 고객 메일로 갑니다
+    FIELDS.forEach(function(f){
+      if (data[f[0]]) body[EN ? f[2] : f[1]] = data[f[0]];
+    });
+    body[LBL.mk] = data.consentMarketing ? LBL.yes : LBL.no;
+    body[LBL.lg] = LBL.lv;
+    body[LBL.at] = new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
+    return body;
+  }
+
+  function sendMail(data){
+    // 봇 차단: 숨은 칸이 채워졌거나 3초 안에 제출되면 보내지 않고 정상처럼 처리
+    var hp = document.querySelector('#inqForm input[name="website"]');
+    if ((hp && hp.value) || Date.now() - PAGE_T0 < 3000) return Promise.resolve();
+    var url = "https://api.web3forms.com/submit";
+    if (FORM_PROVIDER === "formspree") url = "https://formspree.io/f/" + FORMSPREE_ID;
+    return fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(buildBody(data))
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(j){
+        var ok = FORM_PROVIDER === "formspree" ? j.ok !== false : j.success === true;
+        if (!r.ok || !ok) throw { code: r.status === 429 ? "rate_limited" : "http_" + r.status };
+        return j;
+      });
+    });
+  }
+  var COL = "inquiries";
+  var dbReady = (window.claude && window.claude.use) ? window.claude.use("db").catch(function(){ return null; }) : Promise.resolve(null);
+  function submitInquiry(data){
+    if (window.claude && window.claude.use){
+      return dbReady.then(function(db){
+        if (!db) throw { code: "unavailable" };
+        return db.collection(COL).add(data);
+      });
+    }
+    return sendMail(data);
+  }
+
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+  function fmt(iso){ if (!iso) return ""; var d = new Date(iso); if (isNaN(d)) return iso; function p(n){ return (n < 10 ? "0" : "") + n; } return d.getFullYear() + "." + p(d.getMonth()+1) + "." + p(d.getDate()) + " " + p(d.getHours()) + ":" + p(d.getMinutes()); }
+
+  /* ---------- 양식 ---------- */
+  var form = $("inqForm");
+  var msg = $("f-msg");
+  msg.addEventListener("input", function(){ $("msgCount").textContent = msg.value.length.toLocaleString() + " / 3,000"; });
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-toggle]");
+    if (t){ e.preventDefault(); var box = $(t.getAttribute("data-toggle")); box.hidden = !box.hidden; t.setAttribute("aria-expanded", box.hidden ? "false" : "true"); t.textContent = box.hidden ? "View Details" : "Hide"; }
+  });
+  function setErr(el, text){
+    var f = el.closest(".fld"); if (!f) return;
+    f.classList.toggle("bad", !!text);
+    var c = f.querySelector(".choice"); if (c) c.classList.toggle("bad", !!text);
+    var er = f.querySelector(".err"); if (er) er.textContent = text || "";
+  }
+  function val(name){ var el = form.elements[name]; if (!el) return ""; if (el.length && !el.tagName){ for (var i = 0; i < el.length; i++) if (el[i].checked) return el[i].value; return ""; } return (el.value || "").trim(); }
+  function validate(){
+    var first = null, ok = true;
+    function need(name, el, text){ if (!val(name)){ setErr(el, text); ok = false; first = first || el; } else setErr(el, ""); }
+    need("lastName", $("f-last"), "Please enter your last name.");
+    need("firstName", $("f-first"), "Please enter your first name.");
+    need("company", $("f-company"), "Please enter your company name.");
+    need("industry", $("f-industry"), "Please select your industry.");
+    need("role", $("f-role"), "Please select your job role.");
+    var em = $("f-email");
+    if (!val("email")){ setErr(em, "Please enter your email."); ok = false; first = first || em; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val("email"))){ setErr(em, "Please check the email format. Example: name@company.com"); ok = false; first = first || em; }
+    else setErr(em, "");
+    var ph = $("f-phone");
+    if (val("phone") && !/^[0-9+\-\s()]{7,30}$/.test(val("phone"))){ setErr(ph, "Please use only numbers, + and -."); ok = false; first = first || ph; } else setErr(ph, "");
+    need("helpType", form.querySelector('[name=helpType]'), "Please select the help you need.");
+    need("aiStage", form.querySelector('[name=aiStage]'), "Please select your AI adoption stage.");
+    need("message", msg, "Please enter your inquiry.");
+    var pv = $("f-privacy");
+    if (!pv.checked){ setErr(pv, "You must agree to the collection and use of personal information to submit an inquiry."); ok = false; first = first || pv; } else setErr(pv, "");
+    if (first) first.focus();
+    return ok;
+  }
+  form.addEventListener("change", function(e){ var f = e.target.closest(".fld"); if (f && f.classList.contains("bad")) setErr(e.target, ""); });
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    $("formMsg").textContent = "";
+    if (!validate()){ $("formMsg").textContent = "Please check your entries."; return; }
+    var data = {
+      createdAt: new Date().toISOString(), status: "신규", lang: (document.documentElement.lang === "en" ? "en" : "ko"),
+      lastName: val("lastName"), firstName: val("firstName"), company: val("company"), industry: val("industry"), role: val("role"),
+      department: val("department"), position: val("position"), email: val("email"), country: val("country"), phone: val("phone"),
+      helpType: val("helpType"), aiStage: val("aiStage"), message: val("message"),
+      consentPrivacy: true, consentMarketing: $("f-mkt").checked
+    };
+    var btn = $("submitBtn"); btn.disabled = true; btn.textContent = "Submitting";
+    submitInquiry(data).then(function(){
+      $("doneDl").innerHTML = "<dt>Submitted</dt><dd>" + esc(fmt(data.createdAt)) + "</dd><dt>Company</dt><dd>" + esc(data.company) + "</dd><dt>Inquiry Type</dt><dd>" + esc(((form.querySelector("input[name=helpType]:checked") || {}).parentNode || {}).textContent || data.helpType) + "</dd>";
+      form.hidden = true; $("doneBox").hidden = false; $("doneBox").focus();
+    }).catch(function(err){
+      var c = err && err.code;
+      $("formMsg").textContent = c === "rate_limited"
+        ? "We are receiving many requests. Please try again in a moment."
+        : "Your inquiry could not be sent. Please try again shortly, or email us directly at " + FALLBACK_MAIL + ".";
+    }).then(function(){ btn.disabled = false; btn.textContent = "Submit Inquiry"; });
+  });
+  $("againBtn").addEventListener("click", function(){ form.reset(); $("msgCount").textContent = "0 / 3,000"; form.hidden = false; $("doneBox").hidden = true; $("f-last").focus(); });
+
+  /* ---------- 모바일 메뉴 ---------- */
+  var nav = $("nav"), mbtn = $("menuBtn");
+  function setMenu(o){ nav.classList.toggle("open", o); mbtn.setAttribute("aria-expanded", o ? "true" : "false"); mbtn.textContent = o ? "Close" : "Menu"; }
+  mbtn.addEventListener("click", function(){ setMenu(!nav.classList.contains("open")); });
+  nav.addEventListener("click", function(e){ if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && nav.classList.contains("open")){ setMenu(false); mbtn.focus(); } });
+
+})();
+</script>
+<script>
+/* 통합: 다른 페이지의 문의 버튼에서 넘어온 값으로 문의 유형·산업을 미리 선택(사용자가 바꿀 수 있음) */
+(function(){
+  var q = new URLSearchParams(location.search);
+  var TYPE = { diagnosis: "데이터 진단 요청", adoption: "도입 및 상담 문의" };
+  var IND = { finance: "금융·보험" };
+  var t = TYPE[q.get("type")], ind = IND[q.get("industry")];
+  if (t){ var r = document.querySelector('input[name="helpType"][value="' + t + '"]'); if (r){ r.checked = true; r.dispatchEvent(new Event("change", {bubbles:true})); } }
+  if (ind){ var s = document.getElementById("f-industry"); if (s && !s.value){ s.value = ind; s.dispatchEvent(new Event("change", {bubbles:true})); } }
+})();
+</script>
+<nav aria-label="Mobile main menu" class="m-tab"><a data-t="home" href="index.html">Home</a><a data-t="product" href="product.html#product">Product</a><a data-t="industry" href="industry.html#industry">Industry</a><a data-t="rnd" href="rnd.html#rnd">R&amp;D</a><a data-t="company" href="company.html#about">Company</a></nav>
+<button class="m-top" type="button">Back to Top</button>
+<script>
+/* 모바일 웹 버전: 하단 탭·하위 탭 현재 위치 표시, 맨 위로, 입력 중 하단 탭 숨김 */
+(function(){
+  var page = document.body.getAttribute("data-page");
+  var tab = document.querySelector('.m-tab a[data-t="' + page + '"]');
+  if (tab) tab.setAttribute("aria-current", "page");
+  var sub = document.querySelector(".m-sub");
+  function syncSub(){
+    if (!sub) return;
+    var links = [].slice.call(sub.querySelectorAll("a")), h = (location.hash || "").replace("#", "");
+    var hit = links.filter(function(a){ return a.getAttribute("data-h") === h; })[0] || links[0];
+    links.forEach(function(a){ if (a === hit) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (hit && sub.scrollWidth > sub.clientWidth) sub.scrollTo({ left: hit.offsetLeft - 16, behavior: "smooth" });
+  }
+  window.addEventListener("hashchange", syncSub); syncSub();
+  var topBtn = document.querySelector(".m-top");
+  function onScroll(){ if (topBtn) topBtn.classList.toggle("on", window.scrollY > 700); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  if (topBtn) topBtn.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
+  function isField(el){ return el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !/^(checkbox|radio|button|submit)$/.test(el.type || ""); }
+  document.addEventListener("focusin", function(e){ if (isField(e.target)) document.body.classList.add("m-typing"); });
+  document.addEventListener("focusout", function(e){ if (isField(e.target)) document.body.classList.remove("m-typing"); });
+})();
+</script>
+<script>
+/* 언어 선택: 다른 언어를 누르면 현재 화면(해시)과 문의 유형(쿼리)을 유지한 채 이동 */
+document.addEventListener("click", function(e){ var a = e.target.closest && e.target.closest(".lang-sw a"); if (!a) return; e.preventDefault(); if (a.classList.contains("on")) return; location.href = a.getAttribute("href") + location.search + location.hash; });
+</script>
+</body>
+</html>
