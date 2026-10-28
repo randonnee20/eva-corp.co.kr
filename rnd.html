@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<link href="assets/img/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>EVA R&amp;D White Paper</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+/* 한글 본문: Pretendard(OFL-1.1) KS X 1001 서브셋 내장 / 영문 라벨·숫자: Poppins */
+@font-face{font-family:"Pretendard EVA";src:url(assets/fonts/PretendardKS.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+:root{
+  --navy:#0B2B3A;
+  --navy-2:#0F3A4C;
+  --navy-3:#15505F;
+  --teal:#14968E;
+  --teal-dk:#0E7B74;
+  --teal-hi:#3CCABB;
+  --teal-soft:#E7F5F3;
+  --ink:#0E202C;
+  --body:#53646F;
+  --muted:#80909A;
+  --line:#E0E8EB;
+  --mist:#F4F7F9;
+  --paper:#FFFFFF;
+  --warn:#DB6A2C;
+  --on-dark:#FFFFFF;
+  --on-dark-2:#B9CAD2;
+  --f-kr:"Pretendard EVA","Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --f-en:"Poppins","Pretendard EVA","Apple SD Gothic Neo",sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--body);
+  font-family:var(--f-kr);font-size:16px;line-height:1.7;font-weight:400;
+  word-break:keep-all;overflow-wrap:break-word;letter-spacing:-0.005em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{color:var(--ink);font-weight:700;letter-spacing:-0.03em;line-height:1.3;text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--teal-hi);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.acc{color:var(--teal)}
+.blk{display:block}
+.nw{white-space:nowrap}
+.en{font-family:var(--f-en)}
+
+/* 공통 타이포 */
+.eyebrow{font-family:var(--f-en);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);line-height:1.4}
+.eyebrow.ko{font-family:var(--f-kr);font-size:13.5px;font-weight:700;letter-spacing:.01em;text-transform:none}
+.eyebrow.dot{display:inline-flex;align-items:center;gap:8px}
+.eyebrow.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.h2{font-size:clamp(26px,1.9vw + 14px,40px)}
+.h2 .acc{display:block}
+.lead{font-size:16.5px;line-height:1.8;color:var(--body);max-width:64ch}
+.sec{padding-block:clamp(72px,8vw,108px)}
+.sec-head{display:grid;gap:12px;justify-items:center;text-align:center;margin-bottom:clamp(40px,5vw,56px)}
+.sec-head .lead{margin-top:6px}
+.rule{width:40px;height:2px;background:var(--teal);border-radius:2px;margin-top:4px}
+.on-dark h2,.on-dark h3{color:var(--on-dark)}
+.on-dark .acc{color:var(--teal-hi)}
+.on-dark .eyebrow{color:var(--teal-hi)}
+
+/* 버튼 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 24px;border-radius:7px;font-family:var(--f-kr);font-size:15px;font-weight:700;letter-spacing:-0.01em;border:1.5px solid transparent;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-teal{background:var(--teal);color:var(--on-dark)}
+.btn-teal:hover{background:var(--teal-dk)}
+.btn-ghost{border-color:rgba(255,255,255,.45);color:var(--on-dark)}
+.btn-ghost:hover{border-color:var(--on-dark);background:rgba(255,255,255,.07)}
+.btn-white{background:var(--paper);color:var(--navy)}
+.btn-white:hover{background:var(--teal-soft)}
+.btn-dark{background:var(--navy);color:var(--on-dark)}
+.btn-dark:hover{background:var(--navy-3)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+/* CSS 화살표 */
+.arw{position:relative;display:inline-block;width:26px;height:12px;flex:none;color:var(--teal);vertical-align:middle}
+.arw::before{content:"";position:absolute;left:0;right:2px;top:50%;height:2px;margin-top:-1px;background:currentColor;border-radius:2px}
+.arw::after{content:"";position:absolute;right:1px;top:50%;width:8px;height:8px;margin-top:-4px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+
+/* 표식(아이콘 대신 번호) */
+.mk{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-en);font-weight:600;font-size:14px;color:var(--teal);background:var(--teal-soft);border:1px solid #CDEBE6}
+
+
+/* ---------- 공통: 상단바 ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-en);color:var(--navy)}
+.logo .mark{display:block;width:34px;height:auto;flex:none;color:var(--navy)}
+.logo b{font-size:24px;font-weight:700;letter-spacing:.03em;line-height:1}
+.nav{display:flex;align-items:center;gap:40px}
+.nav .gnb{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.gnb > li{position:relative}
+.nav a.m{display:block;font-family:var(--f-en);font-size:15px;font-weight:600;color:#2F414D;padding:24px 16px;position:relative}
+.nav a.m::after{content:"";position:absolute;left:16px;right:16px;bottom:16px;height:2px;background:var(--teal);transform:scaleX(0);transition:transform .2s}
+.gnb > li:hover > a.m,.gnb > li:focus-within > a.m{color:var(--teal)}
+.gnb > li:hover > a.m::after,.gnb > li:focus-within > a.m::after{transform:scaleX(1)}
+.sub{list-style:none;margin:0;padding:8px;position:absolute;left:50%;top:calc(100% - 8px);min-width:210px;transform:translate(-50%,6px);background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 22px 40px -20px rgba(11,43,58,.35);opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.gnb > li:hover .sub,.gnb > li:focus-within .sub{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.sub a{display:block;padding:10px 14px;border-radius:7px;font-family:var(--f-en);font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap}
+.sub a:hover,.sub a:focus-visible{background:var(--teal-soft);color:var(--teal-dk)}
+.menu-btn{display:none;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:7px;background:var(--paper);font-weight:700;font-size:14px;color:var(--navy);cursor:pointer}
+.gnb > li.is-on > a.m{color:var(--teal)}
+.gnb > li.is-on > a.m::after{transform:scaleX(1)}
+
+/* Layout: Resource > R&D - 다크 페이지 헤더 / 목록(최신 백서 강조 + 전체 목록) / 상세(히어로·핵심 수치·본문·다루는 내용·목차와 페이지 미리보기) / 페이지 뷰어 */
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-family:var(--f-en);font-size:13px;font-weight:500;color:var(--on-dark-2)}
+.crumb a:hover{color:var(--on-dark)}
+.crumb i{width:5px;height:5px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg);opacity:.7}
+.crumb span[aria-current]{color:var(--on-dark)}
+
+/* 페이지 헤더 */
+.phead{background:var(--navy);position:relative;overflow:hidden}
+.phead::before{content:"";position:absolute;inset:0;background:radial-gradient(55% 120% at 100% 0%,rgba(60,202,187,.16),transparent 62%);pointer-events:none}
+.phead::after{content:"";position:absolute;right:6%;bottom:-1px;width:min(420px,40%);height:100%;background-image:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1.4px);background-size:18px 18px;-webkit-mask-image:linear-gradient(200deg,#000 20%,transparent 75%);mask-image:linear-gradient(200deg,#000 20%,transparent 75%);pointer-events:none}
+.phead .wrap{position:relative;z-index:1;padding-block:clamp(44px,5vw,64px) clamp(48px,6vw,72px);display:grid;gap:18px}
+.phead h1{color:var(--on-dark);font-size:clamp(30px,2vw + 18px,46px);font-weight:700;letter-spacing:-0.035em}
+.phead p.lead{color:var(--on-dark-2);max-width:60ch}
+
+/* 목록 도구 */
+.tools{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px 20px;margin-bottom:28px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--paper);font-weight:600;font-size:14px;color:var(--body);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.chip:hover{border-color:#BFE4DF;color:var(--teal-dk)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.chip b{font-family:var(--f-en);font-weight:600;margin-left:6px;opacity:.75}
+.search{position:relative;flex:0 1 300px;min-width:0}
+.search input{width:100%;height:42px;border:1px solid var(--line);border-radius:8px;padding:0 14px;font:inherit;font-size:14.5px;color:var(--ink);background:var(--paper)}
+.search input:focus{outline:2px solid var(--teal-hi);outline-offset:1px;border-color:transparent}
+.count{font-size:14px;color:var(--muted);margin:-8px 0 22px}
+.count b{color:var(--ink);font-family:var(--f-en)}
+
+/* 최신 백서 (강조) */
+.feature{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--paper);box-shadow:0 26px 60px -44px rgba(11,43,58,.6)}
+.feature-cover{background:linear-gradient(150deg,var(--navy-3),var(--navy) 70%);padding:clamp(28px,4vw,48px);display:grid;place-items:center;position:relative;overflow:hidden}
+.feature-cover::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1.3px);background-size:16px 16px;-webkit-mask-image:linear-gradient(200deg,#000 10%,transparent 70%);mask-image:linear-gradient(200deg,#000 10%,transparent 70%)}
+.cover-img{position:relative;width:min(300px,100%);aspect-ratio:992/1404;max-width:100%;border-radius:6px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);transform:rotate(-2deg);transition:transform .3s;background:var(--paper)}
+.cover-img img{display:block;width:100%;height:100%;object-fit:cover}
+.feature:hover .cover-img{transform:rotate(0) translateY(-4px)}
+.feature-body{padding:clamp(28px,4vw,48px);display:grid;gap:16px;align-content:center;min-width:0}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13.5px;color:var(--muted)}
+.cat{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;background:var(--teal-soft);color:var(--teal-dk);font-weight:700;font-size:13px}
+.on-dark .cat{background:rgba(60,202,187,.16);color:var(--teal-hi)}
+.new{font-family:var(--f-en);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--warn)}
+.feature-body h2{font-size:clamp(23px,1.2vw + 15px,32px);line-height:1.35}
+.feature-body .sub-t{font-size:16px;font-weight:600;color:var(--teal-dk);margin-top:-6px;line-height:1.5}
+.feature-body p.sum{font-size:15.5px;line-height:1.8}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:12.5px;font-weight:600;color:var(--body);border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.btn-line-dk{border-color:var(--line);color:var(--ink);background:var(--paper)}
+.btn-line-dk:hover{border-color:var(--teal);color:var(--teal-dk)}
+
+/* 전체 목록 */
+.list-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:clamp(48px,6vw,64px) 0 20px;flex-wrap:wrap}
+.list-h h2{font-size:22px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{border:1px solid var(--line);border-radius:14px;background:var(--paper);overflow:hidden;display:grid;grid-template-rows:auto 1fr;transition:box-shadow .2s,transform .2s;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit}
+.card:hover{box-shadow:0 24px 50px -30px rgba(11,43,58,.45);transform:translateY(-3px)}
+.card-top{background:linear-gradient(160deg,var(--navy-3),var(--navy) 75%);height:180px;display:grid;place-items:end center;overflow:hidden;padding-top:22px}
+.card-top img{width:56%;height:auto;aspect-ratio:992/1404;object-fit:cover;object-position:top;border-radius:4px 4px 0 0;box-shadow:0 -10px 30px -10px rgba(0,0,0,.5)}
+.card-body{padding:20px 22px 22px;display:grid;gap:8px;align-content:start}
+.card-body h3{font-size:17.5px;line-height:1.45}
+.card-body p{font-size:14px;line-height:1.6}
+.slot{border:1.5px dashed #C9D7DE;border-radius:14px;display:grid;place-items:center;text-align:center;padding:36px 24px;color:var(--muted);font-size:14.5px;line-height:1.7;min-height:220px;background:var(--mist)}
+.slot b{display:block;font-family:var(--f-en);font-size:12px;letter-spacing:.16em;color:var(--teal);margin-bottom:6px}
+.empty{padding:48px 20px;text-align:center;border:1px solid var(--line);border-radius:14px;color:var(--muted)}
+
+/* ---------- 상세 ---------- */
+.dhero{background:var(--navy);position:relative;overflow:hidden}
+.dhero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 100% at 100% 0%,rgba(60,202,187,.16),transparent 62%),radial-gradient(50% 80% at 0% 100%,rgba(21,80,95,.8),transparent 70%);pointer-events:none}
+.dhero .wrap{position:relative;padding-block:clamp(36px,4vw,52px) clamp(56px,7vw,88px)}
+.dhero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:28px}
+.dhero-l{display:grid;gap:18px;min-width:0}
+.dhero h1{color:var(--on-dark);font-size:clamp(28px,2.2vw + 16px,48px);font-weight:700;letter-spacing:-0.035em;line-height:1.25}
+.dhero .sub-t{color:var(--teal-hi);font-size:clamp(16px,.5vw + 13px,19px);font-weight:600;line-height:1.55;margin-top:-4px}
+.dhero .lead{color:var(--on-dark-2);font-size:16px}
+.dmeta{display:grid;grid-template-columns:repeat(4,minmax(0,auto));justify-content:start;gap:10px 32px;margin-top:6px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)}
+.dmeta div{display:grid;gap:2px}
+.dmeta small{font-size:12px;color:var(--on-dark-2);font-weight:600}
+.dmeta span{font-size:14.5px;color:var(--on-dark);font-weight:600}
+.dhero-r{display:grid;justify-items:center}
+.dhero-r .cover-img{width:min(320px,100%);cursor:zoom-in;border:0;padding:0}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:clamp(-52px,-4vw,-36px);position:relative;z-index:2}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 22px 20px;display:grid;gap:8px;align-content:start;box-shadow:0 22px 50px -36px rgba(11,43,58,.6)}
+.stat b{font-family:var(--f-en);font-size:clamp(24px,1vw + 16px,32px);font-weight:600;color:var(--navy);letter-spacing:-0.02em;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat:nth-child(4) b{color:var(--warn)}
+.stat span{font-size:13.5px;line-height:1.6}
+.src{font-size:12.5px;color:var(--muted);margin-top:12px;text-align:right}
+
+.dsec{padding-block:clamp(56px,7vw,92px)}
+.dsec + .dsec{padding-top:0}
+.two{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,72px);align-items:start}
+.two-h{display:grid;gap:12px;position:sticky;top:96px}
+.two-h h2{font-size:clamp(23px,1.1vw + 15px,32px)}
+.prose{display:grid;gap:18px}
+.prose p{font-size:16.5px;line-height:1.9;color:#3F515C}
+.prose b{color:var(--ink);font-weight:700;background:linear-gradient(transparent 62%,rgba(60,202,187,.28) 62%)}
+.prose .q{font-size:18px;font-weight:600;color:var(--ink);line-height:1.7;border-left:3px solid var(--teal);padding-left:18px}
+
+.points{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
+.point{grid-column:span 2;border:1px solid var(--line);border-radius:14px;padding:26px 24px 22px;background:var(--paper);display:grid;grid-template-rows:auto auto 1fr auto;gap:12px;transition:border-color .2s,box-shadow .2s}
+.point:nth-child(4),.point:nth-child(5){grid-column:span 3}
+.point:hover{border-color:#BFE4DF;box-shadow:0 20px 44px -32px rgba(11,43,58,.5)}
+.point .no{width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--on-dark);display:grid;place-items:center;font-family:var(--f-en);font-weight:600;font-size:14px}
+.point h3{font-size:18px;line-height:1.45}
+.point p{font-size:14.5px;line-height:1.75}
+.pg{justify-self:start;display:inline-flex;align-items:center;gap:8px;border:0;background:none;padding:6px 0 0;font-weight:700;font-size:13.5px;color:var(--teal-dk);cursor:pointer;border-top:1px solid var(--line);width:100%}
+.pg:hover{color:var(--teal)}
+.pg .arw{width:18px}
+
+.evidence{margin-top:6px;font-size:13.5px;line-height:1.7;color:var(--body);background:var(--mist);border-radius:10px;padding:14px 16px}
+.evidence b{color:var(--ink)}
+
+.closing{border-radius:16px;background:linear-gradient(105deg,var(--teal-dk),var(--navy-2) 55%,var(--navy));padding:clamp(30px,4vw,48px) clamp(24px,4vw,52px);display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;position:relative;overflow:hidden}
+.closing::after{content:"";position:absolute;right:-40px;top:-70px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,.1);box-shadow:0 0 0 40px rgba(255,255,255,.03);pointer-events:none}
+.closing p{position:relative;z-index:1;color:var(--on-dark);font-size:clamp(17px,.5vw + 14px,20px);font-weight:600;line-height:1.65;max-width:52ch;letter-spacing:-0.02em}
+.closing .actions{position:relative;z-index:1}
+.back{display:inline-flex;align-items:center;gap:10px;margin-top:28px;font-weight:700;font-size:15px;color:var(--teal-dk);background:none;border:0;padding:0;cursor:pointer}
+.back .arw{width:20px;transform:rotate(180deg)}
+
+/* ---------- 페이지 뷰어 ---------- */
+.viewer{position:fixed;inset:0;z-index:100;background:#061820;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.viewer[hidden]{display:none}
+.v-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px max(16px,2vw);color:var(--on-dark)}
+.v-title{font-size:14px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--on-dark-2)}
+.v-btn{height:38px;padding:0 16px;border-radius:7px;border:1px solid rgba(255,255,255,.3);background:transparent;color:var(--on-dark);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
+.v-btn:hover:not(:disabled){background:rgba(255,255,255,.1);border-color:var(--on-dark)}
+.v-btn:disabled{opacity:.35;cursor:default}
+.v-stage{overflow:auto;display:grid;place-items:start center;padding:8px 16px 16px}
+.viewer.zoom .v-stage img{max-height:none;width:min(1000px,100%);max-width:100%}
+.v-stage img{display:block;width:auto;max-width:min(820px,100%);max-height:calc(100vh - 150px);height:auto;background:var(--paper);box-shadow:0 30px 70px -20px rgba(0,0,0,.7);border-radius:2px}
+.v-nav{display:flex;justify-content:center;align-items:center;gap:14px;padding:12px 16px 16px;color:var(--on-dark);font-family:var(--f-en);font-size:14px;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:120;background:var(--ink);color:var(--on-dark);font-size:14px;padding:10px 16px;border-radius:8px;box-shadow:0 18px 40px -16px rgba(0,0,0,.5);max-width:calc(100% - 32px)}
+.toast[hidden]{display:none}
+
+/* ---------- 공통: 하단 ---------- */
+.foot{background:#08202B;color:#9AB0BB;padding-block:56px 28px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px 56px;flex-wrap:wrap}
+.foot-brand{min-width:0}
+.foot-right{display:flex;align-items:flex-start;gap:56px;flex-wrap:wrap}
+.foot-menus{display:grid;grid-template-columns:repeat(4,auto);gap:24px 44px}
+.partner{display:grid;justify-items:end;gap:12px;padding-left:44px;border-left:1px solid rgba(255,255,255,.1)}
+.partner small{font-family:var(--f-en);font-size:11.5px;letter-spacing:.16em;font-weight:600;color:#8AA1AD}
+.partner .plate{display:inline-flex;background:#FFFFFF;border-radius:8px;padding:10px 16px}
+.partner img{display:block;width:170px;height:auto}
+.foot .logo{color:var(--on-dark)}
+.foot .logo .mark{width:40px;color:var(--on-dark)}
+.foot .logo b{font-size:26px}
+.foot-tag{font-family:var(--f-en);font-size:12px;letter-spacing:.1em;font-weight:600;color:var(--teal-hi);margin-top:14px}
+.foot h4{color:var(--on-dark);font-size:14px;margin-bottom:14px;font-family:var(--f-en);font-weight:600;letter-spacing:.01em}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;font-family:var(--f-en)}
+.foot a:hover{color:var(--on-dark)}
+.foot-bot{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px}
+.foot-bot a{color:#C9D7DE}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:1100px){
+  .nav a.m{padding-inline:12px}
+  .nav a.m::after{left:12px;right:12px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:960px){
+  .nav .gnb,.nav .btn{display:none}
+  .menu-btn{display:inline-flex;align-items:center}
+  .nav.open{position:absolute;left:0;right:0;top:72px;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -20px rgba(11,43,58,.3);padding:12px max(20px,env(safe-area-inset-right,0px)) 20px max(20px,env(safe-area-inset-left,0px));display:grid;gap:12px}
+  .nav.open .gnb{display:grid;gap:4px}
+  .nav.open a.m{padding:10px 0 4px;font-size:15.5px;color:var(--ink)}
+  .nav.open a.m::after{display:none}
+  .nav.open .sub{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;padding:0 0 8px 12px;min-width:0;background:transparent;display:grid;gap:0}
+  .nav.open .sub a{padding:7px 10px;font-size:14px;color:var(--body)}
+  .nav.open .btn{display:inline-flex;justify-self:start}
+  .foot-top,.foot-right{flex-direction:column;gap:32px}
+  .foot-menus{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+  .partner{justify-items:start;padding-left:0;border-left:0}
+  .feature{grid-template-columns:minmax(0,1fr)}
+  .feature-cover{padding-block:32px}
+  .cover-img{width:min(220px,100%)}
+  .dhero-grid,.two{grid-template-columns:minmax(0,1fr)}
+  .dhero-r{order:-1;justify-items:start}
+  .dhero-r .cover-img{width:160px}
+  .two-h{position:static}
+  .points{grid-template-columns:minmax(0,1fr)}
+  .point,.point:nth-child(4),.point:nth-child(5){grid-column:auto}
+  .dmeta{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:minmax(0,1fr)}
+    .search{flex:1 1 100%}
+  .actions .btn{flex:1 1 100%}
+  .v-title{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+<meta content="#0B2B3A" name="theme-color"/>
+<style>
+/* ===== 모바일 웹 버전(768px 이하): 앱 형태 화면 ===== */
+.m-tab,.m-sub,.m-cta,.m-top{display:none}
+@keyframes mfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:768px){
+  html{-webkit-text-size-adjust:100%}
+  body{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+  .top-in{height:56px}
+  .top .logo .mark{width:28px;height:28px}
+  .menu-btn,.nav{display:none!important}
+  .m-cta{display:inline-flex;align-items:center;height:34px;padding:0 16px;border-radius:999px;background:var(--teal);color:var(--on-dark);font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+  body[data-page="contact"] .m-cta{visibility:hidden}
+  .m-sub{display:flex;gap:6px;position:sticky;top:calc(56px + env(safe-area-inset-top,0px));z-index:45;padding:9px 16px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+  .m-sub::-webkit-scrollbar{display:none}
+  .m-sub a{flex:none;padding:7px 15px;border-radius:999px;font-family:var(--f-en);font-size:13.5px;font-weight:600;color:var(--body);background:var(--mist);border:1px solid var(--line);white-space:nowrap;transition:background .2s,color .2s}
+  .m-sub a[aria-current]{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+  .m-tab{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:60;height:calc(62px + env(safe-area-inset-bottom,0px));padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);box-shadow:0 -10px 28px -20px rgba(11,43,58,.4);transition:transform .22s ease}
+  .m-tab a{display:grid;justify-items:center;align-content:center;gap:6px;font-family:var(--f-en);font-size:12.5px;font-weight:600;color:var(--muted)}
+  .m-tab a::before{content:"";width:20px;height:3px;border-radius:3px;background:transparent;transition:background .2s}
+  .m-tab a[aria-current]{color:var(--navy)}
+  .m-tab a[aria-current]::before{background:var(--teal)}
+  body.m-typing .m-tab{transform:translateY(110%)}
+  .m-top{display:block;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:55;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--navy);font:inherit;font-size:12.5px;font-weight:700;box-shadow:0 12px 26px -14px rgba(11,43,58,.55);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;cursor:pointer}
+  .m-top.on{opacity:1;pointer-events:auto;transform:none}
+  body.m-typing .m-top{opacity:0;pointer-events:none}
+  .crumb{display:none!important}
+  #view-detail .crumb{display:flex!important}
+  .foot{padding-block:36px 24px}
+  .foot-menus{display:none!important}
+  .foot-bot{margin-top:28px}
+  main{animation:mfade .35s ease both}
+}
+@media (max-width:768px) and (prefers-reduced-motion:reduce){main{animation:none}}
+</style>
+<style>
+/* 영문판 보정: 영어 문구 길이에 맞춘 너비·글자 크기 */
+html[lang="en"] .assert dl{grid-template-columns:104px minmax(0,1fr) 104px minmax(0,1fr)}
+@media (max-width:640px){ html[lang="en"] .assert dl{grid-template-columns:104px minmax(0,1fr)} }
+html[lang="en"] .assert dt{overflow-wrap:normal;word-break:normal}
+html[lang="en"] .tile .t{font-size:clamp(14px,4.2cqw,26px)}
+html[lang="en"] .lyr b{font-size:14.5px}
+html[lang="en"] .stats .v{font-size:clamp(16px,.8vw + 9px,21px)}
+html[lang="en"] .hero h1{font-size:clamp(30px,1.8vw + 17px,46px)}
+html[lang="en"] .hero-copy{max-width:760px}
+.ko-note{margin:8px 0 0;font-size:12.5px;color:var(--muted);text-align:center}
+</style>
+<style>
+/* 언어 선택(KOR | ENG): 두 언어를 함께 보여 주고 현재 언어를 강조 */
+.lang-sw{display:inline-flex;align-items:center;gap:2px;margin-left:8px;font-family:var(--f-en);font-size:12.5px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.lang-sw a{padding:6px 6px;color:var(--muted);border-radius:6px;transition:color .2s}
+.lang-sw a:hover{color:var(--teal-dk)}
+.lang-sw a.on{color:var(--navy);box-shadow:inset 0 -2px 0 var(--teal);border-radius:0;cursor:default}
+.lang-sw span{color:#C5D2D8;font-weight:400}
+.lang-sw.m-only{display:none}
+@media (max-width:960px){ .nav .lang-sw{display:none} .lang-sw.m-only{display:inline-flex;margin-left:auto} }
+@media (max-width:768px){ .lang-sw.m-only{margin-right:-16px;font-size:12px} .lang-sw.m-only a{padding:6px 4px} }
+</style>
+<link rel="alternate" hreflang="en" href="rnd.html">
+<link rel="alternate" hreflang="ko" href="ko/rnd.html">
+<link rel="alternate" hreflang="x-default" href="rnd.html">
+</head>
+<body data-page="rnd">
+<header class="top">
+<div class="wrap top-in">
+<a aria-label="EVA home" class="logo" href="index.html"><svg aria-hidden="true" class="mark" focusable="false" viewbox="0 0 995 930"><path d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z" fill="currentColor" fill-rule="evenodd"></path></svg><b>EVA</b></a>
+<nav aria-label="Main menu" class="nav" id="nav">
+<ul class="gnb">
+<li><a class="m" href="product.html#product">Product</a>
+<ul class="sub"><li><a href="product.html#ai-engine-document">AI Engine Document</a></li><li><a href="product.html#ai-engine-factory">AI Engine Factory</a></li></ul></li>
+<li><a class="m" href="industry.html#industry">Industry</a>
+<ul class="sub"><li><a href="industry.html#manufacturing">Manufacturing</a></li><li><a href="industry.html#finance">Finance</a></li></ul></li>
+<li class="is-on"><a aria-current="page" class="m" href="#rnd">Resource</a>
+<ul class="sub"><li><a href="#rnd">R&amp;D</a></li></ul></li>
+<li><a class="m" href="company.html#about">Company</a>
+<ul class="sub"><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></li>
+</ul>
+<a class="btn btn-teal btn-sm" href="contact.html?type=diagnosis">Request a Data Diagnosis</a>
+<div class="lang-sw" role="group" aria-label="Language"><a href="ko/rnd.html" hreflang="ko" lang="ko" aria-label="한국어">KOR</a><span aria-hidden="true">|</span><a href="rnd.html" hreflang="en" lang="en" aria-label="English" class="on" aria-current="true">ENG</a></div></nav>
+<div class="lang-sw m-only" role="group" aria-label="Language"><a href="ko/rnd.html" hreflang="ko" lang="ko" aria-label="한국어">KOR</a><span aria-hidden="true">|</span><a href="rnd.html" hreflang="en" lang="en" aria-label="English" class="on" aria-current="true">ENG</a></div>
+    <a class="m-cta" href="contact.html?type=diagnosis">Contact</a>
+<button aria-controls="nav" aria-expanded="false" class="menu-btn" id="menuBtn" type="button">Menu</button>
+</div>
+</header>
+<main id="rnd-page">
+<div id="view-list"></div>
+<div hidden="" id="view-detail"></div>
+</main>
+<div aria-labelledby="vTitle" aria-modal="true" class="viewer" hidden="" id="viewer" role="dialog">
+<div class="v-bar">
+<span class="v-title" id="vTitle"></span>
+<span style="display:flex;gap:8px"><button aria-pressed="false" class="v-btn" id="vZoom" type="button">Enlarge</button><button class="v-btn" id="vClose" type="button">Close</button></span>
+</div>
+<div class="v-stage" id="vStage"><img alt="" id="vImg"/></div>
+<div class="v-nav">
+<button class="v-btn" id="vPrev" type="button">Previous</button>
+<span id="vNum">1 / 15</span>
+<button class="v-btn" id="vNext" type="button">Next</button>
+</div>
+</div>
+<p class="toast" hidden="" id="toast" role="status"></p>
+<footer class="foot">
+<div class="wrap">
+<div class="foot-top">
+<div class="foot-brand">
+<a aria-label="EVA home" class="logo" href="index.html"><svg aria-hidden="true" class="mark" focusable="false" viewbox="0 0 995 930"><path d="M669.0 924.9C668.2 924.5 661.6 920.9 654.5 916.9C627.3 902.0 529.6 847.3 509.0 835.5C488.0 823.5 454.9 804.8 446.0 799.8C442.1 797.6 426.3 788.7 364.5 753.8C356.8 749.4 349.1 745.0 347.5 744.0L344.4 742.1 L303.5 765.1C280.9 777.8 258.2 790.5 253.0 793.5C218.4 813.0 184.1 832.5 181.7 834.2C180.2 835.3 178.3 835.9 177.5 835.6L176.0 835.1 L176.0 658.1L176.0 481.2 L162.8 473.7C155.5 469.6 143.7 463.0 136.6 459.0C129.4 455.0 111.9 445.1 97.6 437.1C83.2 429.0 60.7 416.4 47.5 409.0C11.3 388.9 5.7 385.6 5.3 384.4C5.1 383.7 6.8 382.1 9.2 380.8C12.8 378.8 36.3 365.3 97.5 330.2C101.9 327.7 119.4 317.7 136.5 308.0C165.1 291.7 258.1 238.4 304.0 212.0C314.7 205.9 326.1 199.3 329.2 197.3L335.0 193.9 L335.0 99.5L335.0 5.1 L335.9 4.5C336.4 4.2 346.0 9.4 357.2 16.1C368.4 22.8 394.6 38.5 415.5 51.0C436.4 63.5 465.6 80.8 480.5 89.5C495.4 98.2 511.8 107.8 517.0 111.0C527.6 117.3 551.5 131.4 563.0 138.0C567.1 140.4 577.9 146.7 587.0 152.0C596.1 157.3 609.1 165.0 616.0 169.0C622.9 173.0 634.9 180.1 642.8 184.8L657.1 193.3 L659.3 192.2C661.8 190.9 664.7 189.3 688.1 175.7C697.1 170.5 713.5 161.1 724.5 154.8C763.0 132.6 789.7 117.2 809.7 105.6C820.8 99.1 830.4 94.1 831.0 94.5L832.0 95.1 L832.0 278.0L832.0 460.8 L838.8 464.6C842.5 466.6 853.8 473.0 864.0 478.8C896.8 497.4 904.2 501.6 920.0 510.5C928.5 515.3 938.9 521.1 943.0 523.5C947.1 525.8 959.4 532.8 970.2 538.9C981.1 545.1 990.0 550.5 990.0 551.0C990.0 551.5 988.1 553.0 985.8 554.4C983.4 555.7 970.2 563.3 956.5 571.2C942.8 579.2 922.7 590.6 912.0 596.7C901.3 602.8 882.6 613.5 870.5 620.5C858.4 627.5 840.2 637.9 830.0 643.7C742.1 693.8 690.0 723.5 681.8 728.1L672.1 733.5 L672.0 829.2C672.0 881.8 671.7 925.1 671.2 925.3C670.8 925.6 669.8 925.4 669.0 924.9ZM644.8 722.8L644.5 565.5 L638.0 561.6C634.4 559.4 612.4 546.9 589.0 533.7C565.6 520.6 543.6 508.1 540.0 506.1C536.4 504.0 530.9 500.9 527.8 499.1L522.0 495.9 L522.0 653.2L522.0 810.5 L533.8 817.1C545.5 823.7 577.8 842.1 619.5 865.7C631.6 872.6 641.9 878.6 642.5 879.1C643.0 879.6 643.8 880.0 644.2 880.0C644.6 880.0 644.9 809.2 644.8 722.8ZM490.0 729.0L490.0 664.9 L485.2 667.6C482.6 669.1 480.1 670.7 479.5 671.1C478.4 671.8 447.4 689.3 406.9 712.0C393.4 719.6 380.9 726.7 379.2 727.7L376.0 729.7 L386.7 735.7C392.7 739.0 404.9 745.9 414.0 751.0C453.7 773.5 488.6 792.9 489.2 793.0C489.7 793.0 490.0 764.2 490.0 729.0ZM207.3 788.6C208.5 787.8 223.0 779.6 239.5 770.4C271.8 752.4 282.8 746.3 333.5 717.8C351.6 707.7 369.2 697.8 372.5 696.0C375.8 694.2 384.6 689.2 392.0 685.0C399.4 680.7 418.8 669.8 435.0 660.8C451.2 651.7 466.1 643.4 468.0 642.3C469.9 641.2 475.7 638.0 480.8 635.1L490.0 629.9 L490.0 561.4L490.0 492.8 L486.8 494.8C482.0 497.7 406.2 540.6 381.0 554.8C357.2 568.1 358.8 567.2 336.5 579.5C313.4 592.3 258.5 623.1 229.5 639.5L204.5 653.7 L204.2 721.9C204.1 759.3 204.2 790.0 204.5 790.0C204.8 790.0 206.1 789.4 207.3 788.6ZM689.8 691.8C695.7 688.4 709.3 680.7 720.0 674.7C730.7 668.6 744.9 660.6 751.5 656.8C758.1 653.1 767.0 648.1 771.2 645.7C775.5 643.4 779.0 641.2 779.0 640.9C779.0 640.6 766.7 633.4 751.8 625.0C736.8 616.6 714.4 603.9 702.0 596.9C689.6 589.9 678.7 583.8 677.8 583.5L676.0 582.8 L676.0 641.0L676.0 699.2 L677.6 698.6C678.5 698.3 684.0 695.2 689.8 691.8ZM823.0 616.4C859.8 595.2 870.2 589.3 886.1 580.2C895.8 574.7 906.6 568.6 910.1 566.7C913.6 564.7 921.5 560.3 927.6 556.8L938.7 550.4 L930.1 545.7C919.8 540.1 915.9 537.9 892.0 524.2C881.8 518.4 868.5 510.9 862.5 507.5C856.5 504.1 840.5 495.1 827.0 487.5C779.7 460.9 762.5 451.2 759.0 449.3C745.6 441.8 727.2 431.5 725.5 430.5C724.4 429.8 721.0 427.9 718.0 426.3C715.0 424.7 701.7 417.2 688.4 409.7C675.2 402.1 663.8 396.0 663.1 396.0C662.4 396.0 649.4 403.1 634.2 411.9C619.0 420.6 598.4 432.3 588.5 438.0C578.6 443.6 566.9 450.3 562.5 453.0C558.1 455.6 550.1 460.1 544.8 463.1C539.4 466.1 535.0 468.7 535.0 469.0C535.1 469.3 547.7 476.5 563.1 485.0C578.6 493.5 603.4 507.4 618.4 515.8C633.3 524.3 654.7 536.4 666.0 542.7C677.3 549.1 689.9 556.2 694.0 558.5C698.1 560.9 703.5 563.9 706.0 565.3C708.5 566.6 714.1 569.8 718.5 572.2C722.9 574.7 736.0 582.0 747.5 588.5C781.0 607.2 784.9 609.4 797.0 616.3C803.3 620.0 809.2 622.9 810.0 623.0C810.9 623.0 816.7 620.0 823.0 616.4ZM220.2 607.9C229.2 602.8 243.5 594.8 252.0 589.9C260.5 585.1 276.4 576.3 287.2 570.3L306.8 559.3 L294.7 552.5C268.8 538.0 215.2 507.5 209.2 503.9L202.9 500.0 L203.1 558.5C203.2 590.7 203.5 617.0 203.7 617.0C203.8 617.0 211.3 612.9 220.2 607.9ZM340.6 541.1C341.1 540.6 348.5 536.4 357.0 531.7C365.5 527.1 379.2 519.4 387.5 514.8C395.8 510.1 405.2 504.8 408.5 503.0C411.8 501.2 422.8 495.0 433.0 489.3C443.2 483.5 454.8 477.0 458.8 474.7C462.7 472.5 466.0 470.4 466.0 470.1C466.0 469.7 461.2 466.7 455.2 463.4C434.1 451.4 406.3 435.7 396.5 430.2C383.4 422.9 351.3 404.8 343.0 400.0C339.4 398.0 334.0 394.9 331.0 393.3C323.4 389.1 314.9 384.3 274.5 361.5C226.1 334.1 220.7 331.1 202.2 320.8L185.9 311.7 L183.2 313.0C181.7 313.6 173.8 318.1 165.5 322.9C157.3 327.8 129.7 343.6 104.3 358.0C78.8 372.5 58.0 384.6 58.0 385.0C58.0 385.3 60.4 386.8 63.2 388.3C66.1 389.7 74.1 394.2 81.0 398.1C94.6 405.8 111.9 415.6 153.0 438.5C167.6 446.6 192.8 460.7 209.0 469.8C225.2 478.9 245.5 490.2 254.0 495.0C262.5 499.8 277.1 508.0 286.5 513.2C343.6 545.4 338.7 542.8 340.6 541.1ZM490.0 286.2L490.0 124.3 L479.2 118.1C473.3 114.7 462.4 108.2 455.0 103.8C447.6 99.4 427.1 87.2 409.5 76.7C391.9 66.2 373.9 55.5 369.5 52.8L361.5 47.9 L361.2 190.2C361.0 268.5 361.2 342.4 361.5 354.5L362.2 376.5 L378.4 385.4C387.2 390.3 397.4 396.1 401.0 398.2C412.1 404.8 488.5 447.8 489.2 447.9C489.7 448.0 490.0 375.2 490.0 286.2ZM533.4 433.6C552.2 422.9 616.8 386.2 649.5 367.8C685.0 347.7 755.0 308.1 784.8 291.3L805.0 279.8 L805.0 209.4C805.0 170.6 804.7 139.1 804.2 139.3C803.8 139.5 797.6 143.1 790.5 147.2C775.1 156.1 739.4 176.6 733.0 180.2C730.5 181.6 721.3 186.9 712.5 192.0C677.8 212.0 668.9 217.1 654.5 225.2C603.0 254.3 576.0 269.7 565.0 276.1C558.1 280.1 545.5 287.2 537.0 292.0L521.5 300.7 L521.2 370.3C521.1 408.7 521.3 440.0 521.6 440.0C521.9 440.0 527.2 437.1 533.4 433.6ZM804.6 315.3C804.4 315.0 796.1 319.5 786.3 325.2C776.5 330.9 752.0 345.1 731.8 356.6C711.6 368.1 695.0 377.8 695.0 378.1C695.0 378.5 709.0 386.6 726.2 396.1C743.3 405.7 759.4 414.7 761.9 416.1C778.6 425.6 793.3 433.9 798.5 436.6L804.5 439.9 L804.8 377.8C804.9 343.6 804.8 315.5 804.6 315.3ZM329.7 228.3C329.5 228.2 319.9 233.5 308.4 240.1C273.5 260.4 262.5 266.7 239.0 280.2C226.6 287.4 216.4 293.3 216.2 293.5C216.0 293.7 218.3 295.1 221.2 296.7C225.6 299.1 268.0 323.0 307.0 345.0C311.7 347.7 318.6 351.6 322.5 353.7L329.5 357.6 L329.8 293.1C329.9 257.7 329.9 228.5 329.7 228.3ZM575.2 233.6C603.1 217.6 625.7 204.3 625.5 204.0C625.0 203.2 605.2 191.5 574.5 173.7C560.8 165.8 543.2 155.6 535.6 151.2C528.0 146.7 521.5 143.0 521.4 143.0C521.2 143.0 521.0 170.2 521.0 203.5L521.0 263.9 L522.8 263.2C523.8 262.8 547.4 249.5 575.2 233.6Z" fill="currentColor" fill-rule="evenodd"></path></svg><b>EVA</b></a>
+<p class="foot-tag">EMPOWERING VALUE THROUGH AI</p>
+</div>
+<div class="foot-right">
+<nav aria-label="Footer menu" class="foot-menus">
+<div><h4>Product</h4><ul><li><a href="product.html#ai-engine-document">AI Engine Document</a></li><li><a href="product.html#ai-engine-factory">AI Engine Factory</a></li></ul></div>
+<div><h4>Industry</h4><ul><li><a href="industry.html#manufacturing">Manufacturing</a></li><li><a href="industry.html#finance">Finance</a></li></ul></div>
+<div><h4>Resource</h4><ul><li><a href="#rnd">R&amp;D</a></li></ul></div>
+<div><h4>Company</h4><ul><li><a href="company.html#about">About</a></li><li><a href="company.html#news">News</a></li></ul></div>
+</nav>
+<div class="partner">
+<small>PARTNER</small>
+<span class="plate"><img alt="NVIDIA Inception Program" height="63" src="assets/img/a7d02eebe501.png" width="180"/></span>
+</div>
+</div>
+</div>
+<div class="foot-bot">
+<span>© 2026 EVA. All rights reserved.</span>
+<a href="privacy.html">Privacy Policy</a>
+</div>
+</div>
+</footer>
+<script>
+/* =====================================================================
+   R&D 백서 데이터
+   새 백서 게재 방법: 아래 배열에 객체 하나를 추가하고,
+   whitepapers/<id>/ 폴더에 PDF, cover.jpg, page-NN.jpg 를 넣습니다.
+   목록은 date 기준 최신순으로 자동 정렬되며, 가장 최신 백서가 상단에 강조됩니다.
+   ===================================================================== */
+var WHITEPAPERS = [
+  {
+    id: "causal-policy-analytics",
+    date: "2026-10",
+    category: "Public Policy AI",
+    title: "Beyond correlation: analyzing the causal effects of policy",
+    subtitle: "EVA's approach to Causal AI–based policy effect analysis and decision support",
+    lead: "Is the change in performance after policy support really the effect of the policy? Drawing on EVA's public policy analysis PoC, this paper introduces an approach that goes beyond correlation-based performance tallies, analyzes policy effects with causal inference, and connects them to decision-making.",
+    card: "EVA's public policy AI white paper: it connects policy announcements with firm data, analyzes policy effects through causal inference and validation, and links the results to support recommendations, ex-post evaluation and the design of new programs.",
+    tags: ["Causal inference", "Policy effect analysis", "CATE", "Refutation tests", "Ontology knowledge graph"],
+    doc: { title: "Causal Policy Analytics White Paper", lang: "English", pages: 15, format: "PDF · A4", size: "1.0MB",
+           file: "EVA_WhitePaper_CausalPolicyAnalytics_EN.pdf" },
+    evidence: "Proof of concept built for the Korea Small Business Institute (KOSI), AI+ OpenData Challenge, Task 4 “Policy Effect Prediction Analysis”, 2026",
+    stats: [
+      { v: "2,035,733", t: "firms in the service layer, 210 programs, 833 notices – none dropped" },
+      { v: "4/4", t: "DoWhy refutation tests passed in the 2022 and 2023 cohorts (target 3 / 4)" },
+      { v: "2.6–11.9%", t: "firm-level CATE error, 8 of 8 outcome–cohort combinations within the 15% target" },
+      { v: "−3.56%p", t: "sales-growth estimate (2022 cohort) – and the reason it must not be read as “harm”" }
+    ],
+    statsSource: "Source: White paper, p.3 Summary",
+    intro: {
+      heading: "Who did the policy work for, and by how much?",
+      paragraphs: [
+        "An increase in the sales or employment of supported firms does not mean that the whole change is due to the policy. Conversely, weak performance among supported firms does not prove that the policy failed. Firms that took part in a program and firms that did not may have differed in their circumstances and characteristics from the start.",
+        "This white paper introduces ‘Causal Policy Analytics’, a <b>causal inference</b>–based approach to policy analysis that separates these differences. It goes one step beyond “How did supported firms perform?” to analyze “What would have happened to the same firms without support?”",
+        "Based on the policy effect prediction and analysis task of the Korea Small Business Institute (KOSI), EVA built a PoC that connects policy announcements with firm data and performs causal model design, matching of similar firms, effect estimation by firm characteristics, refutation tests and counterfactual simulation. Using the technical architecture, validation results and real analysis cases from this process, the white paper explains how policy evaluation results can feed program recommendations, budget reviews and the design of new policies.",
+        "It also covers the limits of the analysis, not only its uses. It states the selection bias that observational data cannot easily control for and the additional data that would be needed, and it distinguishes evidence that can support policy decisions from areas that call for careful interpretation."
+      ]
+    },
+    points: [
+      { title: "From performance tallies to policy effect analysis", pages: [4, 5],
+        body: "Sales, employment, closure and patent indicators of supported firms are important performance information. To evaluate a policy’s effect, however, the firms’ existing characteristics and the process of selecting support recipients must also be considered. The white paper explains why observed performance differences must be distinguished from changes caused by the policy." },
+      { title: "A five-stage analysis pipeline that connects documents and data", pages: [6],
+        body: "It presents a structure that runs from analyzing policy announcements to processing firm data, causal graphs and matching, effect estimation by firm characteristics, and counterfactual analysis and reporting. An ontology knowledge graph links firms, programs, support history and performance indicators to support analysis and the search for evidence." },
+      { title: "Beyond a single average: effects by target", pages: [5, 7, 8],
+        body: "A policy’s effect can vary with conditions such as a firm’s industry, size and financial health. The white paper covers how to estimate the conditional average treatment effect (CATE) by firm characteristics and how to use the effect metric that fits each business purpose, such as ex-post evaluation or support recommendations." },
+      { title: "Validating the estimates and disclosing the limits of interpretation", pages: [9, 10, 11, 13],
+        body: "The stability of the results is checked with four refutation tests (placebo treatment, dummy outcome, data subset and bootstrap) and by re-analyzing cohorts from different years. At the same time, the paper states the limit that these tests alone cannot show that unobserved confounders have been removed." },
+      { title: "Connecting analysis to real policy work", pages: [12, 13],
+        body: "It introduces six work scenarios: program recommendations per firm, discovery of unsupported firms, policy document search, ex-post effect analysis, review of support distribution and budget efficiency, and ex-ante effect prediction for new programs. Roles are separated so that the analysis engine computes the effect figures and the language model describes context and interpretation." }
+    ]
+  }
+];
+
+(function(){
+  var BASE = "whitepapers/";
+  var listEl = document.getElementById("view-list"), detEl = document.getElementById("view-detail");
+  var papers = WHITEPAPERS.slice().sort(function(a,b){ return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+  var state = { cat: "All", q: "" };
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+  function fmtDate(d){ return d.replace("-", "."); }
+  function dir(p){ return BASE + p.id + "/"; }
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function pdfHref(p){ return dir(p) + p.doc.file; }
+  function pagesLabel(arr){
+    var out = [], s = arr[0], prev = arr[0];
+    for (var i = 1; i <= arr.length; i++){
+      if (i < arr.length && arr[i] === prev + 1){ prev = arr[i]; continue; }
+      out.push(s === prev ? String(s) : s + "–" + prev);
+      if (i < arr.length){ s = prev = arr[i]; }
+    }
+    return "p." + out.join(", ");
+  }
+
+  /* ---------- 목록 ---------- */
+  function cats(){
+    var m = {}; papers.forEach(function(p){ m[p.category] = (m[p.category] || 0) + 1; });
+    return [["All", papers.length]].concat(Object.keys(m).map(function(k){ return [k, m[k]]; }));
+  }
+  function matches(p){
+    if (state.cat !== "All" && p.category !== state.cat) return false;
+    if (!state.q) return true;
+    var hay = [p.title, p.subtitle, p.lead, p.category, p.tags.join(" "), p.doc.title].join(" ").toLowerCase();
+    return hay.indexOf(state.q.toLowerCase()) > -1;
+  }
+  function featureHTML(p){
+    return '<article class="feature">' +
+      '<div class="feature-cover"><a class="cover-img" href="#wp-' + p.id + '" data-open="' + p.id + '" aria-label="' + esc(p.title) + ' – details"><img src="' + dir(p) + 'cover.jpg" alt="' + esc(p.doc.title) + ' cover" width="520" height="736"></a></div>' +
+      '<div class="feature-body">' +
+        '<div class="meta"><span class="cat">' + esc(p.category) + '</span><span class="en">' + fmtDate(p.date) + '</span><span class="new">LATEST</span></div>' +
+        '<h2>' + esc(p.title) + '</h2>' +
+        '<p class="sub-t">' + esc(p.subtitle) + '</p>' +
+        '<p class="sum">' + esc(p.lead) + '</p>' +
+        '<div class="tags">' + p.tags.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join("") + '</div>' +
+        '<div class="actions"><a class="btn btn-teal" href="#wp-' + p.id + '" data-open="' + p.id + '">View Details</a>' +
+        '<a class="btn btn-line-dk" href="' + pdfHref(p) + '" download data-dl="' + p.id + '">Download PDF</a></div>' +
+      '</div></article>';
+  }
+  function cardHTML(p){
+    return '<button class="card" type="button" data-open="' + p.id + '">' +
+      '<span class="card-top"><img src="' + dir(p) + 'cover.jpg" alt="" loading="lazy"></span>' +
+      '<span class="card-body"><span class="meta"><span class="cat">' + esc(p.category) + '</span><span class="en">' + fmtDate(p.date) + '</span></span>' +
+      '<h3>' + esc(p.title) + '</h3><p>' + esc(p.subtitle) + '</p></span></button>';
+  }
+  function renderList(){
+    var filtering = state.cat !== "All" || state.q;
+    var hits = papers.filter(matches);
+    var h = '';
+    h += '<section class="phead on-dark" aria-labelledby="rdTitle"><div class="wrap">' +
+      '<nav class="crumb" aria-label="Breadcrumb"><a href="index.html">Home</a><i></i><a href="#rnd">Resource</a><i></i><span aria-current="page">R&amp;D</span></nav>' +
+      '<p class="eyebrow">R&amp;D White Paper</p>' +
+      '<h1 id="rdTitle">R&amp;D White Papers</h1>' +
+      '<p class="lead">White papers that describe EVA’s projects from an R&amp;D perspective.</p>' +
+      '</div></section>';
+    h += '<section class="sec" style="padding-top:clamp(40px,5vw,56px)"><div class="wrap">';
+    h += '<div class="tools"><div class="chips" role="group" aria-label="Field">' + cats().map(function(c){
+        return '<button class="chip" type="button" data-cat="' + esc(c[0]) + '" aria-pressed="' + (state.cat === c[0]) + '">' + esc(c[0]) + '<b>' + c[1] + '</b></button>'; }).join("") + '</div>' +
+      '<label class="search"><span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search white papers</span><input id="q" type="search" placeholder="Search by title or keyword" value="' + esc(state.q) + '"></label></div>';
+    if (!filtering && papers.length){
+      h += featureHTML(papers[0]);
+      var rest = papers.slice(1);
+      h += '<div class="list-h"><h2>Earlier White Papers</h2><span class="count">Published: <b>' + papers.length + '</b></span></div><div class="grid">';
+      h += rest.map(cardHTML).join("");
+      h += '<div class="slot"><span><b>NEXT</b>The next white paper<br>will appear here.</span></div>';
+      h += '</div>';
+    } else {
+      h += '<p class="count">Results: <b>' + hits.length + '</b></p>';
+      h += hits.length ? '<div class="grid">' + hits.map(cardHTML).join("") + '</div>' : '<div class="empty">No white papers match. Please try another field or search term.</div>';
+    }
+    h += '</div></section>';
+    listEl.innerHTML = h;
+    var q = document.getElementById("q");
+    q.addEventListener("input", function(){ state.q = q.value.trim(); var pos = q.selectionStart; renderList(); var n = document.getElementById("q"); n.focus(); try{ n.setSelectionRange(pos,pos); }catch(e){} });
+  }
+
+  /* ---------- 상세 ---------- */
+  function renderDetail(p){
+    var d = dir(p), h = '';
+    h += '<section class="dhero on-dark" aria-labelledby="dTitle"><div class="wrap">' +
+      '<nav class="crumb" aria-label="Breadcrumb"><a href="index.html">Home</a><i></i><a href="#rnd" data-list>Resource</a><i></i><a href="#rnd" data-list>R&amp;D</a><i></i><span aria-current="page">White Paper</span></nav>' +
+      '<div class="dhero-grid"><div class="dhero-l">' +
+        '<div class="meta"><span class="cat">' + esc(p.category) + '</span><span class="en" style="color:var(--on-dark-2)">' + fmtDate(p.date) + '</span><span class="en" style="color:var(--on-dark-2)">WHITE PAPER</span></div>' +
+        '<h1 id="dTitle">' + esc(p.title) + '</h1>' +
+        '<p class="sub-t">' + esc(p.subtitle) + '</p>' +
+        '<p class="lead">' + esc(p.lead) + '</p>' +
+        '<div class="actions"><button class="btn btn-teal" type="button" data-view="1">Browse the White Paper</button>' +
+        '<a class="btn btn-ghost" href="' + pdfHref(p) + '" download data-dl="' + p.id + '">Download PDF</a></div>' +
+        '<div class="dmeta"><div><small>Publisher</small><span>EVA</span></div><div><small>Published</small><span class="en">' + fmtDate(p.date) + '</span></div>' +
+        '<div><small>Language</small><span>' + esc(p.doc.lang) + '</span></div><div><small>Length</small><span>' + p.doc.pages + ' pages · ' + esc(p.doc.format) + '</span></div></div>' +
+      '</div><div class="dhero-r"><button class="cover-img" type="button" data-view="1" aria-label="Browse the white paper from the cover"><img src="' + d + 'cover.jpg" alt="' + esc(p.doc.title) + ' cover" width="520" height="736"></button></div></div>' +
+      '</div></section>';
+    if (p.stats && p.stats.length){
+      h += '<div class="wrap"><div class="stats">' + p.stats.map(function(s){ return '<div class="stat"><b>' + esc(s.v) + '</b><span>' + esc(s.t) + '</span></div>'; }).join("") + '</div>' +
+        '<p class="src">' + esc(p.statsSource) + '</p></div>';
+    }
+    h += '<section class="dsec"><div class="wrap two"><div class="two-h"><p class="eyebrow ko dot">About This White Paper</p><h2>' + esc(p.intro.heading) + '</h2></div><div class="prose">' +
+      p.intro.paragraphs.map(function(t, i){ return '<p' + (i === 1 ? ' class="q"' : '') + '>' + t + '</p>'; }).join("") +
+      (p.evidence ? '<p class="evidence"><b>Evidence base</b><br>' + esc(p.evidence) + '</p>' : '') + '</div></div></section>';
+    h += '<section class="dsec" aria-labelledby="ptTitle"><div class="wrap"><div class="sec-head" style="justify-items:start;text-align:left"><p class="eyebrow ko dot">What This White Paper Covers</p><h2 class="h2" id="ptTitle" style="font-size:clamp(23px,1.1vw + 15px,32px)">' + p.points.length + ' key takeaways</h2></div><div class="points">' +
+      p.points.map(function(pt, i){
+        return '<article class="point"><span class="no">' + pad(i+1) + '</span><h3>' + esc(pt.title) + '</h3><p>' + esc(pt.body) + '</p>' +
+          '<button class="pg" type="button" data-view="' + pt.pages[0] + '">View ' + pagesLabel(pt.pages) + ' <span class="arw" aria-hidden="true"></span></button></article>';
+      }).join("") + '</div></div></section>';
+    h += '<section class="dsec"><div class="wrap"><div class="closing on-dark"><p>' + esc(p.card) + '</p><div class="actions"><button class="btn btn-white" type="button" data-view="1">Browse the White Paper</button><a class="btn btn-ghost" href="' + pdfHref(p) + '" download data-dl="' + p.id + '">Download PDF</a></div></div>' +
+      '<button class="back" type="button" data-list><span class="arw" aria-hidden="true"></span>Back to R&amp;D White Papers</button></div></section>';
+    detEl.innerHTML = h;
+  }
+
+  /* ---------- 라우팅 (#rnd / #wp-<id>) ---------- */
+  var current = null;
+  function route(){
+    var hash = (location.hash || "").replace("#", "");
+    var p = hash.indexOf("wp-") === 0 ? papers.filter(function(x){ return "wp-" + x.id === hash; })[0] : null;
+    current = p || null;
+    if (p){ renderDetail(p); listEl.hidden = true; detEl.hidden = false; document.title = p.title + " | EVA R&D"; }
+    else { renderList(); detEl.hidden = true; listEl.hidden = false; document.title = "EVA R&D White Paper"; }
+    window.scrollTo(0, 0);
+  }
+  function go(h){ if (location.hash === h) route(); else location.hash = h; }
+  window.addEventListener("hashchange", route);
+
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-open],[data-list],[data-cat],[data-view],[data-dl]");
+    if (!t) return;
+    if (t.hasAttribute("data-dl")){ download(e, t.getAttribute("data-dl")); return; }
+    if (t.hasAttribute("data-open")){ e.preventDefault(); go("#wp-" + t.getAttribute("data-open")); return; }
+    if (t.hasAttribute("data-list")){ e.preventDefault(); go("#rnd"); return; }
+    if (t.hasAttribute("data-cat")){ state.cat = t.getAttribute("data-cat"); renderList(); return; }
+    if (t.hasAttribute("data-view") && current){ openViewer(current, +t.getAttribute("data-view"), t); }
+  });
+
+  /* ---------- PDF 다운로드: 뷰어 저장 기능이 있으면 사용, 없으면 일반 링크 ---------- */
+  var dl = null;
+  try { if (window.claude && window.claude.use) window.claude.use("downloads").then(function(x){ dl = x; }, function(){}); } catch(err){}
+  var toastT = 0;
+  function toast(msg){ var el = document.getElementById("toast"); el.textContent = msg; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(function(){ el.hidden = true; }, 3200); }
+  function download(e, id){
+    if (!dl) return;
+    e.preventDefault();
+    var p = papers.filter(function(x){ return x.id === id; })[0]; if (!p) return;
+    fetch(pdfHref(p)).then(function(r){ if (!r.ok) throw new Error("fetch"); return r.blob(); })
+      .then(function(b){ return dl.save({ filename: p.doc.file, data: b }); })
+      .then(function(){ toast("PDF saved."); })
+      .catch(function(err){ if (err && err.code === "declined") return; toast("Could not save the PDF. Please try again in a moment."); });
+  }
+
+  /* ---------- 페이지 뷰어 ---------- */
+  var vw = document.getElementById("viewer"), vImg = document.getElementById("vImg"), vNum = document.getElementById("vNum"),
+      vPrev = document.getElementById("vPrev"), vNext = document.getElementById("vNext"), vTitle = document.getElementById("vTitle"),
+      vStage = document.getElementById("vStage"), vp = null, vn = 1, opener = null;
+  function showPage(n){
+    vn = Math.max(1, Math.min(vp.doc.pages, n));
+    vImg.src = dir(vp) + "page-" + pad(vn) + ".jpg";
+    vImg.alt = vp.doc.title + ", page " + vn;
+    vNum.textContent = vn + " / " + vp.doc.pages;
+    vPrev.disabled = vn === 1; vNext.disabled = vn === vp.doc.pages;
+    vStage.scrollTop = 0;
+    if (vn < vp.doc.pages){ var pre = new Image(); pre.src = dir(vp) + "page-" + pad(vn + 1) + ".jpg"; }
+  }
+  function openViewer(p, n, from){ vp = p; opener = from || null; vTitle.textContent = p.doc.title; vw.hidden = false; document.body.style.overflow = "hidden"; showPage(n || 1); document.getElementById("vClose").focus(); }
+  function closeViewer(){ vw.hidden = true; document.body.style.overflow = ""; if (opener) opener.focus(); }
+  document.getElementById("vClose").addEventListener("click", closeViewer);
+  var vZoom = document.getElementById("vZoom");
+  vZoom.addEventListener("click", function(){ var z = vw.classList.toggle("zoom"); vZoom.setAttribute("aria-pressed", z ? "true" : "false"); vZoom.textContent = z ? "Fit to Screen" : "Enlarge"; });
+  vPrev.addEventListener("click", function(){ showPage(vn - 1); });
+  vNext.addEventListener("click", function(){ showPage(vn + 1); });
+  vw.addEventListener("click", function(e){ if (e.target === vw || e.target === vStage) closeViewer(); });
+  document.addEventListener("keydown", function(e){
+    if (vw.hidden) return;
+    if (e.key === "Tab"){
+      var f = [].slice.call(vw.querySelectorAll("button:not(:disabled)"));
+      var i = f.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0){ e.preventDefault(); f[f.length-1].focus(); }
+      else if (!e.shiftKey && (i === f.length - 1 || i < 0)){ e.preventDefault(); f[0].focus(); }
+      return;
+    }
+    if (e.key === "Escape") closeViewer();
+    else if (e.key === "ArrowLeft") showPage(vn - 1);
+    else if (e.key === "ArrowRight") showPage(vn + 1);
+  });
+
+  /* ---------- 모바일 메뉴 ---------- */
+  var nav = document.getElementById("nav"), btn = document.getElementById("menuBtn");
+  function setMenu(o){ nav.classList.toggle("open", o); btn.setAttribute("aria-expanded", o ? "true" : "false"); btn.textContent = o ? "Close" : "Menu"; }
+  btn.addEventListener("click", function(){ setMenu(!nav.classList.contains("open")); });
+  nav.addEventListener("click", function(e){ if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && nav.classList.contains("open")){ setMenu(false); btn.focus(); } });
+
+  route();
+})();
+</script>
+<nav aria-label="Mobile main menu" class="m-tab"><a data-t="home" href="index.html">Home</a><a data-t="product" href="product.html#product">Product</a><a data-t="industry" href="industry.html#industry">Industry</a><a data-t="rnd" href="rnd.html#rnd">R&amp;D</a><a data-t="company" href="company.html#about">Company</a></nav>
+<button class="m-top" type="button">Back to Top</button>
+<script>
+/* 모바일 웹 버전: 하단 탭·하위 탭 현재 위치 표시, 맨 위로, 입력 중 하단 탭 숨김 */
+(function(){
+  var page = document.body.getAttribute("data-page");
+  var tab = document.querySelector('.m-tab a[data-t="' + page + '"]');
+  if (tab) tab.setAttribute("aria-current", "page");
+  var sub = document.querySelector(".m-sub");
+  function syncSub(){
+    if (!sub) return;
+    var links = [].slice.call(sub.querySelectorAll("a")), h = (location.hash || "").replace("#", "");
+    var hit = links.filter(function(a){ return a.getAttribute("data-h") === h; })[0] || links[0];
+    links.forEach(function(a){ if (a === hit) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (hit && sub.scrollWidth > sub.clientWidth) sub.scrollTo({ left: hit.offsetLeft - 16, behavior: "smooth" });
+  }
+  window.addEventListener("hashchange", syncSub); syncSub();
+  var topBtn = document.querySelector(".m-top");
+  function onScroll(){ if (topBtn) topBtn.classList.toggle("on", window.scrollY > 700); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  if (topBtn) topBtn.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
+  function isField(el){ return el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !/^(checkbox|radio|button|submit)$/.test(el.type || ""); }
+  document.addEventListener("focusin", function(e){ if (isField(e.target)) document.body.classList.add("m-typing"); });
+  document.addEventListener("focusout", function(e){ if (isField(e.target)) document.body.classList.remove("m-typing"); });
+})();
+</script>
+<script>
+/* 언어 선택: 다른 언어를 누르면 현재 화면(해시)과 문의 유형(쿼리)을 유지한 채 이동 */
+document.addEventListener("click", function(e){ var a = e.target.closest && e.target.closest(".lang-sw a"); if (!a) return; e.preventDefault(); if (a.classList.contains("on")) return; location.href = a.getAttribute("href") + location.search + location.hash; });
+</script>
+</body>
+</html>
